@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import Image from 'next/image';
 import {
     LayoutDashboard,
     MessageSquare,
@@ -72,16 +73,17 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 {/* ── Branding ── */}
                 <div className="relative flex items-center gap-3 px-6 py-6 border-b border-white/[0.06]">
                     {/* Logo mark */}
-                    <div className="relative flex-shrink-0">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gold/40 to-gold/10 border border-gold/30 flex items-center justify-center shadow-lg shadow-gold/10">
-                            <span className="font-heading text-gold font-black text-sm">V</span>
-                        </div>
-                        <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#13151f]" />
+                    <div className="flex-shrink-0">
+                        <Image
+                            src="/images/Velora_Logo.png"
+                            alt="Velora Journeys"
+                            width={140}
+                            height={42}
+                            className="h-9 w-auto object-contain"
+                            priority
+                        />
                     </div>
-                    <div>
-                        <p className="font-heading text-white font-bold text-base tracking-widest leading-none">VELORA</p>
-                        <p className="text-[10px] text-gold/60 font-medium uppercase tracking-[0.2em] mt-0.5">Journeys Admin</p>
-                    </div>
+                    <p className="text-[10px] text-gold/60 font-medium uppercase tracking-[0.2em]">Admin</p>
                 </div>
 
                 {/* ── Nav ── */}
@@ -96,8 +98,8 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                                 key={href}
                                 href={href}
                                 className={`group relative flex items-center gap-3.5 px-3.5 py-3 rounded-2xl transition-all duration-200 ${active
-                                        ? 'bg-gradient-to-r from-gold/20 to-gold/5 border border-gold/20 shadow-md shadow-gold/5'
-                                        : 'hover:bg-white/[0.04] border border-transparent'
+                                    ? 'bg-gradient-to-r from-gold/20 to-gold/5 border border-gold/20 shadow-md shadow-gold/5'
+                                    : 'hover:bg-white/[0.04] border border-transparent'
                                     }`}
                             >
                                 {/* Active left bar */}
@@ -107,8 +109,8 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
 
                                 {/* Icon */}
                                 <div className={`p-2 rounded-xl transition-all duration-200 ${active
-                                        ? 'bg-gold/20 shadow-sm shadow-gold/10'
-                                        : 'bg-white/[0.04] group-hover:bg-white/[0.07]'
+                                    ? 'bg-gold/20 shadow-sm shadow-gold/10'
+                                    : 'bg-white/[0.04] group-hover:bg-white/[0.07]'
                                     }`}>
                                     <Icon className={`w-4 h-4 ${active ? 'text-gold' : 'text-white/40 group-hover:text-white/70'}`} />
                                 </div>
@@ -172,11 +174,14 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
             ════════════════════════════════════════ */}
             <header className="lg:hidden fixed top-0 left-0 right-0 z-40 bg-[#0f1117]/95 backdrop-blur-xl border-b border-white/5">
                 <div className="flex items-center justify-between px-5 h-14">
-                    <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-gold/40 to-gold/10 border border-gold/20 flex items-center justify-center">
-                            <span className="text-gold text-[10px] font-black">V</span>
-                        </div>
-                        <span className="font-heading text-sm font-bold text-white">VELORA</span>
+                    <div className="flex items-center gap-2">
+                        <Image
+                            src="/images/Velora_Logo.png"
+                            alt="Velora Journeys"
+                            width={110}
+                            height={33}
+                            className="h-7 w-auto object-contain"
+                        />
                         <span className="text-gold/60 text-[9px] font-medium uppercase tracking-widest">Admin</span>
                     </div>
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gold/40 to-gold/10 border border-gold/20 flex items-center justify-center">

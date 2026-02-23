@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
@@ -38,11 +39,16 @@ export default function AdminLoginPage() {
 
             <div className="relative w-full max-w-sm">
                 {/* Logo */}
-                <div className="text-center mb-8">
-                    <span className="font-heading text-2xl font-bold text-white tracking-wider">
-                        VELORA
-                    </span>
-                    <p className="text-white/40 text-xs tracking-[0.3em] uppercase mt-1">
+                <div className="flex flex-col items-center mb-8">
+                    <Image
+                        src="/images/Velora_Logo.png"
+                        alt="Velora Journeys"
+                        width={160}
+                        height={48}
+                        className="h-12 w-auto object-contain mb-2"
+                        priority
+                    />
+                    <p className="text-white/40 text-xs tracking-[0.3em] uppercase">
                         Admin Panel
                     </p>
                 </div>

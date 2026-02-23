@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Compass, ChevronRight, MapPin, Plane, Info, Phone } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
@@ -39,14 +40,15 @@ export default function Navbar() {
             >
                 <nav className="flex items-center justify-between px-4 md:px-6 py-3">
                     {/* Logo */}
-                    <Link href="/" onClick={closeMenu} className="flex items-center gap-2 group">
-                        <div className="relative">
-                            <Compass className="w-7 h-7 md:w-8 md:h-8 text-gold transition-transform duration-500 group-hover:rotate-45" />
-                            <div className="absolute inset-0 bg-gold/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        </div>
-                        <span className="font-heading text-lg md:text-xl font-bold text-white tracking-wide">
-                            Velora<span className="text-gradient-gold"> Journeys</span>
-                        </span>
+                    <Link href="/" onClick={closeMenu} className="flex items-center group">
+                        <Image
+                            src="/images/Velora_Logo.png"
+                            alt="Velora Journeys"
+                            width={160}
+                            height={48}
+                            className="h-10 md:h-12 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop Nav */}

@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
-import { Compass, MapPin, Mail, Phone } from 'lucide-react';
+import Image from 'next/image';
+import { MapPin, Mail, Phone } from 'lucide-react';
 
 const footerLinks = {
     journeys: [
@@ -35,11 +38,14 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
                     {/* Brand */}
                     <div className="lg:col-span-2">
-                        <Link href="/" className="flex items-center gap-2.5 group mb-5">
-                            <Compass className="w-8 h-8 text-gold" />
-                            <span className="font-heading text-2xl font-bold">
-                                Velora <span className="text-gradient-gold">Journeys</span>
-                            </span>
+                        <Link href="/" className="flex items-center group mb-5">
+                            <Image
+                                src="/images/Velora_Logo.png"
+                                alt="Velora Journeys"
+                                width={180}
+                                height={54}
+                                className="h-12 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+                            />
                         </Link>
                         <p className="text-white/50 text-sm leading-relaxed max-w-sm mb-6">
                             Curating extraordinary travel experiences across Sri Lanka and the
