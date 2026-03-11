@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
                 {/* Logo */}
                 <div className="flex flex-col items-center mb-8">
                     <Image
-                        src="/images/Velora_Logo.png"
+                        src="/velora_logo.svg"
                         alt="Velora Journeys"
                         width={160}
                         height={48}

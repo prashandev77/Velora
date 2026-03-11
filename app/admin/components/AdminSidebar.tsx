@@ -75,7 +75,7 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                     {/* Logo mark */}
                     <div className="flex-shrink-0">
                         <Image
-                            src="/images/Velora_Logo.png"
+                            src="/velora_logo.svg"
                             alt="Velora Journeys"
                             width={140}
                             height={42}
@@ -176,7 +176,7 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 <div className="flex items-center justify-between px-5 h-14">
                     <div className="flex items-center gap-2">
                         <Image
-                            src="/images/Velora_Logo.png"
+                            src="/velora_logo.svg"
                             alt="Velora Journeys"
                             width={110}
                             height={33}

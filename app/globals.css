@@ -6,31 +6,36 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ─── Smooth Scrolling ─── */
+html {
+  scroll-behavior: smooth;
+}
+
 /* ─── Tailwind v4 @theme Design Tokens ─── */
 @theme inline {
   /* Typography */
   --font-heading: 'Playfair Display', serif;
   --font-sans: 'Inter', sans-serif;
 
-  /* Brand Colors — Refined luxury palette */
-  --color-ocean: oklch(0.35 0.015 260);
-  /* Charcoal */
-  --color-ocean-light: oklch(0.45 0.015 260);
-  --color-ocean-dark: oklch(0.25 0.012 260);
-  --color-gold: oklch(0.68 0.08 80);
-  /* Muted gold */
-  --color-gold-light: oklch(0.78 0.06 78);
-  --color-gold-dark: oklch(0.55 0.09 80);
-  --color-sand: oklch(0.97 0.008 80);
-  /* Warm ivory */
-  --color-sand-dark: oklch(0.93 0.012 80);
-  --color-deep: oklch(0.14 0.008 260);
-  /* Deep charcoal */
-  --color-deep-light: oklch(0.20 0.008 260);
-  --color-pearl: oklch(0.97 0.006 80);
-  /* Off-white ivory */
+  /* Brand Colors — Luxury Light Palette */
+  --color-ocean: oklch(0.40 0.015 60);
+  /* Warm stone */
+  --color-ocean-light: oklch(0.55 0.012 60);
+  --color-ocean-dark: oklch(0.28 0.012 60);
+  --color-gold: oklch(0.58 0.09 75);
+  /* Rich gold — deeper for light bg contrast */
+  --color-gold-light: oklch(0.68 0.08 78);
+  --color-gold-dark: oklch(0.45 0.10 72);
+  --color-sand: oklch(0.97 0.010 80);
+  /* Warm ivory — primary bg */
+  --color-sand-dark: oklch(0.93 0.014 78);
+  --color-deep: oklch(0.97 0.010 80);
+  /* bg-deep = warm ivory now */
+  --color-deep-light: oklch(0.94 0.012 80);
+  --color-pearl: oklch(0.99 0.004 80);
+  /* Near white */
   --color-coral: oklch(0.60 0.12 25);
-  --color-emerald: oklch(0.60 0.12 160);
+  --color-emerald: oklch(0.55 0.12 160);
 
   /* Shadcn/ui mapped tokens */
   --color-background: var(--background);

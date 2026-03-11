@@ -60,7 +60,7 @@ export default function JourneysSection() {
                     className="flex gap-5 px-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-6"
                     style={{ WebkitOverflowScrolling: 'touch' }}
                 >
-                    {journeys.map((journey, index) => {
+                    {journeys.map((journey) => {
                         const Icon = icons[journey.id as keyof typeof icons] || Mountain;
                         return (
                             <Link

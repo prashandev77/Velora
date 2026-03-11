@@ -1,160 +1,223 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, MapPin, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 import Link from 'next/link';
-import { heroSlides } from '@/lib/data';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+const slides = [
+    {
+        id: 1,
+        headline: 'From Sacred Temples to Turquoise Shores',
+        subtext:
+            'Privately curated journeys across Sri Lanka and the Maldives. Tailor-made travel experiences designed around you. Not fixed departure dates. Not group tours. Just seamless, personal journeys crafted with care.',
+        tag: 'Culture & Coast',
+        buttons: [
+            { label: 'Plan Your Journey', href: '/plan-your-trip', primary: true },
+            { label: 'Explore Signature Experiences', href: '/journeys', primary: false },
+        ],
+        image: '/Photos/Hero Slide Photo 1 Sigiriya.jpeg',
+    },
+    {
+        id: 2,
+        headline: 'Where Untamed Beauty Meets Refined Comfort',
+        subtext:
+            'Luxury safaris, private guides, and boutique lodges in Sri Lanka\'s most extraordinary wilderness.',
+        tag: 'Wildlife & Nature',
+        buttons: [
+            { label: 'Discover Wildlife Journeys', href: '/journeys', primary: true },
+            { label: 'Start Planning', href: '/contact', primary: false },
+        ],
+        image: '/Photos/Hero Slide Photo 2 .jpeg',
+    },
+    {
+        id: 3,
+        headline: 'Island Serenity, Perfected',
+        subtext:
+            'Boutique coastal retreats and overwater villas designed for privacy, romance, and barefoot luxury.',
+        tag: 'Sri Lanka • Maldives',
+        buttons: [
+            { label: 'Explore Beach & Island Escapes', href: '/journeys', primary: true },
+            { label: 'Design My Journey', href: '/contact', primary: false },
+        ],
+        image: '/Photos/Hero Slide 4 Maldives.jpg',
+    },
+    {
+        id: 4,
+        headline: 'Luxury, Thoughtfully Curated',
+        subtext:
+            'Tailor-made journeys designed around you. Seamless, private, and unforgettable.',
+        tag: 'The Velora Promise',
+        buttons: [
+            { label: 'Start Planning', href: '/contact', primary: true },
+            { label: 'View Luxury Itineraries', href: '/journeys', primary: false },
+        ],
+        image: '/Photos/Hero Slide Photo 3 tea.jpeg',
+    },
+];
+
+const INTERVAL = 6000;
 
 export default function Hero() {
     const [current, setCurrent] = useState(0);
+    const [direction, setDirection] = useState(1);
+    const [isPaused, setIsPaused] = useState(false);
+
+    const goTo = useCallback(
+        (index: number) => {
+            setDirection(index > current ? 1 : -1);
+            setCurrent(index);
+        },
+        [current],
+    );
 
     const next = useCallback(() => {
-        setCurrent((prev) => (prev + 1) % heroSlides.length);
+        setDirection(1);
+        setCurrent((prev) => (prev + 1) % slides.length);
+    }, []);
+
+    const prev = useCallback(() => {
+        setDirection(-1);
+        setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     }, []);
 
     useEffect(() => {
-        const timer = setInterval(next, 6000);
+        if (isPaused) return;
+        const timer = setInterval(next, INTERVAL);
         return () => clearInterval(timer);
-    }, [next]);
+    }, [isPaused, next]);
+
+    const slide = slides[current];
+
+    const variants = {
+        enter: (d: number) => ({ x: d > 0 ? '8%' : '-8%', opacity: 0 }),
+        center: { x: 0, opacity: 1 },
+        exit: (d: number) => ({ x: d > 0 ? '-8%' : '8%', opacity: 0 }),
+    };
 
     return (
-        <section className="relative h-screen w-full overflow-hidden">
-            {/* Background Slides */}
-            <AnimatePresence mode="wait">
+        <section
+            className="relative h-screen w-full overflow-hidden"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+        >
+            {/* ── Background images ── */}
+            <AnimatePresence initial={false} custom={direction}>
                 <motion.div
-                    key={current}
-                    initial={{ opacity: 0, scale: 1.08 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1.4, ease: 'easeInOut' }}
+                    key={slide.id}
+                    custom={direction}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                     className="absolute inset-0"
                 >
-                    <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${heroSlides[current].image})` }}
+                    <Image
+                        src={slide.image}
+                        alt={slide.headline}
+                        fill
+                        className="object-cover"
+                        priority={slide.id === 1}
+                        sizes="100vw"
                     />
-                    {/* Stronger gradient on mobile for text legibility */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-deep/70 via-deep/40 to-deep/90 md:from-deep/60 md:via-deep/30 md:to-deep/80" />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
                 </motion.div>
             </AnimatePresence>
 
-            {/* Content */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center px-5 text-center">
-                <AnimatePresence mode="wait">
-                    <motion.div key={current} className="max-w-4xl w-full">
-
-                        {/* Location Tag */}
+            {/* ── Content ── */}
+            <div className="relative z-10 flex h-full items-end pb-24 md:items-center md:pb-0">
+                <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
+                    <AnimatePresence mode="wait">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.5, delay: 0.15 }}
-                            className="flex items-center justify-center gap-2 mb-5"
-                        >
-                            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gold/15 border border-gold/25 text-gold text-xs font-semibold tracking-widest uppercase">
-                                <MapPin className="w-3 h-3" />
-                                Sri Lanka, Maldives &amp; India
-                            </span>
-                        </motion.div>
-
-                        {/* Title — tighter on mobile */}
-                        <motion.h1
-                            initial={{ opacity: 0, y: 35 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -15 }}
-                            transition={{ duration: 0.7, delay: 0.25 }}
-                            className="font-heading text-[2.6rem] leading-[1.05] sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-3"
-                        >
-                            {heroSlides[current].title}
-                        </motion.h1>
-
-                        {/* Subtitle */}
-                        <motion.p
+                            key={slide.id}
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -15 }}
-                            transition={{ duration: 0.6, delay: 0.38 }}
-                            className="font-heading text-xl sm:text-3xl md:text-4xl text-gradient-gold font-semibold mb-5"
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.7, ease: 'easeOut' }}
+                            className="max-w-2xl"
                         >
-                            {heroSlides[current].subtitle}
-                        </motion.p>
+                            {/* Tag */}
+                            <span className="inline-block text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-4 md:mb-5">
+                                {slide.tag}
+                            </span>
 
-                        {/* Description — shorter on mobile */}
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.5, delay: 0.5 }}
-                            className="text-white/60 text-sm sm:text-base md:text-lg max-w-lg md:max-w-2xl mx-auto mb-8 leading-relaxed"
-                        >
-                            Handcrafted luxury journeys to Sri Lanka &amp; the Maldives.<br className="hidden sm:block" />
-                            Ancient heritage meets island paradise.
-                        </motion.p>
+                            {/* Headline */}
+                            <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-5 md:mb-6">
+                                {slide.headline}
+                            </h1>
 
-                        {/* CTA — stacked full-width on mobile, side-by-side on sm+ */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.5, delay: 0.62 }}
-                            className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4"
-                        >
-                            <Link href="/plan-your-trip" className="w-full sm:w-auto">
-                                <Button
-                                    size="lg"
-                                    className="w-full sm:w-auto bg-gold hover:bg-gold-dark text-deep font-bold text-base px-8 py-5 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-gold/30 hover:scale-[1.02] active:scale-[0.98]"
-                                >
-                                    Plan Your Journey
-                                    <ChevronRight className="w-5 h-5 ml-1" />
-                                </Button>
-                            </Link>
+                            {/* Subtext */}
+                            <p className="text-white/70 text-sm md:text-base lg:text-lg leading-relaxed mb-8 md:mb-10 max-w-xl">
+                                {slide.subtext}
+                            </p>
 
-                            <Link href="/journeys" className="w-full sm:w-auto">
-                                <Button
-                                    size="lg"
-                                    variant="outline"
-                                    className="w-full sm:w-auto border-white/25 text-white hover:bg-white/10 text-base px-8 py-5 rounded-xl backdrop-blur-sm active:bg-white/15"
-                                >
-                                    Explore Journeys
-                                </Button>
-                            </Link>
+                            {/* Buttons */}
+                            <div className="flex flex-wrap gap-4">
+                                {slide.buttons.map((btn) => (
+                                    <Link
+                                        key={btn.label}
+                                        href={btn.href}
+                                        className={`px-6 py-3 md:px-8 md:py-3.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                                            btn.primary
+                                                ? 'bg-gold text-deep hover:bg-gold/90 hover:shadow-lg hover:shadow-gold/20'
+                                                : 'border border-white/30 text-white hover:bg-white/10 hover:border-white/50'
+                                        }`}
+                                    >
+                                        {btn.label}
+                                    </Link>
+                                ))}
+                            </div>
                         </motion.div>
-
-                    </motion.div>
-                </AnimatePresence>
+                    </AnimatePresence>
+                </div>
             </div>
 
-            {/* Slide Indicators */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2.5">
-                {heroSlides.map((_, i) => (
+            {/* ── Navigation arrows ── */}
+            <button
+                onClick={prev}
+                aria-label="Previous slide"
+                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300"
+            >
+                <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+                onClick={next}
+                aria-label="Next slide"
+                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300"
+            >
+                <ChevronRight className="w-5 h-5" />
+            </button>
+
+            {/* ── Slide indicators ── */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+                {slides.map((s, i) => (
                     <button
-                        key={i}
-                        onClick={() => setCurrent(i)}
-                        className={`transition-all duration-500 rounded-full ${i === current
-                            ? 'w-8 h-2 bg-gold'
-                            : 'w-2 h-2 bg-white/30 hover:bg-white/50'
-                            }`}
+                        key={s.id}
+                        onClick={() => goTo(i)}
                         aria-label={`Go to slide ${i + 1}`}
-                    />
+                        className="group relative"
+                    >
+                        <div
+                            className={`h-1 rounded-full transition-all duration-500 ${
+                                i === current ? 'w-10 bg-gold' : 'w-6 bg-white/30 group-hover:bg-white/50'
+                            }`}
+                        />
+                        {i === current && !isPaused && (
+                            <motion.div
+                                className="absolute top-0 left-0 h-1 rounded-full bg-gold/50"
+                                initial={{ width: 0 }}
+                                animate={{ width: '100%' }}
+                                transition={{ duration: INTERVAL / 1000, ease: 'linear' }}
+                                key={`progress-${current}`}
+                            />
+                        )}
+                    </button>
                 ))}
             </div>
-
-            {/* Scroll Hint — visible on mobile too */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2.5 }}
-                className="absolute bottom-10 right-5 md:right-8 z-20 flex flex-col items-center gap-1"
-            >
-                <motion.div
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.6 }}
-                >
-                    <ChevronDown className="w-5 h-5 text-white/30" />
-                </motion.div>
-            </motion.div>
         </section>
     );
 }

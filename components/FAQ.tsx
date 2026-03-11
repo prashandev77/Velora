@@ -2,114 +2,93 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const faqs = [
     {
-        question: 'How far in advance should I book my trip?',
-        answer:
-            'We recommend booking at least 3-6 months in advance, especially for peak season travel (December–April). This ensures availability at our partner luxury properties and allows our designers adequate time to craft your perfect itinerary. Last-minute bookings are sometimes possible, but with limited options.',
+        q: 'Do you operate group tours or fixed departure dates?',
+        a: 'No. Velora Journeys specialises exclusively in privately curated travel. We do not operate fixed-date group tours. Every journey is customised around your preferred travel dates, pace, and interests.',
     },
     {
-        question: 'Are your packages customizable?',
-        answer:
-            'Absolutely. Every journey is fully customizable. Our listed packages serve as starting templates — your personal travel designer will work with you to adjust the itinerary, accommodation level, activities, and duration to perfectly match your preferences and budget.',
+        q: 'What is included in a typical Velora journey?',
+        a: 'Each itinerary is personalised, but most journeys include: accommodation in carefully selected 4–5 star hotels, boutique villas, or luxury safari lodges; meals on half-board basis where applicable; private airport transfers; private English-speaking chauffeur-guide; air-conditioned vehicle; entrance fees to included cultural sites; curated experiences such as safaris, heritage visits, or cultural performances; and discreet local support during travel.',
     },
     {
-        question: 'What is included in each journey?',
-        answer:
-            'Our journeys typically include luxury accommodation, private ground transportation, domestic flights/seaplanes, guided excursions, select meals, and 24/7 concierge support. International flights are usually excluded but can be arranged upon request. Each journey page details the full day-by-day itinerary.',
+        q: 'What type of accommodation do you provide?',
+        a: 'We work with handpicked 4–5 star properties, boutique heritage hotels, tea estate bungalows, luxury safari lodges, and premium Maldives resorts.',
     },
     {
-        question: 'Do I need a visa for Sri Lanka or the Maldives?',
-        answer:
-            'Most nationalities can obtain an ETA (Electronic Travel Authorization) for Sri Lanka online. The Maldives offers visa-free entry for 30 days for most passport holders. Our travel designers will advise on specific visa requirements based on your nationality and handle all necessary documentation.',
+        q: 'Is transport private?',
+        a: 'Yes. All tours and transfers are arranged privately with an experienced English-speaking chauffeur-guide. You will not share transport with other travellers.',
     },
     {
-        question: 'What is your cancellation policy?',
-        answer:
-            'Full refund up to 60 days before departure. 50% refund for cancellations 30-60 days prior. Within 30 days, we offer credit toward a future journey valid for 18 months. We strongly recommend travel insurance, which we can arrange for you.',
+        q: 'Are entrance fees included?',
+        a: 'Where specified in your personalised itinerary, entrance fees are included — Dambulla Cave Temple, Temple of the Sacred Tooth Relic, Kandyan dance performance, Peradeniya Botanical Gardens, elephant safari, and Polonnaruwa Ancient City.',
     },
     {
-        question: 'What happens if there is an emergency during my trip?',
-        answer:
-            'Every Velora guest has access to our 24/7 concierge hotline. Our on-ground team in both Sri Lanka and the Maldives can respond within minutes. We also partner with international medical assistance providers and arrange comprehensive travel insurance for all our guests.',
+        q: 'Do I need a visa to visit Sri Lanka?',
+        a: 'Most travellers require an Electronic Travel Authorisation (ETA) prior to arrival in Sri Lanka. We provide guidance once your journey is confirmed.',
     },
     {
-        question: 'Can you accommodate dietary restrictions or accessibility needs?',
-        answer:
-            'Yes, we pride ourselves on accommodating all dietary requirements and accessibility needs. Simply let your travel designer know during the planning phase, and we\'ll ensure every restaurant, hotel, and activity is prepared for your specific requirements.',
+        q: 'What is the best time to visit Sri Lanka?',
+        a: 'Sri Lanka is a year-round destination. The west and south coasts are ideal from December to April, while the east coast is best between May and September. We recommend regions based on your travel dates.',
     },
     {
-        question: 'When is the best time to visit?',
-        answer:
-            'Sri Lanka\'s west and south coasts are best from December to April. The east coast shines from May to September. The Maldives is ideal from November to April (dry season). Our Dual Paradise package is timed to give you the best of both worlds.',
+        q: 'How far in advance should I book?',
+        a: 'For peak season (December–April), we recommend 4–6 months in advance. For other periods, 2–4 months is generally sufficient.',
+    },
+    {
+        q: 'What is the typical investment for a Velora journey?',
+        a: 'As every journey is privately curated, pricing varies by duration, accommodation level, and experiences. Most private journeys range from mid to high four figures per person and above. We provide transparent proposals tailored to your preferences.',
+    },
+    {
+        q: 'Do you offer honeymoon or special occasion planning?',
+        a: 'Yes. We design bespoke honeymoons, anniversaries, and milestone journeys with private dining, curated experiences, and romantic settings.',
+    },
+    {
+        q: 'Can you accommodate dietary or special travel requirements?',
+        a: 'Certainly. We tailor every journey to your preferences including dietary, accessibility, and wellness needs.',
     },
 ];
 
 export default function FAQ() {
-    const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const [open, setOpen] = useState<number | null>(0);
 
     return (
-        <section id="faq" className="relative py-32 bg-sand overflow-hidden">
-            <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-ocean/5 rounded-full blur-[120px]" />
-
-            <div className="relative max-w-3xl mx-auto px-6">
-                {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
-                    transition={{ duration: 0.7 }}
-                    className="text-center mb-16"
-                >
-                    <div className="flex items-center justify-center gap-2 mb-4">
-                        <HelpCircle className="w-5 h-5 text-ocean" />
-                    </div>
-                    <h2 className="font-heading text-4xl md:text-5xl font-bold text-deep mb-4">
-                        Frequently Asked{' '}
-                        <span className="text-gradient-ocean">Questions</span>
+        <section className="min-h-screen flex items-center py-20 md:py-28 bg-white">
+            <div className="max-w-4xl mx-auto px-6 md:px-12 w-full">
+                <div className="text-center mb-14 md:mb-20">
+                    <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
+                        FAQ
+                    </span>
+                    <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
+                        Frequently Asked Questions
                     </h2>
-                    <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                        Everything you need to know before your journey begins.
-                    </p>
-                </motion.div>
+                </div>
 
-                {/* FAQ List */}
                 <div className="space-y-3">
-                    {faqs.map((faq, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.4, delay: index * 0.05 }}
-                        >
-                            <button
-                                onClick={() =>
-                                    setOpenIndex(openIndex === index ? null : index)
-                                }
-                                className={`w-full text-left p-5 rounded-xl border transition-all duration-300 ${openIndex === index
-                                    ? 'bg-white border-ocean/20 shadow-lg shadow-ocean/5'
-                                    : 'bg-white border-border/50 hover:border-ocean/10 hover:shadow-sm'
-                                    }`}
+                    {faqs.map((faq, i) => {
+                        const isOpen = open === i;
+                        return (
+                            <div
+                                key={i}
+                                className={`border rounded-2xl transition-colors duration-300 ${
+                                    isOpen ? 'border-gold/30 bg-gold/[0.03]' : 'border-stone-100 bg-stone-50/50'
+                                }`}
                             >
-                                <div className="flex items-center justify-between gap-4">
-                                    <h3
-                                        className={`font-heading font-semibold text-base transition-colors ${openIndex === index ? 'text-ocean' : 'text-deep'
-                                            }`}
-                                    >
-                                        {faq.question}
-                                    </h3>
+                                <button
+                                    onClick={() => setOpen(isOpen ? null : i)}
+                                    className="flex items-center justify-between w-full text-left px-6 py-5 gap-4"
+                                >
+                                    <span className={`text-sm md:text-base font-semibold transition-colors ${isOpen ? 'text-stone-900' : 'text-stone-700'}`}>
+                                        {faq.q}
+                                    </span>
                                     <ChevronDown
-                                        className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 ${openIndex === index
-                                            ? 'rotate-180 text-ocean'
-                                            : 'text-muted-foreground'
-                                            }`}
+                                        className={`w-5 h-5 shrink-0 text-gold transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
                                     />
-                                </div>
+                                </button>
                                 <AnimatePresence>
-                                    {openIndex === index && (
+                                    {isOpen && (
                                         <motion.div
                                             initial={{ height: 0, opacity: 0 }}
                                             animate={{ height: 'auto', opacity: 1 }}
@@ -117,15 +96,15 @@ export default function FAQ() {
                                             transition={{ duration: 0.3 }}
                                             className="overflow-hidden"
                                         >
-                                            <p className="text-muted-foreground text-sm leading-relaxed mt-4 pt-4 border-t border-border/50">
-                                                {faq.answer}
-                                            </p>
+                                            <div className="px-6 pb-5 text-stone-500 text-sm leading-relaxed">
+                                                {faq.a}
+                                            </div>
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-                            </button>
-                        </motion.div>
-                    ))}
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </section>

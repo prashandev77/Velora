@@ -2,97 +2,75 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Send } from 'lucide-react';
 
 export default function Newsletter() {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (email) {
-            setIsSubmitted(true);
-            setTimeout(() => {
-                setIsSubmitted(false);
-                setEmail('');
-            }, 3000);
-        }
+        setSubmitted(true);
     };
 
     return (
-        <section id="newsletter" className="relative py-32 overflow-hidden">
-            {/* Full background image */}
-            <div
-                className="absolute inset-0 bg-cover bg-center bg-fixed"
-                style={{
-                    backgroundImage:
-                        'url(/images/coastline.jpg)',
-                }}
-            />
-            <div className="absolute inset-0 bg-deep/85 backdrop-blur-sm" />
-
-            <div className="relative max-w-4xl mx-auto px-6">
+        <section className="min-h-screen flex items-center py-20 md:py-28 bg-[#faf7f2]">
+            <div className="max-w-3xl mx-auto px-6 md:px-12 w-full">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.7 }}
+                    transition={{ duration: 0.6 }}
                     className="text-center"
                 >
-                    <div className="flex items-center justify-center gap-2 mb-6">
-                        <Sparkles className="w-5 h-5 text-gold" />
-                        <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
-                            Stay Inspired
-                        </span>
-                        <Sparkles className="w-5 h-5 text-gold" />
-                    </div>
-
-                    <h2 className="font-heading text-4xl md:text-5xl font-bold text-white mb-4">
-                        Get Exclusive Travel{' '}
-                        <span className="text-gradient-gold">Inspiration</span>
+                    <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
+                        Monthly Bulletin
+                    </span>
+                    <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 mb-4">
+                        Stay Inspired by Sri Lanka
                     </h2>
-                    <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
-                        Join 10,000+ discerning travelers. Receive insider guides, early
-                        access to new journeys, and exclusive offers.
+                    <p className="text-stone-500 text-sm md:text-base mb-10 max-w-xl mx-auto leading-relaxed">
+                        Join our monthly bulletin for travel inspiration, seasonal highlights, curated journeys, and exclusive Velora updates.
                     </p>
 
-                    {/* Email Form */}
-                    <form
-                        onSubmit={handleSubmit}
-                        className="flex flex-col sm:flex-row items-center gap-3 max-w-lg mx-auto"
-                    >
-                        <Input
-                            type="email"
-                            placeholder="Enter your email address"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="flex-1 bg-white/10 border-white/15 text-white placeholder:text-white/30 h-12 rounded-xl focus:border-gold/50 focus:ring-gold/20"
-                            required
-                        />
-                        <Button
-                            type="submit"
-                            className="bg-gold hover:bg-gold-dark text-deep font-semibold h-12 px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 whitespace-nowrap"
-                        >
-                            {isSubmitted ? (
-                                <span className="flex items-center gap-2">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
-                                    Subscribed!
-                                </span>
-                            ) : (
-                                <span className="flex items-center gap-2">
-                                    Subscribe
-                                    <Send className="w-4 h-4" />
-                                </span>
-                            )}
-                        </Button>
-                    </form>
+                    {submitted ? (
+                        <div className="bg-white border border-gold/20 rounded-2xl p-8 shadow-sm">
+                            <p className="text-gold font-semibold text-lg mb-1">Thank you!</p>
+                            <p className="text-stone-500 text-sm">
+                                You&apos;ll receive thoughtfully curated travel inspiration in your inbox.
+                            </p>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                            <input
+                                type="text"
+                                placeholder="First Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                                className="flex-1 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder:text-stone-400 text-sm px-4 py-3 focus:outline-none focus:border-gold transition-colors shadow-sm"
+                            />
+                            <input
+                                type="email"
+                                placeholder="Email Address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                className="flex-1 bg-white border border-stone-200 rounded-xl text-stone-800 placeholder:text-stone-400 text-sm px-4 py-3 focus:outline-none focus:border-gold transition-colors shadow-sm"
+                            />
+                            <button
+                                type="submit"
+                                className="bg-gold hover:bg-gold-dark text-white font-semibold text-sm px-6 py-3 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/20 flex items-center justify-center gap-2"
+                            >
+                                <Send className="w-4 h-4" />
+                                Subscribe
+                            </button>
+                        </form>
+                    )}
 
-                    <p className="text-white/20 text-xs mt-4">
-                        No spam. Unsubscribe anytime. Your privacy matters to us.
+                    <p className="text-stone-400 text-xs mt-5">
+                        No spam — just thoughtfully curated travel inspiration.
                     </p>
                 </motion.div>
             </div>

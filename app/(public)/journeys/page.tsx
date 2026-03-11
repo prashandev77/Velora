@@ -1,104 +1,127 @@
-import { Metadata } from 'next';
+'use client';
+
+import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-export const metadata: Metadata = {
-    title: 'Journeys | Velora Journeys',
-    description: 'Explore our curated collection of luxury journeys — from honeymoon escapes and wellness retreats to cultural adventures across Sri Lanka and the Maldives.',
-};
-
-const categories = [
+const collections = [
     {
-        slug: 'luxury',
-        title: 'Luxury Journeys',
-        tagline: 'Exquisite Experiences',
-        description: 'Overwater villas, private transfers, and world-class dining. Experience the finest that Sri Lanka and the Maldives have to offer.',
-        image: '/images/luxury-hero.jpg',
+        title: 'Grand Explorer',
+        meta: '20 Days | Culture • Wildlife • East Coast • Southern Coast',
+        description:
+            'An immersive east-to-south Sri Lankan adventure combining ancient kingdoms, surf coast charm, wildlife safaris, hill country landscapes, and serene beaches. From Sigiriya\'s ancient citadel and Trincomalee\'s turquoise shores to Arugam Bay\'s laid-back coast and Yala\'s leopard territory — this extended journey reveals the island in depth.',
+        idealFor: 'Active travellers, returning guests, multi-region explorers',
+        category: 'Explorer Collection',
+        image: '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg',
     },
     {
-        slug: 'honeymoon',
-        title: 'Honeymoon Collection',
-        tagline: 'Romance Redefined',
-        description: 'Celebrate your love with intimate island retreats, candlelit dinners on private sandbanks, and stunning sunset moments.',
-        image: '/images/honeymoon-hero.jpg',
+        title: 'Serendipity of Sri Lanka',
+        meta: '8 Days | Heritage • Highlands • Wildlife • Coast',
+        description:
+            'A beautifully paced introduction to Sri Lanka\'s iconic highlights. Climb Sigiriya at sunrise, explore sacred Kandy, journey through tea country, enjoy a Yala safari, and unwind along the southern coast. Perfectly balanced for first-time visitors seeking culture, scenery, and relaxation in one seamless journey.',
+        idealFor: 'First-time visitors, couples, families',
+        category: 'Signature Collection',
+        image: '/Photos/Other sections/Hill Country.jpg',
     },
     {
-        slug: 'wellness',
-        title: 'Wellness Retreats',
-        tagline: 'Restore & Rejuvenate',
-        description: 'Ancient Ayurvedic traditions meet modern luxury spa experiences. Reconnect with yourself amongst nature.',
-        image: '/images/wellness-hero.jpg',
+        title: 'Velora Luxe',
+        meta: '11 Days | Cultural Icons • Tea Country • Private Safari • Southern Coast',
+        description:
+            'Elevated travel through Sri Lanka\'s most refined experiences. Stay at architecturally iconic properties, journey by scenic train through tea estates, enjoy a private Yala safari, and unwind at exclusive coastal retreats. Designed for travellers seeking comfort, privacy, and curated cultural depth.',
+        idealFor: 'Luxury travellers, special occasions, boutique stays',
+        category: 'Luxury Collection',
+        image: '/Photos/Other sections/Sec 2-Luxe-Wellness-Club.jpg',
     },
     {
-        slug: 'adventure',
-        title: 'Adventure & Culture',
-        tagline: 'Discover the Extraordinary',
-        description: 'Climb ancient rock fortresses, trek misty highlands, safari through wild parks, and dive pristine coral reefs.',
-        image: '/images/sigiriya.jpg',
+        title: 'Velora Serene',
+        meta: '15 Days | Wellness • Gentle Exploration • Slow Travel',
+        description:
+            'A restorative journey balancing authentic Ayurveda with light cultural discovery. Enjoy personalised treatments under medical supervision, peaceful countryside settings, early temple visits, and unhurried experiences designed for comfort and calm. Perfect for travellers prioritising wellbeing, slower pacing, and mindful travel.',
+        idealFor: 'Senior travellers, wellness seekers, slow travellers',
+        category: 'Wellness Collection',
+        image: '/Photos/Other sections/Destination Tea.jpeg',
     },
 ];
 
 export default function JourneysPage() {
     return (
-        <>
-            {/* Hero */}
-            <section className="relative pt-32 pb-20 bg-deep overflow-hidden">
-                <div className="absolute -top-40 -right-40 w-96 h-96 bg-gold/5 rounded-full blur-[120px]" />
-                <div className="relative max-w-4xl mx-auto px-6 text-center">
-                    <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
+        <main className="min-h-screen bg-[#faf7f2] pt-28 pb-20">
+            <div className="max-w-6xl mx-auto px-6 md:px-12">
+                {/* Header */}
+                <div className="text-center mb-16 md:mb-20">
+                    <span className="text-gold text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
                         Our Collection
                     </span>
-                    <h1 className="font-heading text-5xl md:text-7xl font-bold text-white mt-4 mb-6">
-                        Choose Your <span className="text-gradient-gold">Path</span>
+                    <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
+                        Choose Your Path
                     </h1>
-                    <p className="text-white/50 text-lg max-w-2xl mx-auto">
-                        Every journey is different, and so is every traveller. Explore our
-                        four curated collections to find the experience that speaks to you.
+                    <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+                        Every journey is thoughtfully curated — and fully customisable. All journeys are privately curated and fully customisable.
                     </p>
                 </div>
-            </section>
 
-            {/* Categories */}
-            <section className="bg-sand">
-                {categories.map((cat, i) => (
-                    <div
-                        key={cat.slug}
-                        className={`${i % 2 === 0 ? 'bg-sand' : 'bg-white'}`}
-                    >
-                        <div className="max-w-7xl mx-auto px-6 py-20">
-                            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${i % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
+                {/* Journey Cards */}
+                <div className="space-y-8">
+                    {collections.map((c, i) => (
+                        <motion.div
+                            key={c.title}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: '-50px' }}
+                            transition={{ duration: 0.6, delay: i * 0.1 }}
+                            className="group bg-white border border-stone-100 rounded-2xl overflow-hidden hover:border-gold/20 hover:shadow-md transition-all duration-500"
+                        >
+                            <div className="flex flex-col md:flex-row">
                                 {/* Image */}
-                                <div className={`${i % 2 !== 0 ? 'lg:[direction:ltr]' : ''}`}>
-                                    <div
-                                        className="aspect-[4/3] rounded-3xl bg-cover bg-center shadow-xl"
-                                        style={{ backgroundImage: `url(${cat.image})` }}
+                                <div className="relative w-full md:w-2/5 lg:w-1/3 aspect-[4/3] md:aspect-auto md:min-h-[320px]">
+                                    <Image
+                                        src={c.image}
+                                        alt={c.title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, 40vw"
                                     />
+                                    <div className="absolute top-4 left-4">
+                                        <span className="bg-white/90 backdrop-blur-md border border-stone-200 text-stone-700 text-[11px] font-medium px-3 py-1.5 rounded-full">
+                                            {c.category}
+                                        </span>
+                                    </div>
                                 </div>
 
-                                {/* Text */}
-                                <div className={`${i % 2 !== 0 ? 'lg:[direction:ltr]' : ''}`}>
-                                    <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
-                                        {cat.tagline}
-                                    </span>
-                                    <h2 className="font-heading text-3xl md:text-5xl font-bold text-deep mt-3 mb-5">
-                                        {cat.title}
+                                {/* Content */}
+                                <div className="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center">
+                                    <div className="text-gold text-xs font-medium uppercase tracking-wider mb-2">
+                                        {c.meta}
+                                    </div>
+                                    <h2 className="font-heading text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 mb-4">
+                                        {c.title}
                                     </h2>
-                                    <p className="text-deep/60 text-lg leading-relaxed mb-8">
-                                        {cat.description}
+                                    <p className="text-stone-500 text-sm leading-relaxed mb-5">
+                                        {c.description}
                                     </p>
-                                    <Link href={`/journeys/${cat.slug}`}>
-                                        <Button className="bg-gold hover:bg-gold-dark text-deep font-semibold px-6 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25">
-                                            Explore {cat.title.split(' ')[0]}
-                                            <ChevronRight className="w-4 h-4 ml-1" />
-                                        </Button>
-                                    </Link>
+                                    <p className="text-stone-400 text-xs mb-6">
+                                        <span className="text-stone-600 font-medium">Ideal for:</span> {c.idealFor}
+                                    </p>
+                                    <div className="flex items-center gap-4">
+                                        <Link
+                                            href="/contact"
+                                            className="bg-gold hover:bg-gold-dark text-white font-semibold text-sm px-6 py-3 rounded-full transition-all hover:shadow-lg hover:shadow-gold/20"
+                                        >
+                                            Plan My Journey
+                                        </Link>
+                                        <Link
+                                            href="/contact"
+                                            className="text-stone-400 text-sm font-medium hover:text-stone-700 transition-colors"
+                                        >
+                                            View Itinerary →
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                ))}
-            </section>
-        </>
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+        </main>
     );
 }

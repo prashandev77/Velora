@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { Sun, Thermometer, MapPin, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,22 +13,22 @@ const highlights = [
     {
         title: 'Cultural Triangle',
         description: 'Sigiriya Rock Fortress, Dambulla Cave Temple, and the ancient city of Polonnaruwa — UNESCO World Heritage wonders that tell centuries of royal history.',
-        image: '/images/sigiriya.jpg',
+        image: '/Photos/Hero Slide Photo 1 Sigiriya.jpeg',
     },
     {
         title: 'Sacred Kandy',
         description: 'The hill capital, home to the Temple of the Sacred Tooth Relic, surrounded by lush tea plantations and steeped in cultural tradition.',
-        image: '/images/safari-wildlife.jpg',
+        image: '/Photos/Other sections/Peradeniya Garden.jpeg',
     },
     {
         title: 'Hill Country & Tea',
         description: 'Journey through emerald tea plantations, ride the iconic blue train, and discover charming Ella with its Nine Arches Bridge and misty peaks.',
-        image: '/images/tea-plantation.jpg',
+        image: '/Photos/Other sections/Destination Ella.jpeg',
     },
     {
         title: 'Southern Coast',
         description: 'The historic Galle Fort, pristine beaches of Mirissa, whale watching excursions, and coastal luxury resorts along the palm-fringed shoreline.',
-        image: '/images/wellness-hero.jpg',
+        image: '/Photos/Other sections/Destination Galle.jpeg',
     },
 ];
 
@@ -35,32 +36,23 @@ export default function SriLankaPage() {
     return (
         <>
             {/* Hero */}
-            <section className="relative pt-32 pb-24 bg-deep overflow-hidden">
-                <div className="absolute inset-0">
-                    <div
-                        className="absolute inset-0 bg-cover bg-center opacity-25"
-                        style={{
-                            backgroundImage:
-                                'url(/images/sigiriya.jpg)',
-                        }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-b from-deep via-deep/90 to-deep" />
-                </div>
+            <section className="relative pt-32 pb-24 bg-[#faf7f2] overflow-hidden">
+                <div className="absolute -top-40 -right-40 w-96 h-96 bg-gold/8 rounded-full blur-[140px]" />
                 <div className="relative max-w-4xl mx-auto px-6 text-center">
                     <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
                         The Pearl of the Indian Ocean
                     </span>
-                    <h1 className="font-heading text-5xl md:text-7xl font-bold text-white mt-4 mb-6">
-                        Sri <span className="text-gradient-gold">Lanka</span>
+                    <h1 className="font-heading text-5xl md:text-7xl font-bold text-stone-900 mt-4 mb-6">
+                        Sri <span className="text-gold">Lanka</span>
                     </h1>
-                    <p className="text-white/50 text-lg max-w-3xl mx-auto leading-relaxed">
+                    <p className="text-stone-500 text-lg max-w-3xl mx-auto leading-relaxed">
                         An island of extraordinary beauty and deep heritage. From ancient rock fortresses
                         to misty tea plantations, golden beaches to safari-rich jungles — Sri Lanka
                         offers the adventure of a lifetime in a compact, enchanting paradise.
                     </p>
 
                     {/* Quick Facts */}
-                    <div className="flex flex-wrap items-center justify-center gap-8 mt-10 text-white/50 text-sm">
+                    <div className="flex flex-wrap items-center justify-center gap-8 mt-10 text-stone-500 text-sm">
                         <div className="flex items-center gap-2">
                             <Sun className="w-4 h-4 text-gold" />
                             <span>Best: Dec — Apr</span>
@@ -78,14 +70,14 @@ export default function SriLankaPage() {
             </section>
 
             {/* Highlights */}
-            <section className="py-20 bg-sand">
+            <section className="py-20 bg-[#faf7f2]">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
                         <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
                             Discover
                         </span>
-                        <h2 className="font-heading text-3xl md:text-5xl font-bold text-deep mt-3 mb-4">
-                            Highlights of <span className="text-gradient-gold">Sri Lanka</span>
+                        <h2 className="font-heading text-3xl md:text-5xl font-bold text-stone-900 mt-3 mb-4">
+                            Highlights of <span className="text-gold">Sri Lanka</span>
                         </h2>
                     </div>
 
@@ -93,17 +85,22 @@ export default function SriLankaPage() {
                         {highlights.map((h) => (
                             <div
                                 key={h.title}
-                                className="rounded-3xl overflow-hidden bg-white border border-deep/5 hover:shadow-xl transition-all group"
+                                className="rounded-3xl overflow-hidden bg-white border border-stone-100 hover:shadow-lg hover:border-gold/15 transition-all duration-500 group"
                             >
-                                <div
-                                    className="aspect-[16/9] bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
-                                    style={{ backgroundImage: `url(${h.image})` }}
-                                />
+                                <div className="relative aspect-[16/9] overflow-hidden">
+                                    <Image
+                                        src={h.image}
+                                        alt={h.title}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                    />
+                                </div>
                                 <div className="p-8">
-                                    <h3 className="font-heading text-2xl font-bold text-deep mb-3">
+                                    <h3 className="font-heading text-2xl font-bold text-stone-900 mb-3">
                                         {h.title}
                                     </h3>
-                                    <p className="text-deep/50 text-sm leading-relaxed">
+                                    <p className="text-stone-500 text-sm leading-relaxed">
                                         {h.description}
                                     </p>
                                 </div>
@@ -114,16 +111,16 @@ export default function SriLankaPage() {
             </section>
 
             {/* CTA */}
-            <section className="py-20 bg-deep">
+            <section className="py-20 bg-stone-900">
                 <div className="max-w-3xl mx-auto px-6 text-center">
                     <h2 className="font-heading text-3xl md:text-4xl font-bold text-white mb-4">
                         Plan Your Sri Lanka Journey
                     </h2>
-                    <p className="text-white/50 text-lg mb-8">
+                    <p className="text-white/60 text-lg mb-8">
                         Share your travel vision with our designer and receive a bespoke Sri Lankan itinerary.
                     </p>
                     <Link href="/plan-your-trip">
-                        <Button className="bg-gold hover:bg-gold-dark text-deep font-semibold px-8 py-6 text-base rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25">
+                        <Button className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 py-6 text-base rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25">
                             Start Planning
                             <ChevronRight className="w-5 h-5 ml-2" />
                         </Button>
