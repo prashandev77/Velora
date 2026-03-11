@@ -10,7 +10,7 @@ export async function submitInquiry(formData: FormData) {
         email: formData.get('email') as string,
         phone: formData.get('phone') as string || null,
         travel_month: formData.get('travel_month') as string || null,
-        travel_style: formData.get('travel_style') as string || null,
+        travel_style: formData.get('journey_package') as string || null,
         num_travelers: formData.get('num_travelers') as string || null,
         message: formData.get('message') as string || null,
         status: 'new',

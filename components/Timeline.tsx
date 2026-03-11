@@ -42,7 +42,7 @@ export default function Timeline({ itinerary }: TimelineProps) {
                                         Day {day.day}
                                     </span>
                                 </div>
-                                <h3 className="font-heading text-xl font-bold text-deep group-hover:text-ocean transition-colors mb-2">
+                                <h3 className="font-heading text-xl font-bold text-stone-900 group-hover:text-ocean transition-colors mb-2">
                                     {day.title}
                                 </h3>
                                 <p className="text-muted-foreground text-sm leading-relaxed mb-4">

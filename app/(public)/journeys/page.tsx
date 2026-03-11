@@ -13,6 +13,7 @@ const collections = [
         idealFor: 'Active travellers, returning guests, multi-region explorers',
         category: 'Explorer Collection',
         image: '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg',
+        href: '/package/11',
     },
     {
         title: 'Serendipity of Sri Lanka',
@@ -22,6 +23,7 @@ const collections = [
         idealFor: 'First-time visitors, couples, families',
         category: 'Signature Collection',
         image: '/Photos/Other sections/Hill Country.jpg',
+        href: '/package/10',
     },
     {
         title: 'Velora Luxe',
@@ -31,6 +33,7 @@ const collections = [
         idealFor: 'Luxury travellers, special occasions, boutique stays',
         category: 'Luxury Collection',
         image: '/Photos/Other sections/Sec 2-Luxe-Wellness-Club.jpg',
+        href: '/package/5',
     },
     {
         title: 'Velora Serene',
@@ -40,6 +43,7 @@ const collections = [
         idealFor: 'Senior travellers, wellness seekers, slow travellers',
         category: 'Wellness Collection',
         image: '/Photos/Other sections/Destination Tea.jpeg',
+        href: '/package/8',
     },
 ];
 
@@ -71,7 +75,7 @@ export default function JourneysPage() {
                             transition={{ duration: 0.6, delay: i * 0.1 }}
                             className="group bg-white border border-stone-100 rounded-2xl overflow-hidden hover:border-gold/20 hover:shadow-md transition-all duration-500"
                         >
-                            <div className="flex flex-col md:flex-row">
+                            <Link href={c.href} className="flex flex-col md:flex-row w-full h-full">
                                 {/* Image */}
                                 <div className="relative w-full md:w-2/5 lg:w-1/3 aspect-[4/3] md:aspect-auto md:min-h-[320px]">
                                     <Image
@@ -93,31 +97,17 @@ export default function JourneysPage() {
                                     <div className="text-gold text-xs font-medium uppercase tracking-wider mb-2">
                                         {c.meta}
                                     </div>
-                                    <h2 className="font-heading text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 mb-4">
+                                    <h2 className="font-heading text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 mb-4 group-hover:text-gold transition-colors duration-300">
                                         {c.title}
                                     </h2>
                                     <p className="text-stone-500 text-sm leading-relaxed mb-5">
                                         {c.description}
                                     </p>
-                                    <p className="text-stone-400 text-xs mb-6">
+                                    <p className="text-stone-400 text-xs mb-0">
                                         <span className="text-stone-600 font-medium">Ideal for:</span> {c.idealFor}
                                     </p>
-                                    <div className="flex items-center gap-4">
-                                        <Link
-                                            href="/contact"
-                                            className="bg-gold hover:bg-gold-dark text-white font-semibold text-sm px-6 py-3 rounded-full transition-all hover:shadow-lg hover:shadow-gold/20"
-                                        >
-                                            Plan My Journey
-                                        </Link>
-                                        <Link
-                                            href="/contact"
-                                            className="text-stone-400 text-sm font-medium hover:text-stone-700 transition-colors"
-                                        >
-                                            View Itinerary →
-                                        </Link>
-                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </motion.div>
                     ))}
                 </div>

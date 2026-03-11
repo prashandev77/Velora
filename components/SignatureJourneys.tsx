@@ -6,39 +6,36 @@ import { motion } from 'framer-motion';
 
 const journeys = [
     {
-        duration: '12 Days | 11 Nights',
-        title: 'Classic Discovery',
+        duration: '20 Days',
+        title: 'Grand Explorer',
         description:
-            'An immersive introduction to Sri Lanka\'s cultural heart — ancient kingdoms, sacred temples, scenic hill country, and refined coastal elegance, experienced privately and at your pace.',
+            'An immersive east-to-south Sri Lankan adventure combining ancient kingdoms, surf coast charm, wildlife safaris, hill country landscapes, and serene beaches.',
         image: '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg',
+        href: '/package/11',
     },
     {
-        duration: '14 Days | 13 Nights',
-        title: 'Wildlife & Nature Expedition',
+        duration: '8 Days',
+        title: 'Serendipity of Sri Lanka',
         description:
-            'Luxury safari experiences across Sri Lanka\'s most extraordinary national parks — leopard tracking at dawn, elephant gatherings, and boutique lodge stays immersed in untamed beauty.',
-        image: '/Photos/Other sections/Our Journeys_Wildlife.jpeg',
+            'A beautifully paced introduction to Sri Lanka\'s iconic highlights. Climb Sigiriya at sunrise, explore Kandy, journey through tea country, and enjoy a Yala safari.',
+        image: '/Photos/Other sections/Hill Country.jpg',
+        href: '/package/10',
     },
     {
-        duration: '16 Days | 15 Nights',
-        title: 'Sri Lanka & Maldives Escape',
+        duration: '11 Days',
+        title: 'Velora Luxe',
         description:
-            'A seamless blend of Sri Lankan heritage and Maldives island indulgence — private cultural exploration followed by overwater villa serenity.',
-        image: '/Photos/Other sections/Sec 2  Maldives.jpeg',
-    },
-    {
-        duration: '10–14 Days',
-        title: 'Romance & Honeymoon',
-        description:
-            'Designed for couples seeking privacy and unforgettable moments — scenic train journeys, candlelit beach dinners, boutique villas, and curated experiences crafted for two.',
-        image: '/Photos/Other sections/Section 2 Honeymoon.jpg',
-    },
-    {
-        duration: '9–12 Days',
-        title: 'Wellness & Boutique Retreats',
-        description:
-            'Tea estate escapes, coastal sanctuaries, and curated wellness experiences blending Ayurveda, relaxation, and refined comfort.',
+            'Elevated travel through Sri Lanka\'s most refined experiences. Stay at architecturally iconic properties, enjoy private safaris, and unwind at exclusive retreats.',
         image: '/Photos/Other sections/Sec 2-Luxe-Wellness-Club.jpg',
+        href: '/package/5',
+    },
+    {
+        duration: '15 Days',
+        title: 'Velora Serene',
+        description:
+            'A restorative journey balancing authentic Ayurveda with light cultural discovery. Enjoy personalised treatments, peaceful settings, and mindful travel.',
+        image: '/Photos/Other sections/Destination Tea.jpeg',
+        href: '/package/8',
     },
 ];
 
@@ -70,38 +67,44 @@ export default function SignatureJourneys() {
                             transition={{ duration: 0.6, delay: i * 0.08 }}
                             className="group relative overflow-hidden rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all duration-500"
                         >
-                            <div className="relative aspect-[4/3]">
-                                <Image
-                                    src={j.image}
-                                    alt={j.title}
-                                    fill
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                />
-                                <div className="absolute top-4 left-4">
-                                    <span className="inline-block bg-white/90 backdrop-blur-md text-stone-700 text-[11px] font-medium px-3 py-1.5 rounded-full border border-stone-200">
-                                        {j.duration}
-                                    </span>
+                            <Link href={j.href} className="block w-full h-full">
+                                <div className="relative aspect-[4/3]">
+                                    <Image
+                                        src={j.image}
+                                        alt={j.title}
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                    />
+                                    <div className="absolute top-4 left-4">
+                                        <span className="inline-block bg-white/90 backdrop-blur-md text-stone-700 text-[11px] font-medium px-3 py-1.5 rounded-full border border-stone-200">
+                                            {j.duration}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="bg-white border-t border-stone-100 p-6">
-                                <h3 className="font-heading text-lg md:text-xl font-bold text-stone-900 mb-2">
-                                    {j.title}
-                                </h3>
-                                <p className="text-stone-500 text-sm leading-relaxed mb-5 line-clamp-3">
-                                    {j.description}
-                                </p>
-                                <div className="flex items-center gap-4">
-                                    <Link href="/journeys" className="text-gold text-sm font-semibold hover:text-gold-dark transition-colors">
-                                        View Itinerary →
-                                    </Link>
-                                    <Link href="/contact" className="text-stone-400 text-sm font-medium hover:text-stone-700 transition-colors">
-                                        Plan My Journey
-                                    </Link>
+                                <div className="bg-white border-t border-stone-100 p-6 flex flex-col justify-between" style={{ minHeight: '180px' }}>
+                                    <div>
+                                        <h3 className="font-heading text-lg md:text-xl font-bold text-stone-900 mb-2 group-hover:text-gold transition-colors duration-300">
+                                            {j.title}
+                                        </h3>
+                                        <p className="text-stone-500 text-sm leading-relaxed mb-5 line-clamp-3">
+                                            {j.description}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </motion.div>
                     ))}
+                </div>
+
+                {/* View All CTA */}
+                <div className="mt-16 text-center">
+                    <Link
+                        href="/journeys"
+                        className="inline-flex items-center gap-2 bg-stone-900 hover:bg-gold text-white font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                    >
+                        View All Journeys →
+                    </Link>
                 </div>
             </div>
         </section>

@@ -5,10 +5,11 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
+    { href: '/', label: 'Home', icon: Home },
     { href: '/journeys', label: 'Journeys', icon: Plane },
     { href: '/destinations', label: 'Destinations', icon: MapPin },
     { href: '/about', label: 'About', icon: Info },

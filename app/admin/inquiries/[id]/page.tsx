@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Mail, Phone, Calendar, Users, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Mail, Phone, Calendar, Users, MessageSquare, Package } from 'lucide-react';
 import { updateInquiryStatus, deleteInquiry } from '../actions';
 
 const statusColors: Record<string, string> = {
@@ -28,7 +28,7 @@ export default async function InquiryDetailPage({ params }: { params: Promise<{ 
         { icon: Phone, label: 'Phone', value: inq.phone || '—' },
         { icon: Calendar, label: 'Travel Month', value: inq.travel_month || '—' },
         { icon: Users, label: 'Travellers', value: inq.num_travelers || '—' },
-        { icon: MessageSquare, label: 'Travel Style', value: inq.travel_style || '—' },
+        { icon: Package, label: 'Journey Package', value: inq.travel_style || '—' },
     ];
 
     return (

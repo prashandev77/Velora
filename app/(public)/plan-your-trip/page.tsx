@@ -18,16 +18,9 @@ import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 import { submitInquiry } from './actions';
 
-const TOTAL_STEPS = 3;
+import { packages } from '@/lib/data';
 
-const travelStyles = [
-    'Luxury',
-    'Honeymoon',
-    'Wellness & Spa',
-    'Adventure & Culture',
-    'Family',
-    'Not sure yet',
-];
+const TOTAL_STEPS = 3;
 
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -37,7 +30,7 @@ const months = [
 
 const stepInfo = [
     { icon: User, label: 'Your Details' },
-    { icon: Sparkles, label: 'Travel Style' },
+    { icon: Sparkles, label: 'Journey Package' },
     { icon: MessageSquare, label: 'Your Vision' },
 ];
 
@@ -66,7 +59,7 @@ export default function PlanYourTripPage() {
         email: '',
         phone: '',
         travelMonth: '',
-        travelStyle: '',
+        journeyPackage: '',
         travellers: '2',
         message: '',
     });
@@ -87,7 +80,7 @@ export default function PlanYourTripPage() {
 
     const canProceed = () => {
         if (step === 0) return formData.fullName.trim() !== '' && formData.email.trim() !== '';
-        if (step === 1) return formData.travelMonth !== '' && formData.travelStyle !== '';
+        if (step === 1) return formData.travelMonth !== '' && formData.journeyPackage !== '';
         return true;
     };
 
@@ -98,7 +91,7 @@ export default function PlanYourTripPage() {
         fd.set('email', formData.email);
         fd.set('phone', formData.phone);
         fd.set('travel_month', formData.travelMonth);
-        fd.set('travel_style', formData.travelStyle);
+        fd.set('journey_package', formData.journeyPackage);
         fd.set('num_travelers', formData.travellers);
         fd.set('message', formData.message);
         await submitInquiry(fd);
@@ -298,7 +291,7 @@ export default function PlanYourTripPage() {
                             >
                                 <h3 className="font-heading text-xl font-bold text-stone-900 mb-1 flex items-center gap-2">
                                     <Sparkles className="w-5 h-5 text-gold" />
-                                    Travel Preferences
+                                    Journey Selection
                                 </h3>
                                 <p className="text-stone-400 text-sm mb-6">
                                     Help us understand the kind of journey you&apos;re dreaming of.
@@ -330,23 +323,35 @@ export default function PlanYourTripPage() {
 
                                     {/* Style */}
                                     <div>
-                                        <Label className="text-stone-600 mb-3 block">Travel Style *</Label>
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                                            {travelStyles.map((style) => (
+                                        <Label className="text-stone-600 mb-3 block">Journey Package *</Label>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            {packages.filter(p => ['5', '8', '10', '11'].includes(p.id)).map((pkg) => (
                                                 <button
-                                                    key={style}
+                                                    key={pkg.id}
                                                     type="button"
                                                     onClick={() =>
-                                                        setFormData({ ...formData, travelStyle: style })
+                                                        setFormData({ ...formData, journeyPackage: pkg.title })
                                                     }
-                                                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-300 ${formData.travelStyle === style
+                                                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-300 ${formData.journeyPackage === pkg.title
                                                         ? 'bg-gold/15 border-gold/40 text-gold'
                                                         : 'bg-stone-50 border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'
                                                         }`}
                                                 >
-                                                    {style}
+                                                    {pkg.title}
                                                 </button>
                                             ))}
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setFormData({ ...formData, journeyPackage: 'Not sure yet' })
+                                                }
+                                                className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-300 ${formData.journeyPackage === 'Not sure yet'
+                                                    ? 'bg-gold/15 border-gold/40 text-gold'
+                                                    : 'bg-stone-50 border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'
+                                                    }`}
+                                            >
+                                                Not sure yet
+                                            </button>
                                         </div>
                                     </div>
 
@@ -416,8 +421,8 @@ export default function PlanYourTripPage() {
                                         <span className="text-stone-700">{formData.email || '—'}</span>
                                         <span className="text-stone-400">Travel Month</span>
                                         <span className="text-stone-700">{formData.travelMonth || '—'}</span>
-                                        <span className="text-stone-400">Style</span>
-                                        <span className="text-gold font-medium">{formData.travelStyle || '—'}</span>
+                                        <span className="text-stone-400">Package</span>
+                                        <span className="text-gold font-medium">{formData.journeyPackage || '—'}</span>
                                         <span className="text-stone-400">Travellers</span>
                                         <span className="text-stone-700">{formData.travellers}</span>
                                     </div>
