@@ -48,10 +48,14 @@ export default function Navbar() {
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl transition-all duration-500 rounded-2xl ${
-                    isScrolled || forceDark
-                        ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-stone-200/60 border border-stone-100'
-                        : 'bg-white/10 backdrop-blur-md border border-white/15'
+                className={`fixed z-50 transition-all duration-500
+                    /* Mobile: Fixed to very top, full width, no rounding */
+                    top-0 left-0 w-full rounded-none
+                    /* Desktop: Floating pill shape */
+                    md:top-3 md:left-1/2 md:-translate-x-1/2 md:w-[95%] md:max-w-6xl md:rounded-2xl
+                    ${isScrolled || forceDark
+                        ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-stone-200/60 border-b md:border border-stone-100'
+                        : 'bg-white/10 backdrop-blur-md border-b md:border border-white/15'
                     }`}
             >
                 <nav className="flex items-center justify-between px-4 md:px-6 py-3">
