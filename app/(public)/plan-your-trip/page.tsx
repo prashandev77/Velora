@@ -30,6 +30,11 @@ const durations = [
     '7–9 Days', '10–14 Days', '15–20 Days', '20+ Days', 'Not sure yet'
 ];
 
+const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+];
+
 const experiences = [
     'Culture & Heritage',
     'Wildlife Safaris',
