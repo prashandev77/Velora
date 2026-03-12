@@ -10,6 +10,8 @@ import {
     ChevronLeft,
     User,
     MessageSquare,
+    Globe,
+    CalendarDays
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,19 +20,30 @@ import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 import { submitInquiry } from './actions';
 
-import { packages } from '@/lib/data';
-
 const TOTAL_STEPS = 3;
 
-const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-    'Flexible',
+const countries = [
+    'Australia', 'New Zealand', 'England', 'United States', 'Canada', 'Other'
+];
+
+const durations = [
+    '7–9 Days', '10–14 Days', '15–20 Days', '20+ Days', 'Not sure yet'
+];
+
+const experiences = [
+    'Culture & Heritage',
+    'Wildlife Safaris',
+    'Beaches & Relaxation',
+    'Tea Country & Scenic Train',
+    'Wellness & Ayurveda',
+    'Honeymoon / Romance',
+    'Sri Lanka & Maldives',
+    'Not sure — please recommend'
 ];
 
 const stepInfo = [
     { icon: User, label: 'Your Details' },
-    { icon: Sparkles, label: 'Journey Package' },
+    { icon: Sparkles, label: 'Your Journey' },
     { icon: MessageSquare, label: 'Your Vision' },
 ];
 
@@ -54,15 +67,45 @@ export default function PlanYourTripPage() {
     const [direction, setDirection] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    
+    // Date selection state
+    const [dateOption, setDateOption] = useState<'exact' | 'month' | 'flexible'>('exact');
+
     const [formData, setFormData] = useState({
+        // Step 1
         fullName: '',
         email: '',
         phone: '',
-        travelMonth: '',
-        journeyPackage: '',
+        country: '',
+        departingCity: '',
+        
+        // Step 2
+        exactDates: '',
+        monthYear: '',
+        duration: '',
         travellers: '2',
+        selectedExperiences: [] as string[],
+        
+        // Step 3
         message: '',
     });
+
+    const toggleExperience = (exp: string) => {
+        setFormData(prev => {
+            if (exp === 'Not sure — please recommend') {
+                return { ...prev, selectedExperiences: [exp] };
+            }
+            
+            let newExperiences = prev.selectedExperiences.filter(e => e !== 'Not sure — please recommend');
+            
+            if (newExperiences.includes(exp)) {
+                newExperiences = newExperiences.filter(e => e !== exp);
+            } else {
+                newExperiences = [...newExperiences, exp];
+            }
+            return { ...prev, selectedExperiences: newExperiences };
+        });
+    };
 
     const goNext = () => {
         if (step < TOTAL_STEPS - 1) {
@@ -79,8 +122,13 @@ export default function PlanYourTripPage() {
     };
 
     const canProceed = () => {
-        if (step === 0) return formData.fullName.trim() !== '' && formData.email.trim() !== '';
-        if (step === 1) return formData.travelMonth !== '' && formData.journeyPackage !== '';
+        if (step === 0) return formData.fullName.trim() !== '' && formData.email.trim() !== '' && formData.country !== '';
+        if (step === 1) {
+            const hasDates = (dateOption === 'exact' && formData.exactDates !== '') ||
+                             (dateOption === 'month' && formData.monthYear !== '') ||
+                             dateOption === 'flexible';
+            return hasDates && formData.duration !== '' && formData.selectedExperiences.length > 0;
+        }
         return true;
     };
 
@@ -90,10 +138,20 @@ export default function PlanYourTripPage() {
         fd.set('name', formData.fullName);
         fd.set('email', formData.email);
         fd.set('phone', formData.phone);
-        fd.set('travel_month', formData.travelMonth);
-        fd.set('journey_package', formData.journeyPackage);
+        fd.set('country', formData.country);
+        fd.set('departing_city', formData.departingCity);
+        
+        let travelDates = '';
+        if (dateOption === 'exact') travelDates = formData.exactDates;
+        else if (dateOption === 'month') travelDates = formData.monthYear;
+        else travelDates = 'Flexible';
+        
+        fd.set('travel_dates', travelDates);
+        fd.set('duration', formData.duration);
+        fd.set('experiences', formData.selectedExperiences.join(', '));
         fd.set('num_travelers', formData.travellers);
         fd.set('message', formData.message);
+        
         await submitInquiry(fd);
         setIsSubmitted(true);
         setIsSubmitting(false);
@@ -221,7 +279,7 @@ export default function PlanYourTripPage() {
                                 <h3 className="font-heading text-xl font-bold text-stone-900 mb-1 flex items-center gap-2">
                                     <User className="w-5 h-5 text-gold" />
                                     About You
-                                </h3>
+                               </h3>
                                 <p className="text-stone-400 text-sm mb-6">
                                     So we know who we&apos;re crafting this journey for.
                                 </p>
@@ -260,7 +318,7 @@ export default function PlanYourTripPage() {
                                     </div>
                                     <div>
                                         <Label htmlFor="phone" className="text-stone-600 mb-2 block">
-                                            Phone (Optional)
+                                            Mobile / WhatsApp (Optional)
                                         </Label>
                                         <Input
                                             id="phone"
@@ -269,9 +327,44 @@ export default function PlanYourTripPage() {
                                             onChange={(e) =>
                                                 setFormData({ ...formData, phone: e.target.value })
                                             }
-                                            placeholder="+94 77 123 4567"
+                                            placeholder="+61 412 345 678"
                                             className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
                                         />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <Label htmlFor="country" className="text-stone-600 mb-2 block">
+                                                Country *
+                                            </Label>
+                                            <select
+                                                id="country"
+                                                required
+                                                value={formData.country}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, country: e.target.value })
+                                                }
+                                                className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
+                                            >
+                                                <option value="">Select country</option>
+                                                {countries.map((c) => (
+                                                    <option key={c} value={c}>{c}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <Label htmlFor="departingCity" className="text-stone-600 mb-2 block">
+                                                Departing City
+                                            </Label>
+                                            <Input
+                                                id="departingCity"
+                                                value={formData.departingCity}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, departingCity: e.target.value })
+                                                }
+                                                placeholder="e.g. Sydney"
+                                                className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -291,89 +384,140 @@ export default function PlanYourTripPage() {
                             >
                                 <h3 className="font-heading text-xl font-bold text-stone-900 mb-1 flex items-center gap-2">
                                     <Sparkles className="w-5 h-5 text-gold" />
-                                    Journey Selection
+                                    Journey Details
                                 </h3>
                                 <p className="text-stone-400 text-sm mb-6">
                                     Help us understand the kind of journey you&apos;re dreaming of.
                                 </p>
 
                                 <div className="space-y-6">
-                                    {/* Month */}
+                                    {/* Dates */}
                                     <div>
-                                        <Label htmlFor="travelMonth" className="text-stone-600 mb-2 block">
-                                            Preferred Travel Month *
-                                        </Label>
-                                        <select
-                                            id="travelMonth"
-                                            required
-                                            value={formData.travelMonth}
-                                            onChange={(e) =>
-                                                setFormData({ ...formData, travelMonth: e.target.value })
-                                            }
-                                            className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
-                                        >
-                                            <option value="">Select a month</option>
-                                            {months.map((m) => (
-                                                <option key={m} value={m}>
-                                                    {m}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-
-                                    {/* Style */}
-                                    <div>
-                                        <Label className="text-stone-600 mb-3 block">Journey Package *</Label>
-                                        <div className="grid grid-cols-2 gap-3">
-                                            {packages.filter(p => ['5', '8', '10', '11'].includes(p.id)).map((pkg) => (
-                                                <button
-                                                    key={pkg.id}
-                                                    type="button"
-                                                    onClick={() =>
-                                                        setFormData({ ...formData, journeyPackage: pkg.title })
-                                                    }
-                                                    className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-300 ${formData.journeyPackage === pkg.title
-                                                        ? 'bg-gold/15 border-gold/40 text-gold'
-                                                        : 'bg-stone-50 border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'
-                                                        }`}
-                                                >
-                                                    {pkg.title}
-                                                </button>
-                                            ))}
+                                        <Label className="text-stone-600 mb-3 block">Preferred Travel Dates *</Label>
+                                        <div className="flex gap-3 mb-3">
                                             <button
                                                 type="button"
-                                                onClick={() =>
-                                                    setFormData({ ...formData, journeyPackage: 'Not sure yet' })
-                                                }
-                                                className={`px-4 py-3 rounded-xl text-sm font-medium border transition-all duration-300 ${formData.journeyPackage === 'Not sure yet'
-                                                    ? 'bg-gold/15 border-gold/40 text-gold'
-                                                    : 'bg-stone-50 border-stone-200 text-stone-500 hover:border-stone-300 hover:text-stone-700'
-                                                    }`}
+                                                onClick={() => setDateOption('exact')}
+                                                className={`flex-1 py-2 rounded-lg text-sm transition-colors border ${dateOption === 'exact' ? 'bg-gold/10 border-gold/40 text-gold font-medium' : 'bg-stone-50 border-stone-200 text-stone-500'}`}
                                             >
-                                                Not sure yet
+                                                Exact Dates
                                             </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setDateOption('month')}
+                                                className={`flex-1 py-2 rounded-lg text-sm transition-colors border ${dateOption === 'month' ? 'bg-gold/10 border-gold/40 text-gold font-medium' : 'bg-stone-50 border-stone-200 text-stone-500'}`}
+                                            >
+                                                Month & Year
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setDateOption('flexible')}
+                                                className={`flex-1 py-2 rounded-lg text-sm transition-colors border ${dateOption === 'flexible' ? 'bg-gold/10 border-gold/40 text-gold font-medium' : 'bg-stone-50 border-stone-200 text-stone-500'}`}
+                                            >
+                                                Flexible
+                                            </button>
+                                        </div>
+                                        
+                                        {/* Date inputs based on selection */}
+                                        <AnimatePresence mode="wait">
+                                            {dateOption === 'exact' && (
+                                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="e.g. 12 Nov - 24 Nov 2026"
+                                                        value={formData.exactDates}
+                                                        onChange={(e) => setFormData({ ...formData, exactDates: e.target.value })}
+                                                        className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
+                                                    />
+                                                </motion.div>
+                                            )}
+                                            {dateOption === 'month' && (
+                                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+                                                    <select
+                                                        value={formData.monthYear}
+                                                        onChange={(e) => setFormData({ ...formData, monthYear: e.target.value })}
+                                                        className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60"
+                                                    >
+                                                        <option value="">Select Month & Year</option>
+                                                        {months.filter(m => m !== 'Flexible').map(m => (
+                                                            <option key={m} value={`${m} 2026`}>{m} 2026</option>
+                                                        ))}
+                                                        {months.filter(m => m !== 'Flexible').map(m => (
+                                                            <option key={`${m}-27`} value={`${m} 2027`}>{m} 2027</option>
+                                                        ))}
+                                                    </select>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-4">
+                                        {/* Duration */}
+                                        <div>
+                                            <Label htmlFor="duration" className="text-stone-600 mb-2 block">
+                                                Estimated Duration *
+                                            </Label>
+                                            <select
+                                                id="duration"
+                                                required
+                                                value={formData.duration}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, duration: e.target.value })
+                                                }
+                                                className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
+                                            >
+                                                <option value="">Select duration</option>
+                                                {durations.map((d) => (
+                                                    <option key={d} value={d}>{d}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+
+                                        {/* Travellers */}
+                                        <div>
+                                            <Label htmlFor="travellers" className="text-stone-600 mb-2 block">
+                                                Travellers
+                                            </Label>
+                                            <select
+                                                id="travellers"
+                                                value={formData.travellers}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, travellers: e.target.value })
+                                                }
+                                                className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
+                                            >
+                                                {[1, 2, 3, 4, 5, 6, 7, 8, '9+'].map((n) => (
+                                                    <option key={n} value={String(n)}>
+                                                        {n} {Number(n) === 1 ? 'Person' : 'People'}
+                                                    </option>
+                                                ))}
+                                            </select>
                                         </div>
                                     </div>
 
-                                    {/* Travellers */}
+                                    {/* Experiences (Multi-Select) */}
                                     <div>
-                                        <Label htmlFor="travellers" className="text-stone-600 mb-2 block">
-                                            Number of Travellers
-                                        </Label>
-                                        <select
-                                            id="travellers"
-                                            value={formData.travellers}
-                                            onChange={(e) =>
-                                                setFormData({ ...formData, travellers: e.target.value })
-                                            }
-                                            className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
-                                        >
-                                            {[1, 2, 3, 4, 5, 6, 7, 8, '9+'].map((n) => (
-                                                <option key={n} value={String(n)}>
-                                                    {n}
-                                                </option>
-                                            ))}
-                                        </select>
+                                        <Label className="text-stone-600 mb-3 block">What Would You Like to Experience? *</Label>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                            {experiences.map((exp) => {
+                                                const isSelected = formData.selectedExperiences.includes(exp);
+                                                return (
+                                                    <button
+                                                        key={exp}
+                                                        type="button"
+                                                        onClick={() => toggleExperience(exp)}
+                                                        className={`text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-300 border flex items-center justify-between ${
+                                                            isSelected
+                                                                ? 'bg-gold/10 border-gold/40 text-gold-dark font-medium shadow-sm'
+                                                                : 'bg-stone-50 border-stone-200 text-stone-600 hover:border-gold/30 hover:bg-gold/5'
+                                                        }`}
+                                                    >
+                                                        {exp}
+                                                        {isSelected && <Check className="w-4 h-4 text-gold shrink-0" />}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -393,38 +537,47 @@ export default function PlanYourTripPage() {
                             >
                                 <h3 className="font-heading text-xl font-bold text-stone-900 mb-1 flex items-center gap-2">
                                     <MessageSquare className="w-5 h-5 text-gold" />
-                                    Share Your Vision
+                                    Tell Us About Your Trip
                                 </h3>
                                 <p className="text-stone-400 text-sm mb-6">
                                     The more you tell us, the better we can design your dream trip.
                                 </p>
 
                                 <Textarea
-                                    placeholder="Describe your dream journey... special occasions, must-see places, dietary needs, anything that matters to you."
+                                    placeholder="Celebrating an anniversary, travelling with family, prefer boutique stays..."
                                     value={formData.message}
                                     onChange={(e) =>
                                         setFormData({ ...formData, message: e.target.value })
                                     }
-                                    rows={6}
-                                    className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60 resize-none"
+                                    rows={5}
+                                    className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400 focus:border-gold/60 resize-none"
                                 />
 
                                 {/* Summary Preview */}
-                                <div className="mt-6 p-4 rounded-xl bg-stone-50 border border-stone-100">
-                                    <p className="text-stone-400 text-xs uppercase tracking-widest mb-3">
-                                        Summary
-                                    </p>
-                                    <div className="grid grid-cols-2 gap-y-2 text-sm">
-                                        <span className="text-stone-400">Name</span>
-                                        <span className="text-stone-700">{formData.fullName || '—'}</span>
-                                        <span className="text-stone-400">Email</span>
-                                        <span className="text-stone-700">{formData.email || '—'}</span>
-                                        <span className="text-stone-400">Travel Month</span>
-                                        <span className="text-stone-700">{formData.travelMonth || '—'}</span>
-                                        <span className="text-stone-400">Package</span>
-                                        <span className="text-gold font-medium">{formData.journeyPackage || '—'}</span>
-                                        <span className="text-stone-400">Travellers</span>
-                                        <span className="text-stone-700">{formData.travellers}</span>
+                                <div className="mt-6 p-5 rounded-2xl bg-stone-50/80 border border-stone-100">
+                                    <h4 className="text-stone-800 font-semibold text-sm mb-3">Journey Summary</h4>
+                                    <div className="space-y-2 text-sm">
+                                        <div className="flex justify-between border-b border-stone-100 pb-2">
+                                            <span className="text-stone-500">Contact</span>
+                                            <span className="text-stone-800 font-medium text-right">{formData.fullName}<br/><span className="text-stone-500 font-normal text-xs">{formData.email}</span></span>
+                                        </div>
+                                        <div className="flex justify-between border-b border-stone-100 py-2">
+                                            <span className="text-stone-500">Origin</span>
+                                            <span className="text-stone-800 font-medium text-right">{formData.departingCity ? `${formData.departingCity}, ` : ''}{formData.country}</span>
+                                        </div>
+                                        <div className="flex justify-between border-b border-stone-100 py-2">
+                                            <span className="text-stone-500">Timing</span>
+                                            <span className="text-stone-800 font-medium text-right">
+                                                {dateOption === 'exact' ? formData.exactDates : dateOption === 'month' ? formData.monthYear : 'Flexible Dates'}<br/>
+                                                <span className="text-stone-500 font-normal text-xs">{formData.duration}</span>
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between py-2">
+                                            <span className="text-stone-500">Interests</span>
+                                            <span className="text-gold-dark font-medium text-right max-w-[60%]">
+                                                {formData.selectedExperiences.length} selected
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>
@@ -461,15 +614,15 @@ export default function PlanYourTripPage() {
                             <Button
                                 type="button"
                                 onClick={handleSubmit}
-                                disabled={isSubmitting}
-                                className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 disabled:opacity-40"
+                                disabled={isSubmitting || !canProceed()}
+                                className="bg-stone-900 hover:bg-gold text-white font-semibold px-8 py-6 rounded-xl transition-all hover:shadow-lg disabled:opacity-40"
                             >
                                 {isSubmitting ? (
                                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
                                     <>
-                                        <Send className="w-4 h-4 mr-2" />
-                                        Send Enquiry
+                                        <Sparkles className="w-4 h-4 mr-2" />
+                                        Design My Journey
                                     </>
                                 )}
                             </Button>
@@ -484,3 +637,4 @@ export default function PlanYourTripPage() {
         </>
     );
 }
+

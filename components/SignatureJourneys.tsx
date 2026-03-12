@@ -26,7 +26,7 @@ const journeys = [
         title: 'Velora Luxe',
         description:
             'Elevated travel through Sri Lanka\'s most refined experiences. Stay at architecturally iconic properties, enjoy private safaris, and unwind at exclusive retreats.',
-        image: '/Photos/Other sections/Sec 2-Luxe-Wellness-Club.jpg',
+        image: '/images/velora_luxe_journey.png',
         href: '/package/5',
     },
     {
@@ -34,7 +34,7 @@ const journeys = [
         title: 'Velora Serene',
         description:
             'A restorative journey balancing authentic Ayurveda with light cultural discovery. Enjoy personalised treatments, peaceful settings, and mindful travel.',
-        image: '/Photos/Other sections/Destination Tea.jpeg',
+        image: '/images/velora_serene_journey.png',
         href: '/package/8',
     },
 ];

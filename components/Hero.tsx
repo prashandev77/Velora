@@ -27,7 +27,7 @@ const slides = [
         tag: 'Wildlife & Nature',
         buttons: [
             { label: 'Discover Wildlife Journeys', href: '/journeys', primary: true },
-            { label: 'Start Planning', href: '/contact', primary: false },
+            { label: 'Explore Destination Map', href: '/#destinations', primary: false },
         ],
         image: '/Photos/Hero Slide Photo 2 .jpeg',
     },
@@ -35,11 +35,11 @@ const slides = [
         id: 3,
         headline: 'Island Serenity, Perfected',
         subtext:
-            'Boutique coastal retreats and overwater villas designed for privacy, romance, and barefoot luxury.',
-        tag: 'Sri Lanka • Maldives',
+            'Overwater villas, crystal lagoons, and world-class spa retreats. A private haven where the horizon never ends.',
+        tag: 'The Maldives Escape',
         buttons: [
-            { label: 'Explore Beach & Island Escapes', href: '/journeys', primary: true },
-            { label: 'Design My Journey', href: '/contact', primary: false },
+            { label: 'View Maldives Collection', href: '/journeys', primary: true },
+            { label: 'Design Your Escape', href: '/plan-your-trip', primary: false },
         ],
         image: '/Photos/Hero Slide 4 Maldives.jpg',
     },
@@ -47,11 +47,11 @@ const slides = [
         id: 4,
         headline: 'Luxury, Thoughtfully Curated',
         subtext:
-            'Tailor-made journeys designed around you. Seamless, private, and unforgettable.',
+            'At Velora, we don\'t just book trips — we choreograph experiences. Every detail of your journey is hand-selected and personally coordinated.',
         tag: 'The Velora Promise',
         buttons: [
-            { label: 'Start Planning', href: '/contact', primary: true },
-            { label: 'View Luxury Itineraries', href: '/journeys', primary: false },
+            { label: 'Start Planning', href: '/plan-your-trip', primary: true },
+            { label: 'Learn Our Story', href: '/about', primary: false },
         ],
         image: '/Photos/Hero Slide Photo 3 tea.jpeg',
     },

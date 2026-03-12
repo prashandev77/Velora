@@ -7,51 +7,31 @@ import { motion } from 'framer-motion';
 const tiles = [
     {
         heading: 'Culture & Heritage',
-        description:
-            'Walk through ancient kingdoms, sacred temples, and colonial towns — guided privately and experienced with depth, not crowds.',
+        description: 'Walk through ancient kingdoms, sacred temples, and colonial towns — guided privately and experienced with depth, not crowds.',
         button: 'Explore Cultural Journeys',
         href: '/journeys',
         image: '/Photos/Other sections/Section 2 _ Classic Discovery.jpeg',
     },
     {
         heading: 'Wildlife & Wilderness',
-        description:
-            'Track leopards at dawn, witness elephant gatherings, and stay in boutique safari lodges surrounded by untamed beauty.',
+        description: 'Track leopards at dawn, witness elephant gatherings, and stay in boutique safari lodges surrounded by untamed beauty.',
         button: 'Discover Wildlife Experiences',
         href: '/journeys',
         image: '/Photos/Other sections/Section 2 _ Wildlife Expedition.jpeg',
     },
     {
         heading: 'Coast & Island Escape',
-        description:
-            'Boutique beach retreats, private villas, and overwater Maldives indulgence — designed for complete serenity.',
+        description: 'Boutique beach retreats, private villas, and overwater Maldives indulgence — designed for complete serenity.',
         button: 'Explore Beach & Island Escapes',
         href: '/journeys',
         image: '/Photos/Other sections/Section 2 _ Coast.jpeg',
     },
     {
         heading: 'Romance & Celebrations',
-        description:
-            'Private candlelit dinners, scenic train journeys, and unforgettable honeymoon escapes.',
+        description: 'Private candlelit dinners, scenic train journeys, and unforgettable honeymoon escapes.',
         button: 'View Romantic Journeys',
         href: '/journeys',
         image: '/Photos/Other sections/Section 2 Honeymoon.jpg',
-    },
-    {
-        heading: 'Luxury Wellness',
-        description:
-            'Tea estate sanctuaries, coastal Ayurveda retreats, and curated wellness escapes in some of Sri Lanka\'s most exclusive boutique properties.',
-        button: 'Explore Wellness Journeys',
-        href: '/journeys',
-        image: '/Photos/Other sections/Sec 2-Luxe-Wellness-Club.jpg',
-    },
-    {
-        heading: 'Scenic Hill Country',
-        description:
-            'Iconic train rides, misty tea-draped highlands, Ella\'s Nine Arches Bridge, and colonial hill station charm — woven into a seamless highland journey.',
-        button: 'Explore Hill Country',
-        href: '/journeys',
-        image: '/Photos/Other sections/Hill Country.jpg',
     },
 ];
 
@@ -65,7 +45,7 @@ export default function TravelStyle() {
                         Discover Your Travel Style
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        Six Ways to Experience Sri Lanka
+                        Four Distinct Ways to Experience Sri Lanka
                     </h2>
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
                         Whether you&apos;re drawn to heritage, wildlife, or coastal serenity, each journey is privately curated around you.
@@ -73,7 +53,7 @@ export default function TravelStyle() {
                 </div>
 
                 {/* Tiles Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     {tiles.map((tile, i) => (
                         <motion.div
                             key={tile.heading}

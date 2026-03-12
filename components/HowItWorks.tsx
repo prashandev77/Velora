@@ -9,28 +9,28 @@ const steps = [
         title: 'Share Your Vision',
         description:
             'Tell us how you wish to travel — the pace, experiences, level of comfort, and special occasions. Whether you begin with one of our signature journeys or a blank canvas, we start with you.',
-        image: '/Photos/Other sections/How it works 1.jpeg',
+        image: '/images/how_it_works_1.png',
     },
     {
         number: '02',
         title: 'Curate & Design',
         description:
             'Your dedicated Velora travel specialist crafts a personalised itinerary — selecting boutique stays, private guides, and meaningful experiences tailored to your style.',
-        image: '/Photos/Other sections/Peradeniya Garden.jpeg',
+        image: '/images/how_it_works_2.png',
     },
     {
         number: '03',
         title: 'Refine & Confirm',
         description:
             'We review every detail together and refine as needed. Once confirmed, we coordinate accommodations, private transfers, and on-ground logistics seamlessly.',
-        image: '/Photos/Other sections/How it works 3.jpg',
+        image: '/images/how_it_works_3.png',
     },
     {
         number: '04',
         title: 'Travel Seamlessly',
         description:
             'Arrive with confidence knowing everything is prepared. Enjoy discreet local support and 24/7 assistance while you focus on the experience.',
-        image: '/Photos/Other sections/Destination Tea.jpeg',
+        image: '/images/how_it_works_4.png',
     },
 ];
 

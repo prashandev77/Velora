@@ -32,7 +32,7 @@ const collections = [
             'Elevated travel through Sri Lanka\'s most refined experiences. Stay at architecturally iconic properties, journey by scenic train through tea estates, enjoy a private Yala safari, and unwind at exclusive coastal retreats. Designed for travellers seeking comfort, privacy, and curated cultural depth.',
         idealFor: 'Luxury travellers, special occasions, boutique stays',
         category: 'Luxury Collection',
-        image: '/Photos/Other sections/Sec 2-Luxe-Wellness-Club.jpg',
+        image: '/images/velora_luxe_journey.png',
         href: '/package/5',
     },
     {
@@ -42,7 +42,7 @@ const collections = [
             'A restorative journey balancing authentic Ayurveda with light cultural discovery. Enjoy personalised treatments under medical supervision, peaceful countryside settings, early temple visits, and unhurried experiences designed for comfort and calm. Perfect for travellers prioritising wellbeing, slower pacing, and mindful travel.',
         idealFor: 'Senior travellers, wellness seekers, slow travellers',
         category: 'Wellness Collection',
-        image: '/Photos/Other sections/Destination Tea.jpeg',
+        image: '/images/velora_serene_journey.png',
         href: '/package/8',
     },
 ];
