@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const slides = [
     {
@@ -40,7 +40,7 @@ const slides = [
     {
         id: 4,
         headline: 'Endless Shores. Timeless Escapes.',
-        subtext: 'Boutique luxury beach retreats along Sri Lanka’s southern coast.',
+        subtext: 'Boutique luxury beach retreats along Sri Lanka\'s southern coast.',
         tag: 'COAST & ISLAND',
         buttons: [
             { label: 'Explore Coastal Journeys', href: '/journeys', primary: true },
@@ -92,84 +92,95 @@ export default function Hero() {
 
     const slide = slides[current];
 
-    const variants = {
-        enter: (d: number) => ({ x: d > 0 ? '8%' : '-8%', opacity: 0 }),
-        center: { x: 0, opacity: 1 },
-        exit: (d: number) => ({ x: d > 0 ? '-8%' : '8%', opacity: 0 }),
-    };
-
     return (
         <section
             className="relative h-screen w-full overflow-hidden z-0"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            {/* ── Background images ── */}
+            {/* ── Background images with Ken Burns effect ── */}
             <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                     key={slide.id}
                     custom={direction}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
                     className="absolute inset-0 z-0"
                 >
-                    <Image
-                        src={slide.image}
-                        alt={slide.headline}
-                        fill
-                        className="object-cover"
-                        priority={slide.id === 1}
-                        sizes="100vw"
-                    />
-                    {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent md:from-black/35 md:via-black/10" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent md:from-black/30" />
+                    <motion.div
+                        initial={{ scale: 1.05 }}
+                        animate={{ scale: 1 }}
+                        transition={{ duration: 7, ease: 'linear' }}
+                        className="absolute inset-0"
+                    >
+                        <Image
+                            src={slide.image}
+                            alt={slide.headline}
+                            fill
+                            className="object-cover"
+                            priority={slide.id === 1}
+                            sizes="100vw"
+                        />
+                    </motion.div>
+
+                    {/* Minimal gradient — soft bottom vignette only */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                    {/* Very subtle left vignette for text readability */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent" />
                 </motion.div>
             </AnimatePresence>
 
             {/* ── Content ── */}
-            <div className="relative z-10 flex h-full items-end pb-28 md:items-center md:pb-0">
-                <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
+            <div className="relative z-10 flex h-full items-end pb-28 md:items-end md:pb-32 lg:pb-36">
+                <div className="w-full max-w-7xl mx-auto px-6 md:px-16">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={slide.id}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.7, ease: 'easeOut' }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                             className="max-w-2xl"
                         >
-                            {/* Tag */}
-                            <span className="inline-block text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 md:mb-5 block">
+                            {/* Tag — thin, spaced, understated */}
+                            <motion.span
+                                initial={{ opacity: 0, x: -12 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                className="inline-flex items-center gap-2 text-white/60 text-[10px] md:text-xs font-light uppercase tracking-[0.35em] mb-4 md:mb-5"
+                            >
+                                <span className="w-6 h-px bg-gold/70" />
                                 {slide.tag}
-                            </span>
+                            </motion.span>
 
-                            {/* Headline */}
-                            <h1 className="font-heading text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-3 md:mb-6 leading-[1.18] md:leading-[1.1] drop-shadow-lg">
+                            {/* Headline — elegant, lightweight, no heavy shadows */}
+                            <h1 className="font-heading text-[1.75rem] sm:text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-4 md:mb-5 leading-[1.2] md:leading-[1.15] tracking-tight">
                                 {slide.headline}
                             </h1>
 
-                            {/* Subtext */}
-                            <p className="text-stone-200 text-sm md:text-xl max-w-xs md:max-w-xl leading-snug md:leading-relaxed drop-shadow-md mb-0">
+                            {/* Subtext — airy, subdued */}
+                            <p className="text-white/70 text-sm md:text-base max-w-sm md:max-w-lg leading-relaxed font-light">
                                 {slide.subtext}
                             </p>
 
-                            {/* Buttons */}
-                            <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-10 max-w-fit w-full sm:w-auto">
+                            {/* Buttons — clean, borderless luxury feel */}
+                            <div className="flex flex-wrap items-center gap-4 mt-7 md:mt-8">
                                 {slide.buttons.map((btn, i) => (
-                                    <Link key={i} href={btn.href} className="w-full sm:w-auto">
-                                        <button
-                                            className={`w-full sm:w-auto px-6 md:px-10 py-3 md:py-4 rounded-full text-sm md:text-base font-semibold transition-all duration-300 backdrop-blur-sm shadow-lg shadow-black/30 hover:shadow-black/40 hover:scale-[1.02] ${
+                                    <Link key={i} href={btn.href}>
+                                        <motion.button
+                                            whileHover={{ x: 3 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            className={`group inline-flex items-center gap-2 px-6 md:px-8 py-3 md:py-3.5 rounded-full text-xs md:text-sm font-medium tracking-wide transition-all duration-500 ${
                                                 btn.primary
-                                                    ? 'bg-gold/90 hover:bg-gold text-white border border-gold/50'
-                                                    : 'bg-white/10 hover:bg-white/20 text-white border border-white/30'
+                                                    ? 'bg-white text-stone-900 hover:bg-gold hover:text-white'
+                                                    : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
                                             }`}
                                         >
                                             {btn.label}
-                                        </button>
+                                            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                                        </motion.button>
                                     </Link>
                                 ))}
                             </div>
@@ -178,47 +189,51 @@ export default function Hero() {
                 </div>
             </div>
 
-            {/* ── Navigation arrows ── */}
-            <button
-                onClick={prev}
-                aria-label="Previous slide"
-                className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300"
-            >
-                <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-                onClick={next}
-                aria-label="Next slide"
-                className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all duration-300"
-            >
-                <ChevronRight className="w-5 h-5" />
-            </button>
-
-            {/* ── Slide indicators ── */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex items-center gap-3">
+            {/* ── Slide indicators — minimal vertical line style (right side) ── */}
+            <div className="absolute right-6 md:right-10 top-1/2 -translate-y-1/2 z-20 flex flex-col items-center gap-3">
                 {slides.map((s, i) => (
                     <button
                         key={s.id}
                         onClick={() => goTo(i)}
                         aria-label={`Go to slide ${i + 1}`}
-                        className="group relative"
+                        className="group relative flex items-center justify-center"
                     >
                         <div
-                            className={`h-1 rounded-full transition-all duration-500 ${
-                                i === current ? 'w-10 bg-gold' : 'w-6 bg-white/30 group-hover:bg-white/50'
+                            className={`w-px transition-all duration-500 ${
+                                i === current ? 'h-8 bg-white' : 'h-4 bg-white/30 group-hover:bg-white/60'
                             }`}
                         />
                         {i === current && !isPaused && (
                             <motion.div
-                                className="absolute top-0 left-0 h-1 rounded-full bg-gold/50"
-                                initial={{ width: 0 }}
-                                animate={{ width: '100%' }}
+                                className="absolute top-0 left-0 w-px bg-gold"
+                                initial={{ height: 0 }}
+                                animate={{ height: '100%' }}
                                 transition={{ duration: INTERVAL / 1000, ease: 'linear' }}
                                 key={`progress-${current}`}
                             />
                         )}
                     </button>
                 ))}
+            </div>
+
+            {/* ── Slide counter — bottom right, editorial style ── */}
+            <div className="absolute bottom-8 right-6 md:right-10 z-20 flex items-baseline gap-1 text-white/50 font-light">
+                <span className="text-white text-lg md:text-xl tabular-nums">
+                    {String(current + 1).padStart(2, '0')}
+                </span>
+                <span className="text-xs mx-1">/</span>
+                <span className="text-xs tabular-nums">
+                    {String(slides.length).padStart(2, '0')}
+                </span>
+            </div>
+
+            {/* ── Scroll hint — subtle, centered ── */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-50 hover:opacity-80 transition-opacity">
+                <motion.div
+                    animate={{ y: [0, 6, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    className="w-px h-8 bg-gradient-to-b from-white/0 via-white/60 to-white/0"
+                />
             </div>
         </section>
     );

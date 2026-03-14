@@ -5,6 +5,13 @@ export interface ItineraryDay {
   highlights: string[];
 }
 
+export interface RoutePoint {
+  name: string;
+  lat: number;
+  lng: number;
+  description?: string;
+}
+
 export interface Package {
   id: string;
   slug: string;
@@ -17,6 +24,16 @@ export interface Package {
   description?: string;
   tag?: string;
   highlights?: string[];
+  subtitle?: string;
+  travelStyle?: string;
+  route?: string[];
+  routeCoords?: RoutePoint[];
+  whySpecial?: string[];
+  perfectFor?: string[];
+  accommodation?: string;
+  included?: string[];
+  notIncluded?: string[];
+  galleryImages?: string[];
 }
 
 
