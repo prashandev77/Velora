@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
@@ -13,6 +13,7 @@ const navLinks = [
     { href: '/journeys', label: 'Journeys', icon: Plane },
     { href: '/destinations', label: 'Destinations', icon: MapPin },
     { href: '/about', label: 'About', icon: Info },
+    { href: '/booking', label: 'Booking', icon: CreditCard },
     { href: '/contact', label: 'Contact', icon: Phone },
 ];
 
@@ -29,6 +30,7 @@ export default function Navbar() {
         '/about',
         '/journeys',
         '/destinations',
+        '/booking',
     ].some((p) => pathname === p) || pathname.startsWith('/journeys/') || pathname.startsWith('/destinations/');
 
     // On a light page, navbar is always in "scrolled" style (dark text)
@@ -49,7 +51,7 @@ export default function Navbar() {
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className={`fixed z-50 transition-all duration-500
+                className={`fixed z-[100] transition-all duration-500
                     /* Mobile: Fixed to very top, full width, no rounding */
                     top-0 left-0 w-full rounded-none
                     /* Desktop: Floating pill shape */
@@ -68,6 +70,7 @@ export default function Navbar() {
                             width={160}
                             height={48}
                             className="h-10 md:h-12 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+                            style={{ width: 'auto' }}
                             priority
                         />
                     </Link>
@@ -103,7 +106,7 @@ export default function Navbar() {
                     <button
                         onClick={() => setIsMobileOpen(!isMobileOpen)}
                         className={`md:hidden flex items-center justify-center w-9 h-9 rounded-xl border transition-colors ${
-                            isScrolled || forceDark
+                            isMobileOpen || isScrolled || forceDark
                                 ? 'bg-stone-100 text-stone-700 border-stone-200 hover:bg-stone-200'
                                 : 'bg-white/20 text-white border-white/20 hover:bg-white/30'
                         }`}
@@ -132,7 +135,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
                         exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
                         transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-0 z-40 bg-[#faf7f2] flex flex-col"
+                        className="fixed inset-0 z-[90] bg-[#faf7f2] flex flex-col"
                     >
                         {/* Top bar spacer */}
                         <div className="h-20" />

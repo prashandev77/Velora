@@ -49,13 +49,17 @@ const faqs = [
         q: 'Can you accommodate dietary or special travel requirements?',
         a: 'Certainly. We tailor every journey to your preferences including dietary, accessibility, and wellness needs.',
     },
+    {
+        q: 'How do payments work?',
+        a: 'A 20% deposit is required to confirm your journey. The remaining balance is payable 14 days prior to arrival in Sri Lanka. Full payment instructions will be provided in your booking confirmation.',
+    },
 ];
 
 export default function FAQ() {
     const [open, setOpen] = useState<number | null>(0);
 
     return (
-        <section className="min-h-screen flex items-center py-20 md:py-28 bg-white">
+        <section className="min-h-screen flex items-center py-20 md:py-28 bg-[#F7F5F2]">
             <div className="max-w-4xl mx-auto px-6 md:px-12 w-full">
                 <div className="text-center mb-14 md:mb-20">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
@@ -64,6 +68,7 @@ export default function FAQ() {
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
                         Frequently Asked Questions
                     </h2>
+                    <div className="w-14 h-[2px] bg-gold mx-auto mb-8" />
                 </div>
 
                 <div className="space-y-3">

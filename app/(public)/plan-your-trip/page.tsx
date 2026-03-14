@@ -4,14 +4,12 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Send,
-    Sparkles,
     Check,
     ChevronRight,
     ChevronLeft,
     User,
+    Sparkles,
     MessageSquare,
-    Globe,
-    CalendarDays
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,29 +20,24 @@ import { submitInquiry } from './actions';
 
 const TOTAL_STEPS = 3;
 
-const countries = [
-    'Australia', 'New Zealand', 'England', 'United States', 'Canada', 'Other'
-];
-
-const durations = [
-    '7–9 Days', '10–14 Days', '15–20 Days', '20+ Days', 'Not sure yet'
-];
-
 const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-const experiences = [
+const tripLengths = ['5–7 days', '8–10 days', '10–14 days', '15+ days'];
+
+const travelStyles = [
+    'Luxury Hotels',
+    'Wildlife & Safari',
     'Culture & Heritage',
-    'Wildlife Safaris',
-    'Beaches & Relaxation',
-    'Tea Country & Scenic Train',
+    'Beach & Relaxation',
+    'Honeymoon',
     'Wellness & Ayurveda',
-    'Honeymoon / Romance',
-    'Sri Lanka & Maldives',
-    'Not sure — please recommend'
+    'Adventure & Nature',
 ];
+
+const travellerCounts = ['1', '2', '3', '4', '5+'];
 
 const stepInfo = [
     { icon: User, label: 'Your Details' },
@@ -72,43 +65,30 @@ export default function PlanYourTripPage() {
     const [direction, setDirection] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
-    
-    // Date selection state
-    const [dateOption, setDateOption] = useState<'exact' | 'month' | 'flexible'>('exact');
 
     const [formData, setFormData] = useState({
         // Step 1
         fullName: '',
         email: '',
         phone: '',
-        country: '',
         departingCity: '',
-        
+
         // Step 2
-        exactDates: '',
-        monthYear: '',
-        duration: '',
+        travelMonth: '',
+        tripLength: '',
         travellers: '2',
-        selectedExperiences: [] as string[],
-        
+        selectedStyles: [] as string[],
+
         // Step 3
         message: '',
     });
 
-    const toggleExperience = (exp: string) => {
-        setFormData(prev => {
-            if (exp === 'Not sure — please recommend') {
-                return { ...prev, selectedExperiences: [exp] };
-            }
-            
-            let newExperiences = prev.selectedExperiences.filter(e => e !== 'Not sure — please recommend');
-            
-            if (newExperiences.includes(exp)) {
-                newExperiences = newExperiences.filter(e => e !== exp);
-            } else {
-                newExperiences = [...newExperiences, exp];
-            }
-            return { ...prev, selectedExperiences: newExperiences };
+    const toggleStyle = (style: string) => {
+        setFormData((prev) => {
+            const styles = prev.selectedStyles.includes(style)
+                ? prev.selectedStyles.filter((s) => s !== style)
+                : [...prev.selectedStyles, style];
+            return { ...prev, selectedStyles: styles };
         });
     };
 
@@ -127,13 +107,8 @@ export default function PlanYourTripPage() {
     };
 
     const canProceed = () => {
-        if (step === 0) return formData.fullName.trim() !== '' && formData.email.trim() !== '' && formData.country !== '';
-        if (step === 1) {
-            const hasDates = (dateOption === 'exact' && formData.exactDates !== '') ||
-                             (dateOption === 'month' && formData.monthYear !== '') ||
-                             dateOption === 'flexible';
-            return hasDates && formData.duration !== '' && formData.selectedExperiences.length > 0;
-        }
+        if (step === 0) return formData.fullName.trim() !== '' && formData.email.trim() !== '';
+        if (step === 1) return formData.tripLength !== '' && formData.selectedStyles.length > 0;
         return true;
     };
 
@@ -143,20 +118,13 @@ export default function PlanYourTripPage() {
         fd.set('name', formData.fullName);
         fd.set('email', formData.email);
         fd.set('phone', formData.phone);
-        fd.set('country', formData.country);
         fd.set('departing_city', formData.departingCity);
-        
-        let travelDates = '';
-        if (dateOption === 'exact') travelDates = formData.exactDates;
-        else if (dateOption === 'month') travelDates = formData.monthYear;
-        else travelDates = 'Flexible';
-        
-        fd.set('travel_dates', travelDates);
-        fd.set('duration', formData.duration);
-        fd.set('experiences', formData.selectedExperiences.join(', '));
+        fd.set('travel_dates', formData.travelMonth || 'Flexible');
+        fd.set('duration', formData.tripLength);
+        fd.set('experiences', formData.selectedStyles.join(', '));
         fd.set('num_travelers', formData.travellers);
         fd.set('message', formData.message);
-        
+
         await submitInquiry(fd);
         setIsSubmitted(true);
         setIsSubmitting(false);
@@ -209,8 +177,8 @@ export default function PlanYourTripPage() {
                         Plan Your <span className="text-gold">Journey</span>
                     </h1>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        Tell us your travel vision in three simple steps —
-                        your dedicated designer will handle the rest.
+                        Tell us a little about your travel plans and our Velora specialists will
+                        design a personalised Sri Lanka journey just for you.
                     </p>
                 </div>
             </section>
@@ -284,7 +252,7 @@ export default function PlanYourTripPage() {
                                 <h3 className="font-heading text-xl font-bold text-stone-900 mb-1 flex items-center gap-2">
                                     <User className="w-5 h-5 text-gold" />
                                     About You
-                               </h3>
+                                </h3>
                                 <p className="text-stone-400 text-sm mb-6">
                                     So we know who we&apos;re crafting this journey for.
                                 </p>
@@ -336,46 +304,25 @@ export default function PlanYourTripPage() {
                                             className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
                                         />
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <Label htmlFor="country" className="text-stone-600 mb-2 block">
-                                                Country *
-                                            </Label>
-                                            <select
-                                                id="country"
-                                                required
-                                                value={formData.country}
-                                                onChange={(e) =>
-                                                    setFormData({ ...formData, country: e.target.value })
-                                                }
-                                                className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
-                                            >
-                                                <option value="">Select country</option>
-                                                {countries.map((c) => (
-                                                    <option key={c} value={c}>{c}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <Label htmlFor="departingCity" className="text-stone-600 mb-2 block">
-                                                Departing City
-                                            </Label>
-                                            <Input
-                                                id="departingCity"
-                                                value={formData.departingCity}
-                                                onChange={(e) =>
-                                                    setFormData({ ...formData, departingCity: e.target.value })
-                                                }
-                                                placeholder="e.g. Sydney"
-                                                className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
-                                            />
-                                        </div>
+                                    <div>
+                                        <Label htmlFor="departingCity" className="text-stone-600 mb-2 block">
+                                            Departing City
+                                        </Label>
+                                        <Input
+                                            id="departingCity"
+                                            value={formData.departingCity}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, departingCity: e.target.value })
+                                            }
+                                            placeholder="e.g. Sydney, London, Dubai"
+                                            className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
+                                        />
                                     </div>
                                 </div>
                             </motion.div>
                         )}
 
-                        {/* ── Step 2: Travel Preferences ── */}
+                        {/* ── Step 2: Journey Preferences ── */}
                         {step === 1 && (
                             <motion.div
                                 key="step-1"
@@ -396,83 +343,40 @@ export default function PlanYourTripPage() {
                                 </p>
 
                                 <div className="space-y-6">
-                                    {/* Dates */}
+                                    {/* When are you travelling? */}
                                     <div>
-                                        <Label className="text-stone-600 mb-3 block">Preferred Travel Dates *</Label>
-                                        <div className="flex gap-3 mb-3">
-                                            <button
-                                                type="button"
-                                                onClick={() => setDateOption('exact')}
-                                                className={`flex-1 py-2 rounded-lg text-sm transition-colors border ${dateOption === 'exact' ? 'bg-gold/10 border-gold/40 text-gold font-medium' : 'bg-stone-50 border-stone-200 text-stone-500'}`}
-                                            >
-                                                Exact Dates
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => setDateOption('month')}
-                                                className={`flex-1 py-2 rounded-lg text-sm transition-colors border ${dateOption === 'month' ? 'bg-gold/10 border-gold/40 text-gold font-medium' : 'bg-stone-50 border-stone-200 text-stone-500'}`}
-                                            >
-                                                Month & Year
-                                            </button>
-                                            <button
-                                                type="button"
-                                                onClick={() => setDateOption('flexible')}
-                                                className={`flex-1 py-2 rounded-lg text-sm transition-colors border ${dateOption === 'flexible' ? 'bg-gold/10 border-gold/40 text-gold font-medium' : 'bg-stone-50 border-stone-200 text-stone-500'}`}
-                                            >
-                                                Flexible
-                                            </button>
-                                        </div>
-                                        
-                                        {/* Date inputs based on selection */}
-                                        <AnimatePresence mode="wait">
-                                            {dateOption === 'exact' && (
-                                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                                                    <Input
-                                                        type="text"
-                                                        placeholder="e.g. 12 Nov - 24 Nov 2026"
-                                                        value={formData.exactDates}
-                                                        onChange={(e) => setFormData({ ...formData, exactDates: e.target.value })}
-                                                        className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
-                                                    />
-                                                </motion.div>
-                                            )}
-                                            {dateOption === 'month' && (
-                                                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                                                    <select
-                                                        value={formData.monthYear}
-                                                        onChange={(e) => setFormData({ ...formData, monthYear: e.target.value })}
-                                                        className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60"
-                                                    >
-                                                        <option value="">Select Month & Year</option>
-                                                        {months.filter(m => m !== 'Flexible').map(m => (
-                                                            <option key={m} value={`${m} 2026`}>{m} 2026</option>
-                                                        ))}
-                                                        {months.filter(m => m !== 'Flexible').map(m => (
-                                                            <option key={`${m}-27`} value={`${m} 2027`}>{m} 2027</option>
-                                                        ))}
-                                                    </select>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                        <Label className="text-stone-600 mb-2 block">When are you travelling?</Label>
+                                        <select
+                                            value={formData.travelMonth}
+                                            onChange={(e) =>
+                                                setFormData({ ...formData, travelMonth: e.target.value })
+                                            }
+                                            className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
+                                        >
+                                            <option value="">Select month</option>
+                                            {months.map((m) => (
+                                                <option key={m} value={m}>{m}</option>
+                                            ))}
+                                        </select>
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-4">
-                                        {/* Duration */}
+                                        {/* Trip Length */}
                                         <div>
-                                            <Label htmlFor="duration" className="text-stone-600 mb-2 block">
-                                                Estimated Duration *
+                                            <Label htmlFor="tripLength" className="text-stone-600 mb-2 block">
+                                                Trip Length *
                                             </Label>
                                             <select
-                                                id="duration"
+                                                id="tripLength"
                                                 required
-                                                value={formData.duration}
+                                                value={formData.tripLength}
                                                 onChange={(e) =>
-                                                    setFormData({ ...formData, duration: e.target.value })
+                                                    setFormData({ ...formData, tripLength: e.target.value })
                                                 }
                                                 className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
                                             >
                                                 <option value="">Select duration</option>
-                                                {durations.map((d) => (
+                                                {tripLengths.map((d) => (
                                                     <option key={d} value={d}>{d}</option>
                                                 ))}
                                             </select>
@@ -491,33 +395,31 @@ export default function PlanYourTripPage() {
                                                 }
                                                 className="w-full h-10 rounded-md bg-stone-50 border border-stone-200 text-stone-900 px-3 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-white [&>option]:text-stone-900"
                                             >
-                                                {[1, 2, 3, 4, 5, 6, 7, 8, '9+'].map((n) => (
-                                                    <option key={n} value={String(n)}>
-                                                        {n} {Number(n) === 1 ? 'Person' : 'People'}
-                                                    </option>
+                                                {travellerCounts.map((n) => (
+                                                    <option key={n} value={n}>{n}</option>
                                                 ))}
                                             </select>
                                         </div>
                                     </div>
 
-                                    {/* Experiences (Multi-Select) */}
+                                    {/* Travel Style (Checkboxes) */}
                                     <div>
-                                        <Label className="text-stone-600 mb-3 block">What Would You Like to Experience? *</Label>
+                                        <Label className="text-stone-600 mb-3 block">Travel Style *</Label>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                            {experiences.map((exp) => {
-                                                const isSelected = formData.selectedExperiences.includes(exp);
+                                            {travelStyles.map((style) => {
+                                                const isSelected = formData.selectedStyles.includes(style);
                                                 return (
                                                     <button
-                                                        key={exp}
+                                                        key={style}
                                                         type="button"
-                                                        onClick={() => toggleExperience(exp)}
+                                                        onClick={() => toggleStyle(style)}
                                                         className={`text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-300 border flex items-center justify-between ${
                                                             isSelected
                                                                 ? 'bg-gold/10 border-gold/40 text-gold-dark font-medium shadow-sm'
                                                                 : 'bg-stone-50 border-stone-200 text-stone-600 hover:border-gold/30 hover:bg-gold/5'
                                                         }`}
                                                     >
-                                                        {exp}
+                                                        {style}
                                                         {isSelected && <Check className="w-4 h-4 text-gold shrink-0" />}
                                                     </button>
                                                 );
@@ -564,23 +466,27 @@ export default function PlanYourTripPage() {
                                     <div className="space-y-2 text-sm">
                                         <div className="flex justify-between border-b border-stone-100 pb-2">
                                             <span className="text-stone-500">Contact</span>
-                                            <span className="text-stone-800 font-medium text-right">{formData.fullName}<br/><span className="text-stone-500 font-normal text-xs">{formData.email}</span></span>
+                                            <span className="text-stone-800 font-medium text-right">{formData.fullName}<br /><span className="text-stone-500 font-normal text-xs">{formData.email}</span></span>
                                         </div>
                                         <div className="flex justify-between border-b border-stone-100 py-2">
-                                            <span className="text-stone-500">Origin</span>
-                                            <span className="text-stone-800 font-medium text-right">{formData.departingCity ? `${formData.departingCity}, ` : ''}{formData.country}</span>
+                                            <span className="text-stone-500">Departing</span>
+                                            <span className="text-stone-800 font-medium text-right">{formData.departingCity || 'Not specified'}</span>
                                         </div>
                                         <div className="flex justify-between border-b border-stone-100 py-2">
                                             <span className="text-stone-500">Timing</span>
                                             <span className="text-stone-800 font-medium text-right">
-                                                {dateOption === 'exact' ? formData.exactDates : dateOption === 'month' ? formData.monthYear : 'Flexible Dates'}<br/>
-                                                <span className="text-stone-500 font-normal text-xs">{formData.duration}</span>
+                                                {formData.travelMonth || 'Flexible'}<br />
+                                                <span className="text-stone-500 font-normal text-xs">{formData.tripLength}</span>
                                             </span>
                                         </div>
+                                        <div className="flex justify-between border-b border-stone-100 py-2">
+                                            <span className="text-stone-500">Travellers</span>
+                                            <span className="text-stone-800 font-medium">{formData.travellers}</span>
+                                        </div>
                                         <div className="flex justify-between py-2">
-                                            <span className="text-stone-500">Interests</span>
+                                            <span className="text-stone-500">Style</span>
                                             <span className="text-gold-dark font-medium text-right max-w-[60%]">
-                                                {formData.selectedExperiences.length} selected
+                                                {formData.selectedStyles.length > 0 ? formData.selectedStyles.join(', ') : 'None selected'}
                                             </span>
                                         </div>
                                     </div>
@@ -626,8 +532,8 @@ export default function PlanYourTripPage() {
                                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                                 ) : (
                                     <>
-                                        <Sparkles className="w-4 h-4 mr-2" />
-                                        Design My Journey
+                                        <Send className="w-4 h-4 mr-2" />
+                                        Plan Your Journey
                                     </>
                                 )}
                             </Button>
@@ -642,4 +548,3 @@ export default function PlanYourTripPage() {
         </>
     );
 }
-

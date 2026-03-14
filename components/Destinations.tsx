@@ -39,7 +39,7 @@ const provinces: Province[] = [
         id: 'Central',
         name: 'Central',
         intro: 'Misty highlands, tea-draped hills, and Kandy — the soul of Sri Lanka\'s enchanting hill country filled with colonial charm.',
-        heroImage: '/Photos/Other sections/Section 2 _ Classic Discovery.jpeg',
+        heroImage: '/Photos/Other sections/Destination Tea.jpeg',
         cities: [
             { name: 'Kandy', intro: 'The hill capital home to the sacred Temple of the Sacred Tooth Relic.', image: '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg', attractions: ['Temple of the Tooth', 'Peradeniya Gardens'], bestTime: 'Jan – Apr' },
             { name: 'Nuwara Eliya', intro: 'Colonial charm at 1,868m — rolling tea plantations and the finest Ceylon tea.', image: '/Photos/Other sections/Nuwara Eliya.jpeg', attractions: ['Tea Factory Tours', 'Horton Plains'], bestTime: 'Mar – May' },
@@ -265,7 +265,7 @@ export default function Destinations() {
     }, [svgLoaded]);
 
     return (
-        <section id="destinations" className="min-h-screen flex flex-col justify-center py-16 md:py-20 bg-[#faf7f2]">
+        <section id="destinations" className="min-h-screen flex flex-col justify-center py-16 md:py-20 bg-white">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 {/* Header */}
                 <div className="text-center mb-10 md:mb-12">
@@ -275,8 +275,9 @@ export default function Destinations() {
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-3">
                         Sri Lanka by Province
                     </h2>
+                    <div className="w-14 h-[2px] bg-gold mx-auto mb-5" />
                     <p className="text-stone-400 text-sm max-w-xl mx-auto">
-                        Hover to preview · Click a province to pin its details
+                        Tap a province to explore destinations
                     </p>
                 </div>
 
@@ -438,7 +439,7 @@ export default function Destinations() {
                                         Explore Sri Lanka
                                     </p>
                                     <p className="text-stone-400 text-sm max-w-xs leading-relaxed">
-                                        Hover over any province on the map or a label above to discover its destinations and curated experiences.
+                                        Tap any province on the map or a label above to discover its destinations and curated experiences.
                                     </p>
 
                                     {/* Province list preview */}

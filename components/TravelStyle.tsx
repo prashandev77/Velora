@@ -37,7 +37,7 @@ const tiles = [
 
 export default function TravelStyle() {
     return (
-        <section className="min-h-screen flex items-center py-20 md:py-28 bg-[#faf7f2]">
+        <section className="min-h-screen flex items-center py-20 md:py-28 bg-white">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 {/* Header */}
                 <div className="text-center mb-14 md:mb-20">
@@ -47,13 +47,14 @@ export default function TravelStyle() {
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
                         Four Distinct Ways to Experience Sri Lanka
                     </h2>
+                    <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
                         Whether you&apos;re drawn to heritage, wildlife, or coastal serenity, each journey is privately curated around you.
                     </p>
                 </div>
 
                 {/* Tiles Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 lg:gap-8">
                     {tiles.map((tile, i) => (
                         <motion.div
                             key={tile.heading}

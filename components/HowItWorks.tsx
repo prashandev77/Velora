@@ -36,7 +36,7 @@ const steps = [
 
 export default function HowItWorks() {
     return (
-        <section className="py-20 md:py-28 bg-white">
+        <section className="py-20 md:py-28 bg-[#F7F5F2]">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 <div className="text-center mb-14 md:mb-20">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
@@ -45,12 +45,13 @@ export default function HowItWorks() {
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
                         Effortless, From Start to Finish
                     </h2>
+                    <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
                         Your journey, thoughtfully curated in four simple steps. From the first conversation to your return home — every detail is handled with care and precision.
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-8 lg:gap-6">
                     {steps.map((step, i) => (
                         <motion.div
                             key={step.number}

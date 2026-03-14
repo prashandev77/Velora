@@ -80,6 +80,7 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                             width={140}
                             height={42}
                             className="h-9 w-auto object-contain"
+                            style={{ width: 'auto' }}
                             priority
                         />
                     </div>
@@ -181,6 +182,7 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                             width={110}
                             height={33}
                             className="h-7 w-auto object-contain"
+                            style={{ width: 'auto' }}
                         />
                         <span className="text-gold/60 text-[9px] font-medium uppercase tracking-widest">Admin</span>
                     </div>

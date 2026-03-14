@@ -45,6 +45,7 @@ export default function Footer() {
                                 width={180}
                                 height={54}
                                 className="h-12 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
+                                style={{ width: 'auto' }}
                             />
                         </Link>
                         <p className="text-stone-400 text-sm leading-relaxed max-w-sm mb-6">

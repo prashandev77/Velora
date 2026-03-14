@@ -12,7 +12,7 @@ const promises = [
 
 export default function PrivateTravelPromise() {
     return (
-        <section className="min-h-screen flex items-center py-16 md:py-24 bg-[#faf7f2]">
+        <section className="min-h-screen flex items-center py-16 md:py-24 bg-white">
             <div className="max-w-4xl mx-auto px-6 md:px-12 w-full">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -27,6 +27,7 @@ export default function PrivateTravelPromise() {
                     <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 mb-4">
                         Our Private Travel Promise
                     </h2>
+                    <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base mb-8">
                         We believe exceptional journeys should never feel rushed or crowded.
                     </p>

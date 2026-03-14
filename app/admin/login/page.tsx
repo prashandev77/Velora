@@ -46,6 +46,7 @@ export default function AdminLoginPage() {
                         width={160}
                         height={48}
                         className="h-12 w-auto object-contain mb-2"
+                        style={{ width: 'auto' }}
                         priority
                     />
                     <p className="text-white/40 text-xs tracking-[0.3em] uppercase">
