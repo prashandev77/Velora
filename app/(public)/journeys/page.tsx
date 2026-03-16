@@ -38,7 +38,7 @@ const featuredJourneys = [
         days: 15,
         style: 'Wellness • Ayurveda • Slow Travel',
         description: 'A restorative journey combining authentic Ayurvedic healing with gentle cultural discovery across Sri Lanka.',
-        image: '/Photos/Other sections/Ayurveda spa pavilion new.jpg',
+        image: '/Photos/Other sections/Velora Serene new.avif',
         href: '/journeys/wellness/velora-serene',
         collection: 'Wellness Collection',
     },

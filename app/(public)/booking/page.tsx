@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
     ShieldCheck,
@@ -78,22 +79,28 @@ export default function BookingPage() {
     return (
         <div className="min-h-screen bg-white">
             {/* ── Hero Banner ── */}
-            <section className="relative bg-stone-900 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900" />
+            <section className="relative min-h-[60vh] flex items-end overflow-hidden">
+                <Image
+                    src="/Photos/Other sections/Payment tab new.webp"
+                    alt="Booking & Payment"
+                    fill
+                    className="object-cover"
+                    priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-                <div className="absolute -top-32 -right-32 w-96 h-96 bg-gold/5 rounded-full blur-[100px]" />
 
-                <div className="relative max-w-5xl mx-auto px-6 md:px-12 pt-36 pb-20 md:pt-44 md:pb-28">
+                <div className="relative w-full max-w-5xl mx-auto px-6 md:px-12 pb-20 md:pb-28">
                     <motion.div {...fadeUp} className="text-center">
-                        <span className="text-gold/80 text-xs md:text-sm font-medium uppercase tracking-[0.3em] mb-4 block">
-                            Terms (Booking & Payment Terms)
+                        <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.3em] mb-4 block">
+                            Booking & Payment Terms
                         </span>
                         <h1 className="font-heading text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
                             Travel With Confidence
                         </h1>
                         {/* Gold divider */}
                         <div className="w-14 h-[2px] bg-gold mx-auto mb-8" />
-                        <p className="text-stone-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
                             Planning your journey with Velora is simple and transparent. A small deposit
                             secures your itinerary, with the balance payable closer to your travel date.
                         </p>

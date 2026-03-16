@@ -43,7 +43,7 @@ const journeys = [
         description:
             'A restorative journey designed for wellbeing, combining authentic Ayurveda treatments with gentle cultural discovery and peaceful landscapes.',
         route: 'Negombo → Cultural Triangle → Ayurveda Retreat → South Coast',
-        image: '/Photos/Other sections/Ayurveda spa pavilion new.jpg',
+        image: '/Photos/Other sections/Velora Serene new.avif',
         href: '/package/8',
     },
     {

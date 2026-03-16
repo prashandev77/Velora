@@ -218,7 +218,7 @@ export const packages: Package[] = [
         title: 'Velora Serene',
         location: 'Sri Lanka',
         days: 15,
-        image_url: '/Photos/Other sections/Ayurveda spa pavilion new.jpg',
+        image_url: '/Photos/Other sections/Velora Serene new.avif',
         tag: 'Wellness',
         highlights: ['Ayurveda', 'Gentle Exploration', 'Slow Travel'],
         subtitle: 'A Gentle Wellness Journey Through Sri Lanka',
@@ -260,7 +260,7 @@ export const packages: Package[] = [
             'Optional cultural excursions',
         ],
         galleryImages: [
-            '/Photos/Other sections/Ayurveda spa pavilion new.jpg',
+            '/Photos/Other sections/Velora Serene new.avif',
             '/Photos/Other sections/Peradeniya Garden.jpeg',
             '/Photos/Other sections/Rice Field.jpeg',
             '/Photos/Other sections/Destination Hatton.webp',
