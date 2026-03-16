@@ -5,7 +5,7 @@ import { ChevronRight } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'Destinations | Velora Journeys',
-    description: 'Explore our handpicked destinations — the cultural wonders of Sri Lanka, the pristine paradise of the Maldives, and the timeless grandeur of India.',
+    description: 'Explore our handpicked destinations, the cultural wonders of Sri Lanka and the pristine paradise of the Maldives.',
 };
 
 const destinations = [
@@ -14,7 +14,7 @@ const destinations = [
         name: 'Sri Lanka',
         tagline: 'The Pearl of the Indian Ocean',
         description: 'Ancient temples, misty highlands, golden beaches, and an island brimming with warmth. Sri Lanka offers a journey through centuries of heritage and breathtaking natural beauty.',
-        image: '/Photos/Hero Slide Photo 1 Sigiriya.jpeg',
+        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
     },
     {
         slug: 'maldives',
@@ -22,13 +22,6 @@ const destinations = [
         tagline: 'Paradise Perfected',
         description: 'Crystal-clear lagoons, pristine coral reefs, and overwater luxury that redefines island living. The Maldives is the ultimate destination for romance and relaxation.',
         image: '/Photos/Other sections/Sec 2  Maldives.jpeg',
-    },
-    {
-        slug: 'india',
-        name: 'India',
-        tagline: 'Land of Maharajas & Timeless Wonders',
-        description: 'From the ivory splendour of the Taj Mahal to the rose-gold palaces of Rajasthan and the serene backwaters of Kerala — India is a journey into a world of extraordinary contrasts and living heritage.',
-        image: '/Photos/Other sections/Taj_Mahal_2,_Agra,_India.jpg',
     },
 ];
 
@@ -46,7 +39,7 @@ export default function DestinationsPage() {
                         Our <span className="text-gold">Destinations</span>
                     </h1>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        Three extraordinary destinations, each offering a world of discovery.
+                        Two extraordinary destinations, each offering a world of discovery.
                         Together, they create the ultimate multi-destination journey.
                     </p>
                 </div>

@@ -265,7 +265,7 @@ export default function Destinations() {
     }, [svgLoaded]);
 
     return (
-        <section id="destinations" className="min-h-screen flex flex-col justify-center py-16 md:py-20 bg-white">
+        <section id="destinations" className="min-h-screen flex flex-col justify-center py-16 md:py-20 bg-[#F7F5F2]">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 {/* Header */}
                 <div className="text-center mb-10 md:mb-12">

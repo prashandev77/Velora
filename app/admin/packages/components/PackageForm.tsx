@@ -52,7 +52,7 @@ export default function PackageForm({ action, pkg }: { action: (fd: FormData) =>
                     </div>
                     <div>
                         <label className={labelCls}>Location *</label>
-                        <input name="location" required defaultValue={pkg?.location} placeholder="e.g. Rajasthan, India" className={inputCls} />
+                        <input name="location" required defaultValue={pkg?.location} placeholder="e.g. Kandy, Sri Lanka" className={inputCls} />
                     </div>
                     <div>
                         <label className={labelCls}>Duration (days) *</label>
@@ -66,7 +66,7 @@ export default function PackageForm({ action, pkg }: { action: (fd: FormData) =>
 
                 <div>
                     <label className={labelCls}>Image URL *</label>
-                    <input name="image_url" required defaultValue={pkg?.image_url} placeholder="/images/india-jaipur.jpg or https://..." className={inputCls} />
+                    <input name="image_url" required defaultValue={pkg?.image_url} placeholder="/images/sigiriya.jpg or https://..." className={inputCls} />
                 </div>
 
                 <div>

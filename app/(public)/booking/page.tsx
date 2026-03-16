@@ -62,6 +62,16 @@ const sections = [
         title: 'Travel Insurance',
         body: 'We strongly recommend that all travellers obtain comprehensive travel insurance covering cancellations, medical expenses, and travel disruptions.',
     },
+    {
+        icon: AlertCircle,
+        title: 'External Factors',
+        body: 'Velora Journeys shall not be held responsible for changes caused by circumstances beyond our control, including but not limited to weather conditions, airline schedule changes, government regulations, or force majeure events.',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Local Travel Partners',
+        body: 'Velora Journeys works with licensed local travel providers in Sri Lanka to deliver travel services including accommodation, transport, and guided experiences.',
+    },
 ];
 
 export default function BookingPage() {
@@ -76,7 +86,7 @@ export default function BookingPage() {
                 <div className="relative max-w-5xl mx-auto px-6 md:px-12 pt-36 pb-20 md:pt-44 md:pb-28">
                     <motion.div {...fadeUp} className="text-center">
                         <span className="text-gold/80 text-xs md:text-sm font-medium uppercase tracking-[0.3em] mb-4 block">
-                            Booking & Payments
+                            Terms (Booking & Payment Terms)
                         </span>
                         <h1 className="font-heading text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
                             Travel With Confidence

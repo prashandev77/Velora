@@ -13,7 +13,7 @@ export default function AdventurePage() {
             tagline="Beyond Boundaries"
             title="Adventure"
             titleAccent="Collection"
-            intro="For those who crave discovery — from the ancient rock fortress of Sigiriya to world-class dive sites in the Maldives. Every day brings a new frontier of excitement."
+            intro="For those who crave discovery, from the ancient rock fortress of Sigiriya to world-class dive sites in the Maldives. Every day brings a new frontier of excitement."
             heroImage="/images/sigiriya.jpg"
             features={[
                 {

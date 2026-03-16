@@ -102,7 +102,7 @@ export default function Gallery() {
                         Sri Lanka in Every Frame
                     </h2>
                     <p className="text-stone-400 text-sm md:text-base max-w-xl mx-auto">
-                        From ancient fortresses to ocean villas — a glimpse into the extraordinary moments awaiting you.
+                        From ancient fortresses to ocean villas, a glimpse into the extraordinary moments awaiting you.
                     </p>
                 </motion.div>
 

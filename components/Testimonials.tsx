@@ -51,7 +51,7 @@ const testimonials = [
         avatar: 'R',
         rating: 5,
         package: 'Azure Atoll Escape',
-        text: 'The seaplane arrival alone was worth the trip. But it was the little touches — the floating breakfast, the private sandbank dinner — that showed true attention to detail.',
+        text: 'The seaplane arrival alone was worth the trip. But it was the little touches, the floating breakfast, the private sandbank dinner, that showed true attention to detail.',
     },
 ];
 
@@ -76,7 +76,7 @@ export default function Testimonials() {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [current, paused]);
 
     const variants = {
@@ -174,11 +174,10 @@ export default function Testimonials() {
                         <button
                             key={i}
                             onClick={() => goTo(i, i > current ? 1 : -1)}
-                            className={`transition-all duration-300 rounded-full ${
-                                i === current
+                            className={`transition-all duration-300 rounded-full ${i === current
                                     ? 'w-6 h-2 bg-gold'
                                     : 'w-2 h-2 bg-stone-300 hover:bg-stone-400'
-                            }`}
+                                }`}
                             aria-label={`Go to review ${i + 1}`}
                         />
                     ))}

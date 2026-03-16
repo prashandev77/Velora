@@ -3,7 +3,7 @@ import JourneyCategoryPage from '@/components/JourneyCategoryPage';
 
 export const metadata: Metadata = {
     title: 'Wellness Collection | Velora Journeys',
-    description: 'Rejuvenate body and soul — Ayurvedic retreats, overwater spa rituals, and mindfulness journeys across Sri Lanka and the Maldives.',
+    description: 'Rejuvenate body and soul, Ayurvedic retreats, overwater spa rituals, and mindfulness journeys across Sri Lanka and the Maldives.',
 };
 
 export default function WellnessPage() {
@@ -13,7 +13,7 @@ export default function WellnessPage() {
             tagline="Restore & Renew"
             title="Wellness"
             titleAccent="Collection"
-            intro="Reconnect with yourself through transformative wellness experiences — from ancient Ayurvedic programmes in Sri Lanka to overwater spa sanctuaries in the Maldives."
+            intro="Reconnect with yourself through transformative wellness experiences, from ancient Ayurvedic programmes in Sri Lanka to overwater spa sanctuaries in the Maldives."
             heroImage="/images/wellness-hero.jpg"
             features={[
                 {

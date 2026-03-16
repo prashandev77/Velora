@@ -239,7 +239,7 @@ export default async function PackageDetailPage({
                                 'Handpicked luxury accommodation at every stop',
                                 'Private, English-speaking expert guides throughout',
                                 'Exclusive access to off-the-beaten-path experiences',
-                                'Flexible itinerary — adjust activities to your mood',
+                                'Flexible itinerary, adjust activities to your mood',
                                 'All ground transportation in premium vehicles',
                                 'Pre-departure planning sessions with your travel designer',
                                 'Complimentary 24/7 emergency support',

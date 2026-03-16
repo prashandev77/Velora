@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { MapPin, Mail, Phone } from 'lucide-react';
+import Logo from '@/components/Logo';
 
 const footerLinks = {
     journeys: [
@@ -20,8 +20,8 @@ const footerLinks = {
     support: [
         { label: 'Plan Your Journey', href: '/contact' },
         { label: 'How It Works', href: '/#how-it-works' },
-        { label: 'Privacy Policy', href: '#' },
-        { label: 'Terms of Service', href: '#' },
+        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms of Service', href: '/terms' },
     ],
 };
 
@@ -39,14 +39,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="lg:col-span-2">
                         <Link href="/" className="flex items-center group mb-5">
-                            <Image
-                                src="/velora_logo.svg"
-                                alt="Velora Journeys"
-                                width={180}
-                                height={54}
-                                className="h-12 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
-                                style={{ width: 'auto' }}
-                            />
+                            <Logo isDark={false} className="h-12 w-auto object-contain transition-all duration-300 group-hover:opacity-80" />
                         </Link>
                         <p className="text-stone-400 text-sm leading-relaxed max-w-sm mb-6">
                             Privately curated journeys across Sri Lanka and the Maldives.

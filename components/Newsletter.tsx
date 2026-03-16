@@ -70,7 +70,7 @@ export default function Newsletter() {
                     )}
 
                     <p className="text-stone-400 text-xs mt-5">
-                        No spam — just thoughtfully curated travel inspiration.
+                        No spam, just thoughtfully curated travel inspiration.
                     </p>
                 </motion.div>
             </div>

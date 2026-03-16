@@ -56,7 +56,7 @@ export default function SpecialOffers() {
                                 </span>
                             </div>
                             <h3 className="font-heading text-2xl md:text-3xl font-bold text-white mb-2">
-                                The Dual Paradise — Early Bird
+                                The Dual Paradise, Early Bird
                             </h3>
                             <p className="text-white/50 text-sm leading-relaxed mb-6 max-w-sm">
                                 Book the 14-day Dual Paradise journey before March 31 and enjoy
@@ -96,7 +96,7 @@ export default function SpecialOffers() {
                                     </span>
                                 </div>
                                 <h3 className="font-heading text-xl font-bold text-white mb-1">
-                                    Azure Atoll — Honeymoon Upgrade
+                                    Azure Atoll, Honeymoon Upgrade
                                 </h3>
                                 <p className="text-white/50 text-xs mb-3 max-w-sm">
                                     Complimentary room upgrade to Sunset Water Villa + private
@@ -133,7 +133,7 @@ export default function SpecialOffers() {
                                     </span>
                                 </div>
                                 <h3 className="font-heading text-xl font-bold text-white mb-1">
-                                    Royal Ceylon — Group of 4+
+                                    Royal Ceylon, Group of 4+
                                 </h3>
                                 <p className="text-white/50 text-xs mb-3 max-w-sm">
                                     Travel with friends or family and enjoy complimentary activity

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 const tiles = [
     {
         heading: 'Culture & Heritage',
-        description: 'Walk through ancient kingdoms, sacred temples, and colonial towns — guided privately and experienced with depth, not crowds.',
+        description: 'Walk through ancient kingdoms, sacred temples, and colonial towns, guided privately and experienced with depth, not crowds.',
         button: 'Explore Cultural Journeys',
         href: '/journeys',
         image: '/Photos/Other sections/Section 2 _ Classic Discovery.jpeg',
@@ -21,7 +21,7 @@ const tiles = [
     },
     {
         heading: 'Coast & Island Escape',
-        description: 'Boutique beach retreats, private villas, and overwater Maldives indulgence — designed for complete serenity.',
+        description: 'Boutique beach retreats, private villas, and overwater Maldives indulgence, designed for complete serenity.',
         button: 'Explore Beach & Island Escapes',
         href: '/journeys',
         image: '/Photos/Other sections/Section 2 _ Coast.jpeg',

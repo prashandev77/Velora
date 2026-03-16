@@ -15,7 +15,7 @@ const slides = [
         buttons: [
             { label: 'Plan Your Journey', href: '/plan-your-trip', primary: true },
         ],
-        image: '/Photos/Hero Slide Photo 1 Sigiriya.jpeg',
+        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
     },
     {
         id: 2,
@@ -25,7 +25,7 @@ const slides = [
         buttons: [
             { label: 'Discover Wildlife Journeys', href: '/journeys', primary: true },
         ],
-        image: '/Photos/Hero Slide Photo 2 .jpeg',
+        image: '/Photos/Hero 2 Wildlife new red brightness.png',
     },
     {
         id: 3,
@@ -35,7 +35,7 @@ const slides = [
         buttons: [
             { label: 'Start Planning', href: '/plan-your-trip', primary: true },
         ],
-        image: '/Photos/Hero Slide Photo 3 tea.jpeg',
+        image: '/Photos/Hero 3 - Tea new.jpeg',
     },
     {
         id: 4,

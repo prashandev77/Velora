@@ -13,7 +13,7 @@ const journeys = [
         description:
             'A beautifully balanced introduction to Sri Lanka, blending ancient heritage, misty tea country and the island\'s golden southern coast.',
         route: 'Sigiriya → Kandy → Tea Country → South Coast',
-        image: '/Photos/Other sections/Nuwara Eliya.jpeg',
+        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
         href: '/package/10',
     },
     {
@@ -33,7 +33,7 @@ const journeys = [
         description:
             'A romantic journey through Sri Lanka\'s most beautiful settings, combining scenic train rides, wildlife safaris and luxury oceanfront stays.',
         route: 'Negombo → Sigiriya → Hatton → Ella → Yala → Cape Weligama',
-        image: '/images/journey_honeymoon.png',
+        image: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
         href: '/package/4',
     },
     {
@@ -43,7 +43,7 @@ const journeys = [
         description:
             'A restorative journey designed for wellbeing, combining authentic Ayurveda treatments with gentle cultural discovery and peaceful landscapes.',
         route: 'Negombo → Cultural Triangle → Ayurveda Retreat → South Coast',
-        image: '/images/journey_serene_ayurveda.png',
+        image: '/Photos/Other sections/Ayurveda spa pavilion new.jpg',
         href: '/package/8',
     },
     {
@@ -53,14 +53,14 @@ const journeys = [
         description:
             'An immersive wildlife expedition exploring Sri Lanka\'s national parks, wetlands and rainforests in search of extraordinary biodiversity.',
         route: 'Wilpattu → Trincomalee → Kumana → Gal Oya → Sinharaja → Kitulgala',
-        image: '/images/journey_wild_safari.png',
+        image: '/Photos/Other sections/Journey_Velora Wild new.jpg',
         href: '/package/12',
     },
 ];
 
 export default function SignatureJourneys() {
     return (
-        <section className="min-h-screen flex items-center py-20 md:py-28 bg-[#F7F5F2]">
+        <section className="min-h-screen flex items-center py-20 md:py-28 bg-white">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 {/* Header */}
                 <div className="text-center mb-14 md:mb-20">

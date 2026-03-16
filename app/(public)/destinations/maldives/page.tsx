@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Maldives | Velora Journeys',
-    description: 'Experience the pristine paradise of the Maldives — overwater villas, crystal lagoons, world-class diving, and unparalleled luxury.',
+    description: 'Experience the pristine paradise of the Maldives, overwater villas, crystal lagoons, world-class diving, and unparalleled luxury.',
 };
 
 const highlights = [
@@ -48,7 +48,7 @@ export default function MaldivesPage() {
                     <p className="text-stone-500 text-lg max-w-3xl mx-auto leading-relaxed">
                         A constellation of 1,200 islands scattered across the Indian Ocean, the Maldives
                         is the ultimate expression of tropical luxury. Crystal lagoons, pristine reefs,
-                        and overwater elegance — this is paradise, perfected.
+                        and overwater elegance, this is paradise, perfected.
                     </p>
 
                     {/* Quick Facts */}

@@ -48,26 +48,22 @@ export default function StartPlanning() {
 
     if (isSubmitted) {
         return (
-            <section className="relative py-20 md:py-28 overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <Image src="/images/planning_couple.png" alt="" fill className="object-cover" />
-                    <div className="absolute inset-0 bg-stone-950/88" />
-                </div>
+            <section className="relative py-20 md:py-28 bg-white overflow-hidden">
                 <div className="relative z-10 max-w-xl mx-auto px-6 text-center">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                     >
-                        <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
-                            <Check className="w-8 h-8 text-emerald-400" />
+                        <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-6">
+                            <Check className="w-8 h-8 text-emerald-600" />
                         </div>
-                        <h3 className="font-heading text-2xl font-bold text-white mb-3">Thank You!</h3>
-                        <p className="text-stone-300 mb-6">
+                        <h3 className="font-heading text-2xl font-bold text-stone-900 mb-3">Thank You!</h3>
+                        <p className="text-stone-500 mb-6">
                             Your journey request has been received. A Velora specialist will be in touch within 24 hours.
                         </p>
                         <Link
                             href="/journeys"
-                            className="inline-flex items-center gap-2 text-gold hover:text-white text-sm font-medium transition-colors"
+                            className="inline-flex items-center gap-2 text-gold hover:text-stone-900 text-sm font-medium transition-colors"
                         >
                             Browse Journeys While You Wait <ArrowRight className="w-4 h-4" />
                         </Link>
@@ -78,18 +74,7 @@ export default function StartPlanning() {
     }
 
     return (
-        <section className="relative py-20 md:py-28 overflow-hidden">
-            {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-                <Image
-                    src="/images/planning_couple.png"
-                    alt="Couple planning a luxury journey"
-                    fill
-                    className="object-cover"
-                />
-                <div className="absolute inset-0 bg-stone-950/88" />
-            </div>
-
+        <section className="relative py-20 md:py-28 bg-white overflow-hidden">
             <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12">
                 {/* Header */}
                 <motion.div
@@ -102,11 +87,11 @@ export default function StartPlanning() {
                     <span className="text-gold text-xs md:text-sm font-medium uppercase tracking-[0.3em] mb-4 block">
                         Your Journey Begins Here
                     </span>
-                    <h2 className="font-heading text-3xl md:text-5xl font-bold text-white mb-5 leading-tight">
+                    <h2 className="font-heading text-3xl md:text-5xl font-bold text-stone-900 mb-5 leading-tight">
                         Start Planning Your{' '}
                         <span className="text-gold">Private Journey</span>
                     </h2>
-                    <p className="text-stone-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-stone-500 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
                         Tell us a little about your travel plans and our Velora specialists will design a personalised Sri Lanka journey just for you.
                     </p>
                 </motion.div>
@@ -118,18 +103,18 @@ export default function StartPlanning() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="bg-white/[0.06] backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-10 max-w-4xl mx-auto"
+                    className="bg-[#F7F5F2] border border-stone-200 rounded-3xl p-8 md:p-10 max-w-4xl mx-auto"
                 >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         {/* When are you travelling? */}
                         <div>
-                            <label className="text-stone-300 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
                                 When are you travelling?
                             </label>
                             <select
                                 value={month}
                                 onChange={(e) => setMonth(e.target.value)}
-                                className="w-full h-11 rounded-xl bg-white/10 border border-white/15 text-white px-4 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-stone-900 [&>option]:text-white"
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm focus:outline-none focus:border-gold/60"
                             >
                                 <option value="">Select month</option>
                                 {months.map((m) => (
@@ -140,13 +125,13 @@ export default function StartPlanning() {
 
                         {/* Trip length */}
                         <div>
-                            <label className="text-stone-300 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
                                 Trip Length
                             </label>
                             <select
                                 value={tripLength}
                                 onChange={(e) => setTripLength(e.target.value)}
-                                className="w-full h-11 rounded-xl bg-white/10 border border-white/15 text-white px-4 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-stone-900 [&>option]:text-white"
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm focus:outline-none focus:border-gold/60"
                             >
                                 <option value="">Select duration</option>
                                 {tripLengths.map((d) => (
@@ -157,13 +142,13 @@ export default function StartPlanning() {
 
                         {/* Number of travellers */}
                         <div>
-                            <label className="text-stone-300 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
                                 Number of Travellers
                             </label>
                             <select
                                 value={travellers}
                                 onChange={(e) => setTravellers(e.target.value)}
-                                className="w-full h-11 rounded-xl bg-white/10 border border-white/15 text-white px-4 text-sm focus:outline-none focus:border-gold/60 [&>option]:bg-stone-900 [&>option]:text-white"
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm focus:outline-none focus:border-gold/60"
                             >
                                 {travellerCounts.map((n) => (
                                     <option key={n} value={n}>{n}</option>
@@ -173,7 +158,7 @@ export default function StartPlanning() {
 
                         {/* Departing City */}
                         <div>
-                            <label className="text-stone-300 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
                                 Departing City
                             </label>
                             <input
@@ -181,14 +166,14 @@ export default function StartPlanning() {
                                 value={departingCity}
                                 onChange={(e) => setDepartingCity(e.target.value)}
                                 placeholder="e.g. Sydney, London"
-                                className="w-full h-11 rounded-xl bg-white/10 border border-white/15 text-white px-4 text-sm placeholder:text-stone-500 focus:outline-none focus:border-gold/60"
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
                             />
                         </div>
                     </div>
 
                     {/* Travel Style — Checkboxes */}
                     <div className="mb-8">
-                        <label className="text-stone-300 text-sm font-medium mb-3 block">
+                        <label className="text-stone-700 text-sm font-medium mb-3 block">
                             Travel Style
                         </label>
                         <div className="flex flex-wrap gap-2">
@@ -202,7 +187,7 @@ export default function StartPlanning() {
                                         className={`px-4 py-2 rounded-full text-sm transition-all duration-300 border ${
                                             isSelected
                                                 ? 'bg-gold/20 border-gold/50 text-gold font-medium'
-                                                : 'bg-white/5 border-white/15 text-stone-400 hover:border-gold/30 hover:text-stone-200'
+                                                : 'bg-white border-stone-200 text-stone-500 hover:border-gold/30 hover:text-stone-700'
                                         }`}
                                     >
                                         {isSelected && <Check className="w-3.5 h-3.5 inline mr-1.5 -mt-0.5" />}
@@ -216,7 +201,7 @@ export default function StartPlanning() {
                     {/* Email + Message */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <div>
-                            <label className="text-stone-300 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
                                 Email *
                             </label>
                             <input
@@ -225,11 +210,11 @@ export default function StartPlanning() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="you@example.com"
-                                className="w-full h-11 rounded-xl bg-white/10 border border-white/15 text-white px-4 text-sm placeholder:text-stone-500 focus:outline-none focus:border-gold/60"
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
                             />
                         </div>
                         <div>
-                            <label className="text-stone-300 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
                                 Message (Optional)
                             </label>
                             <input
@@ -237,7 +222,7 @@ export default function StartPlanning() {
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                                 placeholder="Tell us anything else..."
-                                className="w-full h-11 rounded-xl bg-white/10 border border-white/15 text-white px-4 text-sm placeholder:text-stone-500 focus:outline-none focus:border-gold/60"
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
                             />
                         </div>
                     </div>
@@ -252,7 +237,7 @@ export default function StartPlanning() {
                             Plan Your Journey
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                         </button>
-                        <p className="text-stone-600 text-xs mt-5 tracking-wide">
+                        <p className="text-stone-500 text-xs mt-5 tracking-wide">
                             No commitment required · Response within 24 hours · 100% bespoke
                         </p>
                     </div>

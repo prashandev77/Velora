@@ -23,7 +23,7 @@ const faqs = [
     },
     {
         q: 'Are entrance fees included?',
-        a: 'Where specified in your personalised itinerary, entrance fees are included — Dambulla Cave Temple, Temple of the Sacred Tooth Relic, Kandyan dance performance, Peradeniya Botanical Gardens, elephant safari, and Polonnaruwa Ancient City.',
+        a: 'Where specified in your personalised itinerary, entrance fees are included, Dambulla Cave Temple, Temple of the Sacred Tooth Relic, Kandyan dance performance, Peradeniya Botanical Gardens, elephant safari, and Polonnaruwa Ancient City.',
     },
     {
         q: 'Do I need a visa to visit Sri Lanka?',
@@ -77,9 +77,8 @@ export default function FAQ() {
                         return (
                             <div
                                 key={i}
-                                className={`border rounded-2xl transition-colors duration-300 ${
-                                    isOpen ? 'border-gold/30 bg-gold/[0.03]' : 'border-stone-100 bg-stone-50/50'
-                                }`}
+                                className={`border rounded-2xl transition-colors duration-300 ${isOpen ? 'border-gold/30 bg-gold/[0.03]' : 'border-stone-100 bg-stone-50/50'
+                                    }`}
                             >
                                 <button
                                     onClick={() => setOpen(isOpen ? null : i)}

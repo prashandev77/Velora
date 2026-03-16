@@ -3,7 +3,7 @@ import JourneyCategoryPage from '@/components/JourneyCategoryPage';
 
 export const metadata: Metadata = {
     title: 'Luxury Collection | Velora Journeys',
-    description: 'Indulge in handcrafted luxury — private villas, curated fine dining, and exclusive access to the most extraordinary places in Sri Lanka and the Maldives.',
+    description: 'Indulge in handcrafted luxury, private villas, curated fine dining, and exclusive access to the most extraordinary places in Sri Lanka and the Maldives.',
 };
 
 export default function LuxuryPage() {
@@ -13,7 +13,7 @@ export default function LuxuryPage() {
             tagline="Ultimate Refinement"
             title="Luxury"
             titleAccent="Collection"
-            intro="Experience travel at its finest. Every detail curated, every moment extraordinary — from private overwater villas to bespoke cultural immersions."
+            intro="Experience travel at its finest. Every detail curated, every moment extraordinary, from private overwater villas to bespoke cultural immersions."
             heroImage="/images/luxury-hero.jpg"
             features={[
                 {

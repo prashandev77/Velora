@@ -48,7 +48,7 @@ export default function JourneysSection() {
                         Three Ways to <span className="text-gradient-gold">Explore</span>
                     </h2>
                     <p className="text-white/50 text-lg max-w-xl">
-                        Whether you seek culture, serenity, or adventure — every path leads
+                        Whether you seek culture, serenity, or adventure, every path leads
                         to the extraordinary.
                     </p>
                 </motion.div>

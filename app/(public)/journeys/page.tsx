@@ -11,7 +11,7 @@ const featuredJourneys = [
         days: 8,
         style: 'Culture • Nature • Heritage',
         description: 'Discover Sri Lanka\'s ancient cities, hill country landscapes, and golden beaches in one beautifully balanced journey.',
-        image: '/Photos/Other sections/Hill Country.jpg',
+        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
         href: '/journeys/adventure/serendipity-of-sri-lanka',
         collection: 'Signature Collection',
     },
@@ -29,7 +29,7 @@ const featuredJourneys = [
         days: 12,
         style: 'Romance • Tea Country • Safari • Beach',
         description: 'A romantic journey through Sri Lanka\'s most beautiful landscapes, ending with ocean sunsets and luxury coastal retreats.',
-        image: '/images/honeymoon-hero.jpg',
+        image: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
         href: '/journeys/honeymoon/velora-honeymoon',
         collection: 'Romance Collection',
     },
@@ -38,7 +38,7 @@ const featuredJourneys = [
         days: 15,
         style: 'Wellness • Ayurveda • Slow Travel',
         description: 'A restorative journey combining authentic Ayurvedic healing with gentle cultural discovery across Sri Lanka.',
-        image: '/images/velora_serene_journey.png',
+        image: '/Photos/Other sections/Ayurveda spa pavilion new.jpg',
         href: '/journeys/wellness/velora-serene',
         collection: 'Wellness Collection',
     },
@@ -47,7 +47,7 @@ const featuredJourneys = [
         days: 17,
         style: 'Wildlife • Birding • Safaris',
         description: 'Sri Lanka\'s most complete wildlife journey exploring wetlands, national parks, rainforests, and mountain ecosystems.',
-        image: '/images/journey_wild_safari.png',
+        image: '/Photos/Other sections/Journey_Velora Wild new.jpg',
         href: '/journeys/adventure/velora-wild',
         collection: 'Wildlife Collection',
     },
@@ -156,6 +156,12 @@ export default function JourneysPage() {
                             </Link>
                         </motion.div>
                     ))}
+                </div>
+
+                <div className="mt-16 text-center">
+                    <p className="text-stone-500 text-sm italic">
+                        All journeys are privately curated and subject to availability at the time of booking.
+                    </p>
                 </div>
             </div>
         </main>

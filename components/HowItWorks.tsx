@@ -8,14 +8,14 @@ const steps = [
         number: '01',
         title: 'Share Your Vision',
         description:
-            'Tell us how you wish to travel — the pace, experiences, level of comfort, and special occasions. Whether you begin with one of our signature journeys or a blank canvas, we start with you.',
+            'Tell us how you wish to travel, the pace, experiences, level of comfort, and special occasions. Whether you begin with one of our signature journeys or a blank canvas, we start with you.',
         image: '/images/how_it_works_1.png',
     },
     {
         number: '02',
         title: 'Curate & Design',
         description:
-            'Your dedicated Velora travel specialist crafts a personalised itinerary — selecting boutique stays, private guides, and meaningful experiences tailored to your style.',
+            'Your dedicated Velora travel specialist crafts a personalised itinerary, selecting boutique stays, private guides, and meaningful experiences tailored to your style.',
         image: '/images/how_it_works_2.png',
     },
     {
@@ -47,7 +47,7 @@ export default function HowItWorks() {
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                        Your journey, thoughtfully curated in four simple steps. From the first conversation to your return home — every detail is handled with care and precision.
+                        Your journey, thoughtfully curated in four simple steps. From the first conversation to your return home, every detail is handled with care and precision.
                     </p>
                 </div>
 

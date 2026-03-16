@@ -49,7 +49,7 @@ export default function PrivateTravelPromise() {
                     </div>
 
                     <p className="text-gold text-sm md:text-base italic font-medium">
-                        Travel as you wish — with confidence and clarity.
+                        Travel as you wish, with confidence and clarity.
                     </p>
                 </motion.div>
             </div>

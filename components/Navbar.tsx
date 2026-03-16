@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Logo from '@/components/Logo';
 
 const navLinks = [
     { href: '/', label: 'Home', icon: Home },
@@ -64,15 +64,7 @@ export default function Navbar() {
                 <nav className="flex items-center justify-between px-4 md:px-6 py-3">
                     {/* Logo */}
                     <Link href="/" onClick={closeMenu} className="flex items-center group">
-                        <Image
-                            src="/velora_logo.svg"
-                            alt="Velora Journeys"
-                            width={160}
-                            height={48}
-                            className="h-10 md:h-12 w-auto object-contain transition-opacity duration-300 group-hover:opacity-80"
-                            style={{ width: 'auto' }}
-                            priority
-                        />
+                        <Logo isDark={isScrolled || forceDark} />
                     </Link>
 
                     {/* Desktop Nav */}

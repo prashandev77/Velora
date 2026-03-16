@@ -6,13 +6,13 @@ import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
     title: 'Sri Lanka | Velora Journeys',
-    description: 'Discover the Pearl of the Indian Ocean — ancient temples, misty tea plantations, wildlife safaris, and golden beaches. Handcrafted luxury journeys through Sri Lanka.',
+    description: 'Discover the Pearl of the Indian Ocean, ancient temples, misty tea plantations, wildlife safaris, and golden beaches. Handcrafted luxury journeys through Sri Lanka.',
 };
 
 const highlights = [
     {
         title: 'Cultural Triangle',
-        description: 'Sigiriya Rock Fortress, Dambulla Cave Temple, and the ancient city of Polonnaruwa — UNESCO World Heritage wonders that tell centuries of royal history.',
+        description: 'Sigiriya Rock Fortress, Dambulla Cave Temple, and the ancient city of Polonnaruwa, UNESCO World Heritage wonders that tell centuries of royal history.',
         image: '/Photos/Hero Slide Photo 1 Sigiriya.jpeg',
     },
     {
@@ -47,7 +47,7 @@ export default function SriLankaPage() {
                     </h1>
                     <p className="text-stone-500 text-lg max-w-3xl mx-auto leading-relaxed">
                         An island of extraordinary beauty and deep heritage. From ancient rock fortresses
-                        to misty tea plantations, golden beaches to safari-rich jungles — Sri Lanka
+                        to misty tea plantations, golden beaches to safari-rich jungles, Sri Lanka
                         offers the adventure of a lifetime in a compact, enchanting paradise.
                     </p>
 
