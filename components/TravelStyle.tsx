@@ -54,7 +54,7 @@ export default function TravelStyle() {
                 </div>
 
                 {/* Tiles Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-6 lg:gap-8">
                     {tiles.map((tile, i) => (
                         <motion.div
                             key={tile.heading}
@@ -62,26 +62,47 @@ export default function TravelStyle() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: '-50px' }}
                             transition={{ duration: 0.6, delay: i * 0.1 }}
-                            className="group relative overflow-hidden rounded-2xl aspect-[4/3] md:aspect-[3/2]"
+                            className="group flex flex-col p-5 md:p-0 rounded-[2.5rem] md:rounded-2xl border border-gold/10 md:border-transparent hover:border-gold/30 md:hover:border-transparent transition-all duration-500 bg-[#F7F5F2]/40 md:bg-transparent hover:bg-white md:hover:bg-transparent"
                         >
-                            <Image
-                                src={tile.image}
-                                alt={tile.heading}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-                            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                                <h3 className="font-heading text-xl md:text-2xl font-bold text-white mb-2">
+                            <div className="relative overflow-hidden rounded-2xl md:rounded-2xl aspect-[16/10] md:aspect-[3/2] md:border md:border-gold/10 md:group-hover:border-gold/30 md:transition-colors md:duration-500">
+                                <Image
+                                    src={tile.image}
+                                    alt={tile.heading}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                                {/* Overlay only for desktop */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 md:opacity-100 transition-opacity duration-500" />
+                                
+                                <div className="hidden md:flex absolute inset-0 flex-col justify-end p-8">
+                                    <h3 className="font-heading text-2xl font-bold text-white mb-2">
+                                        {tile.heading}
+                                    </h3>
+                                    <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-md">
+                                        {tile.description}
+                                    </p>
+                                    <Link
+                                        href={tile.href}
+                                        className="inline-flex items-center gap-2 text-gold-light text-sm font-semibold hover:text-white transition-colors duration-300 group/link"
+                                    >
+                                        {tile.button}
+                                        <span className="translate-x-0 group-hover/link:translate-x-1 transition-transform duration-300">→</span>
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Minimal details for mobile view — outside image */}
+                            <div className="flex md:hidden flex-col mt-5">
+                                <h3 className="font-heading text-xl font-bold text-stone-900 mb-2">
                                     {tile.heading}
                                 </h3>
-                                <p className="text-white/70 text-sm leading-relaxed mb-5 max-w-md">
+                                <p className="text-stone-500 text-sm leading-relaxed mb-4">
                                     {tile.description}
                                 </p>
                                 <Link
                                     href={tile.href}
-                                    className="inline-flex items-center gap-2 text-gold-light text-sm font-semibold hover:text-white transition-colors duration-300 group/link"
+                                    className="inline-flex items-center gap-2 text-gold text-sm font-semibold group/link"
                                 >
                                     {tile.button}
                                     <span className="translate-x-0 group-hover/link:translate-x-1 transition-transform duration-300">→</span>

@@ -49,21 +49,21 @@ const inclusions = [
 const reviews = [
     {
         name: 'James & Sarah M.',
-        location: 'London, UK',
+        location: 'Sydney, Australia',
         rating: 5,
         text: 'An absolutely unforgettable experience. Every moment was crafted to perfection. The attention to detail by our travel designer was extraordinary.',
     },
     {
         name: 'Akira T.',
-        location: 'Tokyo, Japan',
+        location: 'Melbourne, Australia',
         rating: 5,
         text: 'Velora exceeded all expectations. The local guides were knowledgeable and passionate. Already planning our return trip.',
     },
     {
         name: 'Elena R.',
-        location: 'Milan, Italy',
+        location: 'Brisbane, Australia',
         rating: 5,
-        text: 'The perfect honeymoon. Every transfer, every meal, every sunset — it all felt seamlessly orchestrated. Pure luxury.',
+        text: 'The perfect honeymoon. Every transfer, every meal, every sunset, it all felt seamlessly orchestrated. Pure luxury.',
     },
 ];
 

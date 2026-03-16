@@ -38,9 +38,20 @@ const fadeUp = {
     transition: { duration: 0.6, ease: [0, 0, 0.58, 1] as const },
 };
 
+const pricing: Record<number, string> = {
+    8: '1,950',
+    11: '5,450',
+    12: '7,450',
+    15: '3,750',
+    17: '6,950',
+    20: '6,200',
+};
+
 export default function PackageDetail({ pkg }: { pkg: Package }) {
     const [expandedDay, setExpandedDay] = useState<number | null>(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const price = pricing[pkg.days];
 
     // Auto-slider for the photo gallery
     useEffect(() => {
@@ -65,7 +76,7 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
                     priority
                     sizes="100vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
                 <div className="relative z-10 h-full flex flex-col justify-end pb-14 md:pb-20 px-6 max-w-6xl mx-auto">
                     {/* Breadcrumb */}
@@ -122,16 +133,21 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.7 }}
-                        className="flex items-center gap-5 mt-5 text-white/60 text-sm"
+                        className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6 text-white/60 text-sm"
                     >
-                        <span className="flex items-center gap-1.5">
+                        <span className="flex items-center gap-1.5 whitespace-nowrap">
                             <Calendar className="w-4 h-4 text-gold/80" />
                             {pkg.days} Days / {pkg.days - 1} Nights
                         </span>
-                        <span className="flex items-center gap-1.5">
+                        <span className="flex items-center gap-1.5 whitespace-nowrap">
                             <MapPin className="w-4 h-4 text-gold/80" />
                             {pkg.location}
                         </span>
+                        {price && (
+                            <span className="flex items-center gap-1.5 px-3 py-1 bg-gold/15 backdrop-blur-md rounded-full border border-gold/30 text-white font-medium whitespace-nowrap">
+                                From AUD {price}
+                            </span>
+                        )}
                     </motion.div>
                 </div>
             </section>

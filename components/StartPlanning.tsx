@@ -165,7 +165,7 @@ export default function StartPlanning() {
                                 type="text"
                                 value={departingCity}
                                 onChange={(e) => setDepartingCity(e.target.value)}
-                                placeholder="e.g. Sydney, London"
+                                placeholder="e.g. Sydney, Melbourne"
                                 className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
                             />
                         </div>

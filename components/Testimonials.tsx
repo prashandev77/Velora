@@ -7,7 +7,7 @@ import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const testimonials = [
     {
         name: 'Sarah & James Mitchell',
-        location: 'London, UK',
+        location: 'Sydney, Australia',
         avatar: 'S',
         rating: 5,
         package: 'The Dual Paradise',
@@ -15,15 +15,15 @@ const testimonials = [
     },
     {
         name: 'Akira Tanaka',
-        location: 'Tokyo, Japan',
+        location: 'Melbourne, Australia',
         avatar: 'A',
         rating: 5,
         package: 'Royal Ceylon Odyssey',
-        text: 'I\'ve traveled extensively, but this Sri Lankan journey was on another level. The private sunrise climb of Sigiriya and the train through tea country — every moment felt curated just for me.',
+        text: 'I\'ve traveled extensively, but this Sri Lankan journey was on another level. The private sunrise climb of Sigiriya and the train through tea country, every moment felt curated just for me.',
     },
     {
         name: 'Elena & Marco Rossi',
-        location: 'Milan, Italy',
+        location: 'Brisbane, Australia',
         avatar: 'E',
         rating: 5,
         package: 'Azure Atoll Escape',
@@ -31,7 +31,7 @@ const testimonials = [
     },
     {
         name: 'David Okonkwo',
-        location: 'New York, USA',
+        location: 'Perth, Australia',
         avatar: 'D',
         rating: 5,
         package: 'Royal Ceylon Odyssey',
@@ -39,7 +39,7 @@ const testimonials = [
     },
     {
         name: 'Charlotte Dubois',
-        location: 'Paris, France',
+        location: 'Adelaide, Australia',
         avatar: 'C',
         rating: 5,
         package: 'The Dual Paradise',
@@ -47,7 +47,7 @@ const testimonials = [
     },
     {
         name: 'Raj & Priya Sharma',
-        location: 'Dubai, UAE',
+        location: 'Gold Coast, Australia',
         avatar: 'R',
         rating: 5,
         package: 'Azure Atoll Escape',
@@ -111,7 +111,7 @@ export default function Testimonials() {
                     onMouseLeave={() => setPaused(false)}
                 >
                     {/* Main card */}
-                    <div className="max-w-3xl mx-auto relative min-h-[260px]">
+                    <div className="max-w-3xl mx-auto overflow-hidden">
                         <AnimatePresence mode="wait" custom={direction}>
                             <motion.div
                                 key={current}
@@ -121,9 +121,9 @@ export default function Testimonials() {
                                 animate="center"
                                 exit="exit"
                                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                                className="bg-white border border-stone-100 rounded-3xl p-8 md:p-12 shadow-sm text-center absolute inset-0"
+                                className="bg-white border border-stone-100 rounded-3xl p-8 md:p-12 shadow-sm text-center"
                             >
-                                <Quote className="w-9 h-9 text-gold/25 mx-auto mb-5" />
+                                <Quote className="w-9 h-9 text-gold/25 mx-auto mb-6" />
 
                                 {/* Stars */}
                                 <div className="flex justify-center gap-1 mb-5">
@@ -169,14 +169,14 @@ export default function Testimonials() {
                 </div>
 
                 {/* Dot indicators */}
-                <div className="flex justify-center gap-2 mt-72 md:mt-64">
+                <div className="flex justify-center gap-2 mt-12 md:mt-16">
                     {testimonials.map((_, i) => (
                         <button
                             key={i}
                             onClick={() => goTo(i, i > current ? 1 : -1)}
                             className={`transition-all duration-300 rounded-full ${i === current
-                                    ? 'w-6 h-2 bg-gold'
-                                    : 'w-2 h-2 bg-stone-300 hover:bg-stone-400'
+                                ? 'w-6 h-2 bg-gold'
+                                : 'w-2 h-2 bg-stone-300 hover:bg-stone-400'
                                 }`}
                             aria-label={`Go to review ${i + 1}`}
                         />

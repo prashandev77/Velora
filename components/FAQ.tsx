@@ -53,6 +53,10 @@ const faqs = [
         q: 'How do payments work?',
         a: 'A 20% deposit is required to confirm your journey. The remaining balance is payable 14 days prior to arrival in Sri Lanka. Full payment instructions will be provided in your booking confirmation.',
     },
+    {
+        q: 'Do you arrange international flights?',
+        a: 'Yes. While most travellers prefer to book their own flights, Velora Journeys can assist with international airline tickets through our trusted airline and travel partners if required. If you would like us to include flights as part of your journey planning, our team will be happy to provide suitable options based on your travel dates, preferred airlines, and departure city.',
+    },
 ];
 
 export default function FAQ() {

@@ -314,7 +314,7 @@ export default function PlanYourTripPage() {
                                             onChange={(e) =>
                                                 setFormData({ ...formData, departingCity: e.target.value })
                                             }
-                                            placeholder="e.g. Sydney, London, Dubai"
+                                            placeholder="e.g. Sydney, Melbourne, Brisbane"
                                             className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
                                         />
                                     </div>

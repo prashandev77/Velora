@@ -42,7 +42,7 @@ export default function JourneyMap({ points, journeyTitle }: JourneyMapProps) {
             // Draw route polyline
             const latlngs = points.map((p) => [p.lat, p.lng] as [number, number]);
             L.polyline(latlngs, {
-                color: '#C9A96E',
+                color: '#8E743F',
                 weight: 2.5,
                 opacity: 0.85,
                 dashArray: '6, 6',
@@ -63,8 +63,8 @@ export default function JourneyMap({ points, journeyTitle }: JourneyMapProps) {
                             width: ${isEndpoint ? '16px' : '12px'};
                             height: ${isEndpoint ? '16px' : '12px'};
                             border-radius: 50%;
-                            background: ${isEndpoint ? '#C9A96E' : '#fff'};
-                            border: 2.5px solid #C9A96E;
+                            background: #8E743F;
+                            border: 2.5px solid #8E743F;
                             box-shadow: 0 2px 6px rgba(0,0,0,0.25);
                         "></div>
                         <div style="
