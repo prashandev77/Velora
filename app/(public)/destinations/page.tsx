@@ -14,7 +14,7 @@ const destinations = [
         name: 'Sri Lanka',
         tagline: 'The Pearl of the Indian Ocean',
         description: 'Ancient temples, misty highlands, golden beaches, and an island brimming with warmth. Sri Lanka offers a journey through centuries of heritage and breathtaking natural beauty.',
-        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
+        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
     },
     {
         slug: 'maldives',

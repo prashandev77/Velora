@@ -15,7 +15,7 @@ export const heroContent = {
             buttons: [
                 { label: 'Plan Your Journey', href: '/plan-your-trip', primary: true },
             ],
-            image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
+            image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
         },
         {
             id: 2,
@@ -25,7 +25,7 @@ export const heroContent = {
             buttons: [
                 { label: 'Discover Wildlife Journeys', href: '/journeys', primary: true },
             ],
-            image: '/Photos/Hero 2 Wildlife new red brightness.png',
+            image: '/Photos/Hero 2 Wildlife new red brightness.webp',
         },
         {
             id: 3,
@@ -35,7 +35,7 @@ export const heroContent = {
             buttons: [
                 { label: 'Start Planning', href: '/plan-your-trip', primary: true },
             ],
-            image: '/Photos/Hero 3 - Tea new.jpeg',
+            image: '/Photos/Hero 3 - Tea new.webp',
         },
         {
             id: 4,
@@ -188,25 +188,25 @@ export const howItWorksContent = {
             number: '01',
             title: 'Share Your Vision',
             description: 'Tell us how you wish to travel, the pace, experiences, level of comfort, and special occasions. Whether you begin with one of our signature journeys or a blank canvas, we start with you.',
-            image: '/images/how_it_works_1.png',
+            image: '/images/how_it_works_1.webp',
         },
         {
             number: '02',
             title: 'Curate & Design',
             description: 'Your dedicated Velora travel specialist crafts a personalised itinerary, selecting boutique stays, private guides, and meaningful experiences tailored to your style.',
-            image: '/images/how_it_works_2.png',
+            image: '/images/how_it_works_2.webp',
         },
         {
             number: '03',
             title: 'Refine & Confirm',
             description: 'We review every detail together and refine as needed. Once confirmed, we coordinate accommodations, private transfers, and on-ground logistics seamlessly.',
-            image: '/images/how_it_works_3.png',
+            image: '/images/how_it_works_3.webp',
         },
         {
             number: '04',
             title: 'Travel Seamlessly',
             description: 'Arrive with confidence knowing everything is prepared. Enjoy discreet local support and 24/7 assistance while you focus on the experience.',
-            image: '/images/how_it_works_4.png',
+            image: '/images/how_it_works_4.webp',
         },
     ],
 };
@@ -500,7 +500,7 @@ export const signatureJourneysContent = {
             tags: 'Culture • Highlands • Wildlife • Coast',
             description: 'A beautifully balanced introduction to Sri Lanka, blending ancient heritage, misty tea country and the island\'s golden southern coast.',
             route: 'Sigiriya → Kandy → Tea Country → South Coast',
-            image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
+            image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
             href: '/package/10',
         },
         {
@@ -509,7 +509,7 @@ export const signatureJourneysContent = {
             tags: 'Culture • Tea Country • Safari • Coast',
             description: 'Sri Lanka\'s most iconic landscapes are experienced in refined comfort, from cultural landmarks and tea estates to wildlife safaris and coastal retreats.',
             route: 'Sigiriya → Kandy → Tea Country → Yala → South Coast',
-            image: '/images/velora_luxe_journey.png',
+            image: '/images/velora_luxe_journey.webp',
             href: '/package/5',
         },
         {
@@ -557,7 +557,7 @@ export const journeysPageContent = {
             days: 8,
             style: 'Culture • Nature • Heritage',
             description: 'Discover Sri Lanka\'s ancient cities, hill country landscapes, and golden beaches in one beautifully balanced journey.',
-            image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
+            image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
             href: '/journeys/adventure/serendipity-of-sri-lanka',
             collection: 'Signature Collection',
         },
@@ -566,7 +566,7 @@ export const journeysPageContent = {
             days: 11,
             style: 'Luxury • Culture • Scenic Beauty',
             description: 'Sri Lanka\'s signature experiences combined with handpicked luxury hotels and seamless private travel.',
-            image: '/images/velora_luxe_journey.png',
+            image: '/images/velora_luxe_journey.webp',
             href: '/journeys/luxury/velora-luxe',
             collection: 'Luxury Collection',
         },
