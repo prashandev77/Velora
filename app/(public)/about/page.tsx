@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Heart, Leaf } from 'lucide-react';
 import Link from 'next/link';
+import { aboutPageContent } from '@/lib/content';
 
 const sections = [
     {
@@ -35,13 +36,13 @@ export default function AboutPage() {
                 {/* Hero */}
                 <div className="text-center mb-16 md:mb-24">
                     <span className="text-gold text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        About Velora Journeys
+                        {aboutPageContent.tag}
                     </span>
                     <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-6">
-                        Travel, Thoughtfully Curated
+                        {aboutPageContent.heading}
                     </h1>
                     <p className="text-stone-500 text-sm md:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto">
-                        Velora Journeys was founded with a simple belief, that truly memorable travel should feel personal, seamless, and deeply meaningful. We specialise in privately curated journeys across Sri Lanka and the Maldives, blending refined comfort with authentic local experiences.
+                        {aboutPageContent.heroDescription}
                     </p>
                 </div>
 
@@ -66,7 +67,7 @@ export default function AboutPage() {
                 {/* Key intro */}
                 <div className="mb-16 md:mb-24 max-w-3xl mx-auto text-center">
                     <p className="text-stone-500 text-sm md:text-base leading-relaxed">
-                        Every itinerary we design is tailored around you, your pace, your interests, your preferred travel dates. We do not operate fixed group tours. We craft journeys exclusively for individuals, couples, families, and small private groups seeking a more considered way to travel.
+                        {aboutPageContent.introText}
                     </p>
                 </div>
 
@@ -104,7 +105,7 @@ export default function AboutPage() {
                         &ldquo;Velora Journeys was created from a deep appreciation for Sri Lanka and a desire to present it in a way that feels refined, seamless, and personal. I recognised a gap between traditional group tourism and the private, well-paced journeys many discerning travellers seek. Velora was founded to bridge that gap, with thoughtful design, trusted local partnerships, and clear communication. Travel should never feel rushed or impersonal. It should feel considered, immersive, and effortless.&rdquo;
                     </p>
                     <p className="text-gold text-sm font-semibold">
-                        Founder, Velora Journeys
+                        {aboutPageContent.founderAttribution}
                     </p>
                 </motion.div>
 
@@ -118,18 +119,18 @@ export default function AboutPage() {
                     <div className="flex items-center gap-3 mb-4">
                         <Leaf className="w-5 h-5 text-emerald-500" />
                         <h2 className="font-heading text-xl md:text-2xl font-bold text-stone-900">
-                            Sustainability &amp; Responsible Travel
+                            {aboutPageContent.sustainability.heading}
                         </h2>
                     </div>
                     <p className="text-stone-500 text-sm md:text-base leading-relaxed mb-8">
-                        We prioritise boutique and locally owned properties where possible, respectful cultural engagement, wildlife experiences aligned with conservation standards, and supporting local guides and communities. Luxury and responsibility can, and should, coexist.
+                        {aboutPageContent.sustainability.body}
                     </p>
 
                     <Link
                         href="/contact"
                         className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-sm px-6 py-3 rounded-full transition-all hover:shadow-lg hover:shadow-gold/20"
                     >
-                        Start Planning Your Journey →
+                        {aboutPageContent.ctaText}
                     </Link>
                 </motion.div>
             </div>

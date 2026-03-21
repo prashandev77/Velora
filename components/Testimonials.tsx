@@ -3,57 +3,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { testimonialsContent } from '@/lib/content';
 
-const testimonials = [
-    {
-        name: 'Sarah & James Mitchell',
-        location: 'Sydney, Australia',
-        avatar: 'S',
-        rating: 5,
-        package: 'The Dual Paradise',
-        text: 'Absolutely life-changing. The seamless transition from Sri Lanka\'s cultural wonders to the Maldives\' turquoise waters was pure magic. Every need was anticipated before we even thought of it.',
-    },
-    {
-        name: 'Akira Tanaka',
-        location: 'Melbourne, Australia',
-        avatar: 'A',
-        rating: 5,
-        package: 'Royal Ceylon Odyssey',
-        text: 'I\'ve traveled extensively, but this Sri Lankan journey was on another level. The private sunrise climb of Sigiriya and the train through tea country, every moment felt curated just for me.',
-    },
-    {
-        name: 'Elena & Marco Rossi',
-        location: 'Brisbane, Australia',
-        avatar: 'E',
-        rating: 5,
-        package: 'Azure Atoll Escape',
-        text: 'Our honeymoon exceeded every dream. The bioluminescent beach walk and underwater dining were moments we\'ll treasure forever. Velora made it all effortless.',
-    },
-    {
-        name: 'David Okonkwo',
-        location: 'Perth, Australia',
-        avatar: 'D',
-        rating: 5,
-        package: 'Royal Ceylon Odyssey',
-        text: 'From the elephants at Minneriya to the ancient ruins of Polonnaruwa, each day revealed a new wonder. The local guides were incredibly knowledgeable and passionate.',
-    },
-    {
-        name: 'Charlotte Dubois',
-        location: 'Adelaide, Australia',
-        avatar: 'C',
-        rating: 5,
-        package: 'The Dual Paradise',
-        text: 'Two weeks of pure paradise. The combination of ancient temples and pristine beaches was the perfect balance. We\'re already planning our return trip with Velora.',
-    },
-    {
-        name: 'Raj & Priya Sharma',
-        location: 'Gold Coast, Australia',
-        avatar: 'R',
-        rating: 5,
-        package: 'Azure Atoll Escape',
-        text: 'The seaplane arrival alone was worth the trip. But it was the little touches, the floating breakfast, the private sandbank dinner, that showed true attention to detail.',
-    },
-];
+const testimonials = testimonialsContent.reviews;
 
 export default function Testimonials() {
     const [current, setCurrent] = useState(0);
@@ -93,14 +45,14 @@ export default function Testimonials() {
                 {/* Header */}
                 <div className="text-center mb-12 md:mb-16">
                     <span className="text-gold text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        Traveller Reviews
+                        {testimonialsContent.tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        Words From Our Travellers
+                        {testimonialsContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-400 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-                        Real experiences from guests who trusted Velora to craft their most meaningful journeys.
+                        {testimonialsContent.subtitle}
                     </p>
                 </div>
 

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { privacyPageContent } from '@/lib/content';
 
 export const metadata = {
     title: 'Privacy Policy | Velora Journeys',
@@ -9,10 +10,10 @@ export default function PrivacyPolicyPage() {
     return (
         <main className="min-h-screen bg-white pt-32 pb-24">
             <div className="max-w-3xl mx-auto px-6 md:px-12 prose prose-stone prose-headings:font-heading prose-a:text-gold hover:prose-a:text-gold/80">
-                <h1 className="text-3xl md:text-5xl font-bold text-stone-900 mb-8 font-heading tracking-tight">Velora Journeys – Privacy Policy</h1>
+                <h1 className="text-3xl md:text-5xl font-bold text-stone-900 mb-8 font-heading tracking-tight">{privacyPageContent.heading}</h1>
                 
                 <p className="text-stone-600 mb-8">
-                    Velora Journeys respects your privacy and is committed to protecting the personal information you provide when using our website or contacting us regarding travel services.
+                    {privacyPageContent.intro}
                 </p>
 
                 <h2 className="text-2xl font-bold text-stone-800 mt-12 mb-4 font-heading">Information We Collect</h2>

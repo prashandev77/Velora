@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Mail, Phone, MapPin, ChevronRight, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { contactPageContent } from '@/lib/content';
 
 export default function ContactPage() {
     return (
@@ -14,13 +15,13 @@ export default function ContactPage() {
                         {/* Header */}
                         <div className="mb-10 lg:mb-16">
                             <span className="text-gold text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                                Get in Touch
+                                {contactPageContent.tag}
                             </span>
                             <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                                Contact Us
+                                {contactPageContent.heading}
                             </h1>
                             <p className="text-stone-500 text-sm md:text-base leading-relaxed">
-                                Whether you have a question about our journeys, need assistance with an existing booking, or want to discuss a completely bespoke itinerary, our team of travel specialists is here to help.
+                                {contactPageContent.subtitle}
                             </p>
                         </div>
 
@@ -32,8 +33,8 @@ export default function ContactPage() {
                                     <Phone className="w-6 h-6 text-gold" />
                                 </div>
                                 <div>
-                                    <h3 className="text-stone-900 font-semibold mb-1">Call or WhatsApp</h3>
-                                    <p className="text-stone-500 text-sm mb-2">We are available 24/7 for urgent inquiries.</p>
+                                    <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.phone.title}</h3>
+                                    <p className="text-stone-500 text-sm mb-2">{contactPageContent.phone.description}</p>
                                     <a href="tel:+61212345678" className="text-stone-800 font-medium hover:text-gold transition-colors block">
                                         +61 2 1234 5678
                                     </a>
@@ -46,8 +47,8 @@ export default function ContactPage() {
                                     <Mail className="w-6 h-6 text-gold" />
                                 </div>
                                 <div>
-                                    <h3 className="text-stone-900 font-semibold mb-1">Email Us</h3>
-                                    <p className="text-stone-500 text-sm mb-2">Our team typically replies within 24 hours.</p>
+                                    <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.email.title}</h3>
+                                    <p className="text-stone-500 text-sm mb-2">{contactPageContent.email.description}</p>
                                     <a href="mailto:hello@velorajourneys.com" className="text-stone-800 font-medium hover:text-gold transition-colors block">
                                         hello@velorajourneys.com
                                     </a>
@@ -60,8 +61,8 @@ export default function ContactPage() {
                                     <MapPin className="w-6 h-6 text-gold" />
                                 </div>
                                 <div>
-                                    <h3 className="text-stone-900 font-semibold mb-1">Office Location</h3>
-                                    <p className="text-stone-500 text-sm mb-2">Visits by appointment only.</p>
+                                    <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.office.title}</h3>
+                                    <p className="text-stone-500 text-sm mb-2">{contactPageContent.office.description}</p>
                                     <p className="text-stone-800 font-medium">
                                         123 Serenity Drive,<br />
                                         Sydney, NSW,<br />
@@ -77,7 +78,7 @@ export default function ContactPage() {
                                 Ready to design your journey?
                             </h3>
                             <p className="text-stone-500 text-sm mb-6 leading-relaxed">
-                                If you want to start planning your bespoke trip, use our detailed inquiry form to tell us exactly what you're looking for.
+                                {contactPageContent.cta.description}
                             </p>
                             <Link href="/plan-your-trip">
                                 <Button className="w-full bg-gold hover:bg-gold-dark text-white font-semibold py-6 rounded-xl text-base shadow-sm hover:shadow-md hover:shadow-gold/20 transition-all group">
@@ -102,10 +103,10 @@ export default function ContactPage() {
                             <div className="absolute bottom-6 left-6 right-6">
                                 <div className="flex items-center gap-2 text-white/90 mb-2">
                                     <Globe className="w-4 h-4 text-gold" />
-                                    <span className="text-sm font-medium tracking-wide uppercase">Based in Australia</span>
+                                    <span className="text-sm font-medium tracking-wide uppercase">{contactPageContent.sideLabel}</span>
                                 </div>
                                 <p className="text-white/70 text-sm leading-relaxed">
-                                    Australian trust, global luxury standards.
+                                    {contactPageContent.sideTagline}
                                 </p>
                             </div>
                         </div>

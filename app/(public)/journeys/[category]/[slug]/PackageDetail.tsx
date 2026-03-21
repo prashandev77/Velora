@@ -20,6 +20,7 @@ import {
     Clock,
 } from 'lucide-react';
 import { Package } from '@/lib/types';
+import { packages } from '@/lib/data';
 
 // Lazy-load the Leaflet map (client-only, no SSR)
 const JourneyMap = dynamic(() => import('@/components/JourneyMap'), {
@@ -48,10 +49,34 @@ const pricing: Record<number, string> = {
 };
 
 export default function PackageDetail({ pkg }: { pkg: Package }) {
-    const [expandedDay, setExpandedDay] = useState<number | null>(0);
+    const [expandedDays, setExpandedDays] = useState<Set<number>>(new Set([0]));
+    
+    const toggleDay = (i: number) => {
+        setExpandedDays(prev => {
+            const next = new Set(prev);
+            if (next.has(i)) next.delete(i);
+            else next.add(i);
+            return next;
+        });
+    };
+    
+    const toggleAll = () => {
+        if (expandedDays.size === pkg.itinerary.length) {
+            setExpandedDays(new Set());
+        } else {
+            setExpandedDays(new Set(pkg.itinerary.map((_, i) => i)));
+        }
+    };
+
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const price = pricing[pkg.days];
+
+    // Determine 2 related packages (prioritize same category, then others)
+    const relatedPackages = packages
+        .filter((p) => p.category === pkg.category && p.id !== pkg.id)
+        .concat(packages.filter((p) => p.category !== pkg.category && p.id !== pkg.id))
+        .slice(0, 2);
 
     // Auto-slider for the photo gallery
     useEffect(() => {
@@ -344,6 +369,14 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
                     </motion.div>
 
                     {/* Timeline */}
+                    <div className="flex justify-end mb-4 relative z-10">
+                        <button 
+                            onClick={toggleAll} 
+                            className="text-gold text-xs font-semibold tracking-wider uppercase hover:text-stone-900 transition-colors"
+                        >
+                            {expandedDays.size === pkg.itinerary.length ? 'Collapse All' : 'Expand All'}
+                        </button>
+                    </div>
                     <div className="relative">
                         {/* Vertical connector line */}
                         <div className="absolute left-[17px] top-6 bottom-6 w-px bg-stone-200" />
@@ -360,7 +393,7 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
                                 >
                                     {/* Day circle on timeline */}
                                     <div className={`absolute left-0 top-3.5 w-9 h-9 rounded-full border-2 flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
-                                        expandedDay === i
+                                        expandedDays.has(i)
                                             ? 'bg-gold border-gold text-white shadow-md shadow-gold/20'
                                             : 'bg-white border-stone-200 text-stone-400'
                                     }`}>
@@ -369,9 +402,9 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
 
                                     {/* Card */}
                                     <button
-                                        onClick={() => setExpandedDay(expandedDay === i ? null : i)}
+                                        onClick={() => toggleDay(i)}
                                         className={`w-full text-left px-5 py-4 rounded-xl border transition-all duration-300 ${
-                                            expandedDay === i
+                                            expandedDays.has(i)
                                                 ? 'bg-white border-gold/20 shadow-sm'
                                                 : 'bg-white border-stone-100 hover:border-stone-200'
                                         }`}
@@ -380,16 +413,16 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
                                             <div>
                                                 <p className="text-stone-400 text-[10px] uppercase tracking-wider mb-0.5">Day {day.day}</p>
                                                 <h4 className={`font-medium text-sm transition-colors duration-200 ${
-                                                    expandedDay === i ? 'text-stone-900' : 'text-stone-700'
+                                                    expandedDays.has(i) ? 'text-stone-900' : 'text-stone-700'
                                                 }`}>{day.title}</h4>
                                             </div>
                                             <ChevronDown className={`w-4 h-4 flex-shrink-0 transition-all duration-300 ${
-                                                expandedDay === i ? 'rotate-180 text-gold' : 'text-stone-300'
+                                                expandedDays.has(i) ? 'rotate-180 text-gold' : 'text-stone-300'
                                             }`} />
                                         </div>
 
                                         <AnimatePresence mode="wait">
-                                            {expandedDay === i && (
+                                            {expandedDays.has(i) && (
                                                 <motion.div
                                                     initial={{ opacity: 0, height: 0 }}
                                                     animate={{ opacity: 1, height: 'auto' }}
@@ -496,6 +529,39 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
             )}
 
             {/* ═══════════════════════════════════════
+               9.5. IMPORTANT INFORMATION
+            ═══════════════════════════════════════ */}
+            <section className="bg-white py-14 md:py-20 border-t border-stone-100">
+                <div className="max-w-4xl mx-auto px-6 md:px-12">
+                    <motion.div {...fadeUp} className="text-center mb-10">
+                        <span className="text-gold/80 text-xs font-medium uppercase tracking-[0.3em] mb-3 block">Good to Know</span>
+                        <h2 className="font-heading text-2xl md:text-3xl font-semibold text-stone-900 mb-3">
+                            Important Information
+                        </h2>
+                        <div className="w-12 h-[2px] bg-gold mx-auto" />
+                    </motion.div>
+                    <motion.div {...fadeUp} className="bg-[#F7F5F2] rounded-2xl p-6 md:p-8 border border-stone-100">
+                        <ul className="space-y-4">
+                            {[
+                                'All journeys are privately curated and tailored to your preferences',
+                                'Hotels are subject to availability and may be substituted with similar options',
+                                'Pricing may vary depending on travel dates and availability',
+                                'Scenic train journeys are subject to ticket availability',
+                                'Travel times may vary due to road and traffic conditions',
+                                'Standard hotel check-in/out times apply',
+                                'Travel insurance is strongly recommended',
+                            ].map((info, i) => (
+                                <li key={i} className="flex items-start gap-3 text-stone-600 text-sm">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-gold/60 mt-2 flex-shrink-0" />
+                                    <span className="leading-relaxed">{info}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* ═══════════════════════════════════════
                10. BOOKING & PAYMENTS
             ═══════════════════════════════════════ */}
             <section className="bg-white py-14 md:py-20">
@@ -541,6 +607,60 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
                     </motion.div>
                 </div>
             </section>
+
+            {/* ═══════════════════════════════════════
+               10.5. RELATED JOURNEYS
+            ═══════════════════════════════════════ */}
+            {relatedPackages.length > 0 && (
+                <section className="bg-[#F7F5F2] py-16 md:py-24 border-t border-stone-100">
+                    <div className="max-w-6xl mx-auto px-6 md:px-12">
+                        <motion.div {...fadeUp} className="text-center mb-12">
+                            <span className="text-gold/80 text-xs font-medium uppercase tracking-[0.3em] mb-3 block">Discover More</span>
+                            <h2 className="font-heading text-3xl md:text-4xl font-semibold text-stone-900 mb-4">
+                                You May Also Love
+                            </h2>
+                            <div className="w-12 h-[2px] bg-gold mx-auto" />
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
+                            {relatedPackages.map((relatedPkg, i) => (
+                                <Link
+                                    key={relatedPkg.id}
+                                    href={`/journeys/${relatedPkg.category}/${relatedPkg.slug}`}
+                                    className="group block relative overflow-hidden rounded-2xl md:rounded-[2rem] bg-stone-900 aspect-[4/3] md:aspect-[3/2] shadow-md hover:shadow-xl transition-all duration-500"
+                                >
+                                    <Image
+                                        src={relatedPkg.image_url}
+                                        alt={relatedPkg.title}
+                                        fill
+                                        className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                                    <div className="absolute bottom-8 left-8 right-8">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="bg-gold/90 text-white text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full backdrop-blur-md">
+                                                {relatedPkg.days} Days
+                                            </span>
+                                            {relatedPkg.travelStyle && (
+                                                <span className="text-white/80 text-[10px] font-medium tracking-wider uppercase">
+                                                    • {relatedPkg.travelStyle.split('•')[0].trim()}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h3 className="font-heading text-2xl md:text-3xl font-medium text-white mb-2 leading-tight">
+                                            {relatedPkg.title}
+                                        </h3>
+                                        <div className="inline-flex items-center gap-2 text-gold text-xs font-bold uppercase tracking-widest group-hover:gap-3 transition-all duration-300">
+                                            View Journey
+                                            <ArrowRight className="w-3.5 h-3.5" />
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* ═══════════════════════════════════════
                11. CALL TO ACTION

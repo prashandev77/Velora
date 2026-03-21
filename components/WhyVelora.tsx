@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Shield, Compass, Headphones, Sparkles } from 'lucide-react';
+import { whyVeloraContent } from '@/lib/content';
 import Image from 'next/image';
 
 const values = [
@@ -37,14 +38,14 @@ export default function WhyVelora() {
             <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
                 <div className="text-center mb-16 md:mb-24">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-4 block">
-                        The Velora Difference
+                        {whyVeloraContent.tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-5xl lg:text-6xl font-bold text-stone-900 mb-6">
-                        Private Journeys. Thoughtfully Designed. Seamlessly Delivered
+                        {whyVeloraContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-lg max-w-3xl mx-auto leading-relaxed whitespace-pre-line">
-                        At Velora Journeys, we design private travel experiences across Sri Lanka with thoughtful attention to every detail.{'\n'}Each journey is crafted around your pace, interests, and style of travel, supported by trusted local partnerships and carefully selected stays.
+                        {whyVeloraContent.description}
                     </p>
                 </div>
 

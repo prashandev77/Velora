@@ -4,63 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, MapPin } from 'lucide-react';
+import { journeysPageContent } from '@/lib/content';
 
-const featuredJourneys = [
-    {
-        title: 'Serendipity of Sri Lanka',
-        days: 8,
-        style: 'Culture • Nature • Heritage',
-        description: 'Discover Sri Lanka\'s ancient cities, hill country landscapes, and golden beaches in one beautifully balanced journey.',
-        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
-        href: '/journeys/adventure/serendipity-of-sri-lanka',
-        collection: 'Signature Collection',
-    },
-    {
-        title: 'Velora Luxe',
-        days: 11,
-        style: 'Luxury • Culture • Scenic Beauty',
-        description: 'Sri Lanka\'s signature experiences combined with handpicked luxury hotels and seamless private travel.',
-        image: '/images/velora_luxe_journey.png',
-        href: '/journeys/luxury/velora-luxe',
-        collection: 'Luxury Collection',
-    },
-    {
-        title: 'Velora Honeymoon Journey',
-        days: 12,
-        style: 'Romance • Tea Country • Safari • Beach',
-        description: 'A romantic journey through Sri Lanka\'s most beautiful landscapes, ending with ocean sunsets and luxury coastal retreats.',
-        image: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
-        href: '/journeys/honeymoon/velora-honeymoon',
-        collection: 'Romance Collection',
-    },
-    {
-        title: 'Velora Serene',
-        days: 15,
-        style: 'Wellness • Ayurveda • Slow Travel',
-        description: 'A restorative journey combining authentic Ayurvedic healing with gentle cultural discovery across Sri Lanka.',
-        image: '/Photos/Other sections/Velora Serene new.avif',
-        href: '/journeys/wellness/velora-serene',
-        collection: 'Wellness Collection',
-    },
-    {
-        title: 'Velora Wild',
-        days: 17,
-        style: 'Wildlife • Birding • Safaris',
-        description: 'Sri Lanka\'s most complete wildlife journey exploring wetlands, national parks, rainforests, and mountain ecosystems.',
-        image: '/Photos/Other sections/Journey_Velora Wild new.jpg',
-        href: '/journeys/adventure/velora-wild',
-        collection: 'Wildlife Collection',
-    },
-    {
-        title: 'Velora Explorer',
-        days: 20,
-        style: 'Adventure • Culture • Beaches',
-        description: 'The ultimate Sri Lanka journey exploring the island\'s most diverse landscapes and experiences.',
-        image: '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg',
-        href: '/journeys/adventure/grand-explorer',
-        collection: 'Explorer Collection',
-    },
-];
+const featuredJourneys = journeysPageContent.featuredJourneys;
 
 export default function JourneysPage() {
     return (
@@ -73,7 +19,7 @@ export default function JourneysPage() {
                         animate={{ opacity: 1 }}
                         className="text-gold/80 text-xs md:text-sm font-medium uppercase tracking-[0.3em] mb-3 block"
                     >
-                        Our Curated Collection
+                        {journeysPageContent.tag}
                     </motion.span>
                     <motion.h1
                         initial={{ opacity: 0, y: 15 }}
@@ -81,7 +27,7 @@ export default function JourneysPage() {
                         transition={{ delay: 0.1 }}
                         className="font-heading text-3xl md:text-4xl lg:text-5xl font-normal text-stone-900 mb-3 tracking-tight"
                     >
-                        Choose Your Path
+                        {journeysPageContent.heading}
                     </motion.h1>
                     <motion.div
                         initial={{ width: 0 }}
@@ -95,7 +41,7 @@ export default function JourneysPage() {
                         transition={{ delay: 0.2 }}
                         className="text-stone-500 text-sm md:text-base max-w-xl mx-auto leading-relaxed"
                     >
-                        Every journey is thoughtfully curated and fully customisable. Choose your ideal itinerary and we&apos;ll tailor every detail.
+                        {journeysPageContent.subtitle}
                     </motion.p>
                 </div>
 
@@ -149,7 +95,7 @@ export default function JourneysPage() {
                                     </p>
 
                                     <div className="inline-flex items-center gap-2 text-gold text-xs font-medium group-hover:gap-3 transition-all duration-300">
-                                        View Itinerary
+                                        {journeysPageContent.viewItinerary}
                                         <ArrowRight className="w-3.5 h-3.5" />
                                     </div>
                                 </div>
@@ -160,7 +106,7 @@ export default function JourneysPage() {
 
                 <div className="mt-16 text-center">
                     <p className="text-stone-500 text-sm italic">
-                        All journeys are privately curated and subject to availability at the time of booking.
+                        {journeysPageContent.footerNote}
                     </p>
                 </div>
             </div>

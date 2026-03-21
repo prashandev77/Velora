@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { faqContent } from '@/lib/content';
 
 const faqs = [
     {
@@ -70,7 +71,7 @@ export default function FAQ() {
                         FAQ
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        Frequently Asked Questions
+                        {faqContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-8" />
                 </div>

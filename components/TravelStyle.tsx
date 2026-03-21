@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { travelStyleContent } from '@/lib/content';
 
 const tiles = [
     {
@@ -42,14 +43,14 @@ export default function TravelStyle() {
                 {/* Header */}
                 <div className="text-center mb-14 md:mb-20">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        Discover Your Travel Style
+                        {travelStyleContent.tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        Four Distinct Ways to Experience Sri Lanka
+                        {travelStyleContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                        Whether you&apos;re drawn to heritage, wildlife, or coastal serenity, each journey is privately curated around you.
+                        {travelStyleContent.subtitle}
                     </p>
                 </div>
 

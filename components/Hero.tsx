@@ -5,61 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { heroContent } from '@/lib/content';
 
-const slides = [
-    {
-        id: 1,
-        headline: 'From Sacred Temples to Turquoise Shores',
-        subtext: 'Privately curated journeys across Sri Lanka.',
-        tag: 'DISCOVER SRI LANKA',
-        buttons: [
-            { label: 'Plan Your Journey', href: '/plan-your-trip', primary: true },
-        ],
-        image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.jpg',
-    },
-    {
-        id: 2,
-        headline: 'Where Untamed Beauty Meets Refined Comfort',
-        subtext: 'Private safaris and boutique wilderness lodges.',
-        tag: 'WILDLIFE & NATURE',
-        buttons: [
-            { label: 'Discover Wildlife Journeys', href: '/journeys', primary: true },
-        ],
-        image: '/Photos/Hero 2 Wildlife new red brightness.png',
-    },
-    {
-        id: 3,
-        headline: 'Luxury, Thoughtfully Curated',
-        subtext: 'Privately designed journeys with handpicked stays and trusted local expertise.',
-        tag: 'THE VELORA PROMISE',
-        buttons: [
-            { label: 'Start Planning', href: '/plan-your-trip', primary: true },
-        ],
-        image: '/Photos/Hero 3 - Tea new.jpeg',
-    },
-    {
-        id: 4,
-        headline: 'Endless Shores. Timeless Escapes.',
-        subtext: 'Boutique luxury beach retreats along Sri Lanka\'s southern coast.',
-        tag: 'COAST & ISLAND',
-        buttons: [
-            { label: 'Explore Coastal Journeys', href: '/journeys', primary: true },
-        ],
-        image: '/Photos/Hero Slide 2 Cape Weligama.jpg',
-    },
-    {
-        id: 5,
-        headline: 'Island Serenity, Perfected',
-        subtext: 'Overwater villas and crystal lagoons in the Maldives.',
-        tag: 'THE MALDIVES ESCAPE',
-        buttons: [
-            { label: 'View Maldives Collection', href: '/journeys', primary: true },
-        ],
-        image: '/Photos/Hero Slide 4 Maldives.jpg',
-    },
-];
-
-const INTERVAL = 6000;
+const slides = heroContent.slides;
+const INTERVAL = heroContent.interval;
 
 export default function Hero() {
     const [current, setCurrent] = useState(0);

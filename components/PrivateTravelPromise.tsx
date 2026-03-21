@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
+import { privateTravelPromiseContent } from '@/lib/content';
 
 const promises = [
     'Privately curated — never fixed-date group tours',
@@ -22,14 +23,14 @@ export default function PrivateTravelPromise() {
                     className="bg-white border border-gold/20 rounded-3xl p-8 md:p-14 text-center shadow-sm"
                 >
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        Our Promise
+                        {privateTravelPromiseContent.tag}
                     </span>
                     <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 mb-4">
-                        Our Private Travel Promise
+                        {privateTravelPromiseContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base mb-8">
-                        We believe exceptional journeys should never feel rushed or crowded.
+                        {privateTravelPromiseContent.subtitle}
                     </p>
 
                     <div className="flex flex-col items-center gap-3 mb-8">
@@ -49,7 +50,7 @@ export default function PrivateTravelPromise() {
                     </div>
 
                     <p className="text-gold text-sm md:text-base italic font-medium">
-                        Travel as you wish, with confidence and clarity.
+                        {privateTravelPromiseContent.tagline}
                     </p>
                 </motion.div>
             </div>

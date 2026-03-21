@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { howItWorksContent } from '@/lib/content';
 
 const steps = [
     {
@@ -43,11 +44,11 @@ export default function HowItWorks() {
                         How It Works
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        Effortless, From Start to Finish
+                        {howItWorksContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                        Your journey, thoughtfully curated in four simple steps. From the first conversation to your return home, every detail is handled with care and precision.
+                        {howItWorksContent.subtitle}
                     </p>
                 </div>
 

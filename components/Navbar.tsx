@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Logo from '@/components/Logo';
+import { navbarContent } from '@/lib/content';
 
 const navLinks = [
     { href: '/', label: 'Home', icon: Home },
@@ -134,7 +135,7 @@ export default function Navbar() {
 
                         {/* Brand tagline */}
                         <div className="px-6 pt-4 pb-6 border-b border-stone-100">
-                            <p className="text-stone-400 text-xs tracking-widest uppercase">Navigation</p>
+                            <p className="text-stone-400 text-xs tracking-widest uppercase">{navbarContent.mobileNavLabel}</p>
                         </div>
 
                         {/* Nav links */}
@@ -172,7 +173,7 @@ export default function Navbar() {
                             transition={{ delay: 0.35, duration: 0.4 }}
                             className="px-6 pb-10 pt-4 border-t border-stone-100"
                         >
-                            <p className="text-stone-400 text-xs tracking-widest uppercase mb-4">Ready to travel?</p>
+                            <p className="text-stone-400 text-xs tracking-widest uppercase mb-4">{navbarContent.mobileCtaLabel}</p>
                             <Link href="/plan-your-trip" onClick={closeMenu}>
                                 <Button className="w-full bg-gold hover:bg-gold-dark text-deep font-bold text-base py-6 rounded-2xl hover:shadow-xl hover:shadow-gold/25 active:scale-[0.98] transition-all">
                                     Plan Your Journey
@@ -181,7 +182,7 @@ export default function Navbar() {
                             </Link>
                             <Link href="/contact" onClick={closeMenu}>
                                 <Button variant="ghost" className="w-full mt-2 text-stone-400 hover:text-stone-700 text-sm py-4 rounded-2xl">
-                                    Talk to an expert
+                                    {navbarContent.mobileTalkToExpert}
                                 </Button>
                             </Link>
                         </motion.div>

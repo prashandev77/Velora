@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { MapPin, Mail, Phone } from 'lucide-react';
 import Logo from '@/components/Logo';
+import { footerContent } from '@/lib/content';
 
 const footerLinks = {
     journeys: [
@@ -42,21 +43,21 @@ export default function Footer() {
                             <Logo isDark={false} className="h-12 w-auto object-contain transition-all duration-300 group-hover:opacity-80" />
                         </Link>
                         <p className="text-stone-400 text-sm leading-relaxed max-w-sm mb-6">
-                            Privately curated journeys across Sri Lanka and the Maldives.
-                            Tailor-made travel experiences designed around you.
+                            {footerContent.description.split('\n')[0]}
+                            {footerContent.description.split('\n')[1]}
                         </p>
                         <div className="flex flex-col gap-3 text-sm text-stone-400">
                             <div className="flex items-center gap-2">
                                 <MapPin className="w-4 h-4 text-gold/70" />
-                                <span>Sydney, Australia</span>
+                                <span>{footerContent.contact.location}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Mail className="w-4 h-4 text-gold/70" />
-                                <span>hello@velorajourneys.com</span>
+                                <span>{footerContent.contact.email}</span>
                             </div>
                             <div className="flex items-center gap-2">
                                 <Phone className="w-4 h-4 text-gold/70" />
-                                <span>+61 2 1234 5678</span>
+                                <span>{footerContent.contact.phone}</span>
                             </div>
                         </div>
                     </div>
@@ -125,7 +126,7 @@ export default function Footer() {
                         © {new Date().getFullYear()} Velora Journeys. All rights reserved.
                     </p>
                     <p className="text-xs text-stone-500">
-                        Crafted with passion for extraordinary travel
+                        {footerContent.tagline}
                     </p>
                 </div>
             </div>

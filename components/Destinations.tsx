@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Sparkles, Calendar, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { destinationsContent } from '@/lib/content';
 
 interface City {
     name: string;
@@ -270,14 +271,14 @@ export default function Destinations() {
                 {/* Header */}
                 <div className="text-center mb-10 md:mb-12">
                     <span className="text-gold text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        Our Destinations
+                        {destinationsContent.tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-3">
-                        Sri Lanka by Province
+                        {destinationsContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-5" />
                     <p className="text-stone-400 text-sm max-w-xl mx-auto">
-                        Tap a province to explore destinations
+                        {destinationsContent.subtitle}
                     </p>
                 </div>
 
@@ -412,13 +413,13 @@ export default function Destinations() {
                                             href="/contact"
                                             className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-all hover:shadow-lg hover:shadow-gold/20"
                                         >
-                                            Plan a Journey Here <ArrowRight className="w-4 h-4" />
+                                            {destinationsContent.ctaPrimary} <ArrowRight className="w-4 h-4" />
                                         </Link>
                                         <Link
                                             href="/destinations"
                                             className="text-stone-500 hover:text-stone-800 text-sm font-medium transition-colors flex items-center gap-1"
                                         >
-                                            Full guide <ArrowRight className="w-3.5 h-3.5" />
+                                            {destinationsContent.ctaSecondary} <ArrowRight className="w-3.5 h-3.5" />
                                         </Link>
                                     </div>
                                 </motion.div>
@@ -436,10 +437,10 @@ export default function Destinations() {
                                         <Sparkles className="w-8 h-8 text-gold/50" />
                                     </div>
                                     <p className="font-heading text-xl font-semibold text-stone-700 mb-2">
-                                        Explore Sri Lanka
+                                        {destinationsContent.emptyState.title}
                                     </p>
                                     <p className="text-stone-400 text-sm max-w-xs leading-relaxed">
-                                        Tap any province on the map or a label above to discover its destinations and curated experiences.
+                                        {destinationsContent.emptyState.description}
                                     </p>
 
                                     {/* Province list preview */}
