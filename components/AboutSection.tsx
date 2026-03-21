@@ -39,7 +39,7 @@ export default function AboutSection() {
                     <motion.div
                         initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: '-100px' }}
+                        viewport={{ once: true }}
                         transition={{ duration: 0.7 }}
                     >
                         <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
@@ -78,7 +78,7 @@ export default function AboutSection() {
                         {features.map((feature, index) => (
                             <motion.div
                                 key={feature.title}
-                                initial={{ opacity: 0, y: 30 }}
+                                initial={{ opacity: 0, y: 16 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}

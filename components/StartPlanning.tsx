@@ -67,9 +67,9 @@ export default function StartPlanning() {
             <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-12">
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.7 }}
                     className="text-center mb-12"
                 >

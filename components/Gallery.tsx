@@ -89,9 +89,9 @@ export default function Gallery() {
             <div className="relative max-w-7xl mx-auto px-5 md:px-6">
                 {/* Header */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-80px' }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.7 }}
                     className="text-center mb-10 md:mb-14"
                 >
@@ -180,7 +180,7 @@ export default function Gallery() {
                             key={img.alt + index}
                             initial={{ opacity: 0, scale: 0.92 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true, margin: '-60px' }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.55, delay: index * 0.06 }}
                             className={`relative rounded-2xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300 ${img.span}`}
                         >

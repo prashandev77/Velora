@@ -59,9 +59,9 @@ export default function TravelStyle() {
                     {tiles.map((tile, i) => (
                         <motion.div
                             key={tile.heading}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: i * 0.1 }}
                             className="group flex flex-col p-5 md:p-0 rounded-[2.5rem] md:rounded-2xl border border-gold/10 md:border-transparent hover:border-gold/30 md:hover:border-transparent transition-all duration-500 bg-[#F7F5F2]/40 md:bg-transparent hover:bg-white md:hover:bg-transparent"
                         >

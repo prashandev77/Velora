@@ -31,9 +31,9 @@ export default function SignatureJourneys() {
                     {journeys.map((j, i) => (
                         <motion.div
                             key={j.title}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: i * 0.08 }}
                             className="group relative overflow-hidden rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all duration-500"
                         >

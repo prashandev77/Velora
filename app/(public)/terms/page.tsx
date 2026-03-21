@@ -49,7 +49,7 @@ export default function TermsPage() {
                                 key={section.title}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-50px' }}
+                                viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                                 className="bg-white p-8 md:p-10 rounded-2xl border border-stone-100 shadow-sm hover:shadow-md transition-shadow duration-300"
                             >

@@ -56,9 +56,9 @@ export default function HowItWorks() {
                     {steps.map((step, i) => (
                         <motion.div
                             key={step.number}
-                            initial={{ opacity: 0, y: 24 }}
+                            initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.55, delay: i * 0.12 }}
                             className="group relative"
                         >

@@ -13,9 +13,9 @@ export default function SpecialOffers() {
 
             <div className="relative max-w-7xl mx-auto px-6">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.7 }}
                     className="text-center mb-14"
                 >
@@ -34,7 +34,7 @@ export default function SpecialOffers() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Offer 1 */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
@@ -75,7 +75,7 @@ export default function SpecialOffers() {
                     {/* Offer 2 + 3 */}
                     <div className="grid grid-rows-2 gap-6">
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 }}
@@ -112,7 +112,7 @@ export default function SpecialOffers() {
                         </motion.div>
 
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.2 }}

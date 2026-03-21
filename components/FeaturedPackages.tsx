@@ -15,9 +15,9 @@ export default function FeaturedPackages() {
 
             {/* Section Header */}
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.7 }}
                 className="relative max-w-7xl mx-auto px-5 md:px-6 text-center mb-10 md:mb-16"
             >

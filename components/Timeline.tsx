@@ -21,7 +21,7 @@ export default function Timeline({ itinerary }: TimelineProps) {
                         key={day.day}
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: '-50px' }}
+                        viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: index * 0.05 }}
                         className={`relative flex items-start gap-8 mb-12 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
                             }`}

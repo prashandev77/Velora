@@ -36,9 +36,9 @@ export default function JourneysSection() {
             {/* Section Header */}
             <div className="relative max-w-7xl mx-auto px-6 mb-12">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-100px' }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.7 }}
                 >
                     <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">

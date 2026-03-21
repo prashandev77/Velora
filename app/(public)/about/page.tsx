@@ -78,7 +78,7 @@ export default function AboutPage() {
                             key={s.title}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: '-50px' }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: i * 0.05 }}
                             className="border-l-2 border-gold/30 pl-6"
                         >

@@ -113,7 +113,7 @@ export default function BookingPage() {
                                 key={s.title}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: '-40px' }}
+                                viewport={{ once: true }}
                                 transition={{ duration: 0.55, delay: i * 0.06 }}
                                 className="flex gap-5"
                             >
