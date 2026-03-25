@@ -188,7 +188,7 @@ export const howItWorksContent = {
             number: '01',
             title: 'Share Your Vision',
             description: 'Tell us how you wish to travel, the pace, experiences, level of comfort, and special occasions. Whether you begin with one of our signature journeys or a blank canvas, we start with you.',
-            image: '/images/how_it_works_1.webp',
+            image: '/Photos/Other sections/How it works 1.jpeg',
         },
         {
             number: '02',
@@ -501,7 +501,7 @@ export const signatureJourneysContent = {
             description: 'A beautifully balanced introduction to Sri Lanka, blending ancient heritage, misty tea country and the island\'s golden southern coast.',
             route: 'Sigiriya → Kandy → Tea Country → South Coast',
             image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
-            href: '/package/10',
+            href: '/journeys/adventure/serendipity-of-sri-lanka',
         },
         {
             title: 'Velora Luxe',
@@ -510,7 +510,7 @@ export const signatureJourneysContent = {
             description: 'Sri Lanka\'s most iconic landscapes are experienced in refined comfort, from cultural landmarks and tea estates to wildlife safaris and coastal retreats.',
             route: 'Sigiriya → Kandy → Tea Country → Yala → South Coast',
             image: '/images/velora_luxe_journey.webp',
-            href: '/package/5',
+            href: '/journeys/luxury/velora-luxe',
         },
         {
             title: 'Velora Luxury Honeymoon',
@@ -519,7 +519,7 @@ export const signatureJourneysContent = {
             description: 'A romantic journey through Sri Lanka\'s most beautiful settings, combining scenic train rides, wildlife safaris and luxury oceanfront stays.',
             route: 'Negombo → Sigiriya → Hatton → Ella → Yala → Cape Weligama',
             image: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
-            href: '/package/4',
+            href: '/journeys/honeymoon/velora-honeymoon',
         },
         {
             title: 'Velora Serene',
@@ -528,7 +528,7 @@ export const signatureJourneysContent = {
             description: 'A restorative journey designed for wellbeing, combining authentic Ayurveda treatments with gentle cultural discovery and peaceful landscapes.',
             route: 'Negombo → Cultural Triangle → Ayurveda Retreat → South Coast',
             image: '/Photos/Other sections/Velora Serene new.avif',
-            href: '/package/8',
+            href: '/journeys/wellness/velora-serene',
         },
         {
             title: 'Velora Wild',
@@ -537,7 +537,7 @@ export const signatureJourneysContent = {
             description: 'An immersive wildlife expedition exploring Sri Lanka\'s national parks, wetlands and rainforests in search of extraordinary biodiversity.',
             route: 'Wilpattu → Trincomalee → Kumana → Gal Oya → Sinharaja → Kitulgala',
             image: '/Photos/Other sections/Journey_Velora Wild new.jpg',
-            href: '/package/12',
+            href: '/journeys/adventure/velora-wild',
         },
     ],
     cta: 'View All Journeys',
@@ -734,7 +734,7 @@ export const bookingPageContent = {
         heading: 'How to Pay',
         subtitle: 'We accept the following payment methods:',
         methods: [
-            { label: 'International bank transfer' },
+            { label: 'Bank transfer' },
             { label: 'Credit card payments' },
         ],
     },
