@@ -151,7 +151,7 @@ export default function BookingPage() {
                             </p>
                             <div className="flex flex-col gap-4">
                                 {[
-                                    { icon: Banknote, label: 'International bank transfer' },
+                                    { icon: Banknote, label: 'Bank transfer' },
                                     { icon: CreditCard, label: 'Credit card payments' },
                                 ].map(({ icon: Icon, label }) => (
                                     <div key={label} className="flex items-center gap-4 bg-white border border-stone-100 rounded-2xl px-5 py-4">
