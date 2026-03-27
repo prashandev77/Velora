@@ -509,7 +509,7 @@ export const signatureJourneysContent = {
             tags: 'Culture • Tea Country • Safari • Coast',
             description: 'Sri Lanka\'s most iconic landscapes are experienced in refined comfort, from cultural landmarks and tea estates to wildlife safaris and coastal retreats.',
             route: 'Sigiriya → Kandy → Tea Country → Yala → South Coast',
-            image: '/images/velora_luxe_journey.webp',
+            image: '/Photos/Other sections/Velora Luxe Main photo.webp',
             href: '/journeys/luxury/velora-luxe',
         },
         {
@@ -566,7 +566,7 @@ export const journeysPageContent = {
             days: 11,
             style: 'Luxury • Culture • Scenic Beauty',
             description: 'Sri Lanka\'s signature experiences combined with handpicked luxury hotels and seamless private travel.',
-            image: '/images/velora_luxe_journey.webp',
+            image: '/Photos/Other sections/Velora Luxe Main photo.webp',
             href: '/journeys/luxury/velora-luxe',
             collection: 'Luxury Collection',
         },

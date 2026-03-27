@@ -11,7 +11,7 @@ export const packages: Package[] = [
         title: 'Velora Luxe',
         location: 'Sri Lanka',
         days: 11,
-        image_url: '/images/velora_luxe_journey.webp',
+        image_url: '/Photos/Other sections/Velora Luxe Main photo.webp',
         tag: 'Luxury',
         highlights: ['Cultural Icons', 'Tea Country', 'Private Safari', 'Coastal Retreats'],
         subtitle: 'Luxury, Thoughtfully Curated',
@@ -54,7 +54,7 @@ export const packages: Package[] = [
             'Early check-in and late check-out unless specified',
         ],
         galleryImages: [
-            '/images/velora_luxe_journey.webp',
+            '/Photos/Other sections/Velora Luxe Main photo.webp',
             '/Photos/Other sections/Destination Tea.jpeg',
             '/Photos/Other sections/Destination Dambulla.jpg',
             '/Photos/Hero Slide 2 Cape Weligama.jpg',
