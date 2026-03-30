@@ -14,7 +14,7 @@ interface JourneyCategoryProps {
     features: { title: string; description: string }[];
 }
 
-export default function JourneyCategoryPage({
+export default async function JourneyCategoryPage({
     category,
     tagline,
     title,
@@ -23,7 +23,7 @@ export default function JourneyCategoryPage({
     heroImage,
     features,
 }: JourneyCategoryProps) {
-    const categoryPackages = getPackagesByCategory(category);
+    const categoryPackages = await getPackagesByCategory(category);
 
     return (
         <>

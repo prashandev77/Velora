@@ -13,10 +13,10 @@ export default async function EditPackagePage({ params }: { params: Promise<{ id
 
     return (
         <div className="max-w-3xl">
-            <Link href="/admin/packages" className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm mb-6 transition-colors">
+            <Link href="/admin/packages" className="inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 text-sm mb-6 transition-colors">
                 <ArrowLeft className="w-4 h-4" /> Back to Packages
             </Link>
-            <h1 className="text-2xl font-bold text-white font-heading mb-8">Edit Package</h1>
+            <h1 className="text-2xl font-bold text-gray-900 font-heading mb-8">Edit Journey</h1>
             <PackageForm action={savePackage} pkg={pkg} />
         </div>
     );

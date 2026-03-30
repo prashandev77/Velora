@@ -33,95 +33,100 @@ export default function AdminLoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-deep flex items-center justify-center px-4">
-            <div className="absolute inset-0 bg-gradient-to-br from-deep via-deep to-ocean/10" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-[120px]" />
-
-            <div className="relative w-full max-w-sm">
-                {/* Logo */}
-                <div className="flex flex-col items-center mb-8">
+        <div className="min-h-screen bg-gray-50 flex flex-col pt-32 pb-12 px-4 items-center sm:px-6 lg:px-8">
+            <div className="relative w-full max-w-md">
+                {/* Logo Section */}
+                <div className="flex flex-col items-center mb-10">
                     <Image
                         src="/velora_logo.svg"
                         alt="Velora Journeys"
-                        width={160}
-                        height={48}
-                        className="h-12 w-auto object-contain mb-2"
-                        style={{ width: 'auto' }}
+                        width={180}
+                        height={55}
+                        className="h-10 w-auto object-contain mb-3"
                         priority
                     />
-                    <p className="text-white/40 text-xs tracking-[0.3em] uppercase">
-                        Admin Panel
-                    </p>
+                    <span className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] bg-gray-200/50 px-3 py-1 rounded-full border border-gray-200">
+                        Admin Portal
+                    </span>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
-                    <h1 className="text-white font-semibold text-lg mb-1">Welcome back</h1>
-                    <p className="text-white/40 text-sm mb-7">Sign in to manage your journeys</p>
+                {/* Login Card */}
+                <div className="bg-white border border-gray-200 shadow-xl shadow-gray-200/50 rounded-3xl p-8 sm:p-10">
+                    <div className="mb-8">
+                        <h1 className="text-gray-900 font-bold text-2xl tracking-tight mb-2">Welcome Back</h1>
+                        <p className="text-gray-500 text-sm">Please sign in to manage your journeys.</p>
+                    </div>
 
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <form onSubmit={handleLogin} className="space-y-5">
+                        {/* Email */}
                         <div>
-                            <label className="text-white/60 text-xs font-medium mb-1.5 block uppercase tracking-wider">
-                                Email
+                            <label className="text-gray-600 text-[11px] font-bold mb-2 block uppercase tracking-wider">
+                                Email Address
                             </label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="admin@example.com"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/20 text-sm pl-10 pr-4 py-3 focus:outline-none focus:border-gold/40 transition-colors"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 text-sm pl-11 pr-4 py-3.5 focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all font-medium"
                                 />
                             </div>
                         </div>
 
+                        {/* Password */}
                         <div>
-                            <label className="text-white/60 text-xs font-medium mb-1.5 block uppercase tracking-wider">
+                            <label className="text-gray-600 text-[11px] font-bold mb-2 block uppercase tracking-wider">
                                 Password
                             </label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+                                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                 <input
                                     type={showPassword ? 'text' : 'password'}
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/20 text-sm pl-10 pr-10 py-3 focus:outline-none focus:border-gold/40 transition-colors"
+                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder:text-gray-400 text-sm pl-11 pr-11 py-3.5 focus:outline-none focus:border-gray-400 focus:ring-4 focus:ring-gray-100 transition-all font-medium"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1"
+                                    title={showPassword ? "Hide password" : "Show password"}
                                 >
                                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                                 </button>
                             </div>
                         </div>
 
+                        {/* Error Message */}
                         {error && (
-                            <p className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-3">
-                                {error}
-                            </p>
+                            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 flex items-start gap-3">
+                                <p className="text-red-600 text-sm font-medium">{error}</p>
+                            </div>
                         )}
 
+                        {/* Submit Button */}
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full bg-gold hover:bg-gold/90 text-deep font-semibold text-sm py-3 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/20 disabled:opacity-60 flex items-center justify-center gap-2 mt-2"
+                            className="w-full bg-gray-900 hover:bg-black text-white font-semibold text-sm py-4 rounded-xl transition-all shadow-md shadow-gray-900/10 disabled:opacity-70 flex items-center justify-center gap-2 mt-2 active:scale-[0.98]"
                         >
                             {loading ? (
-                                <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</>
+                                <><Loader2 className="w-4 h-4 animate-spin" /> Authenticating…</>
                             ) : (
-                                'Sign In'
+                                'Sign In Securely'
                             )}
                         </button>
                     </form>
                 </div>
 
-                <p className="text-center text-white/20 text-xs mt-6">
-                    Velora Journeys Admin · Authorised users only
+                {/* Footer */}
+                <p className="text-center text-gray-400 font-medium text-xs mt-8">
+                    Velora Journeys Admin &middot; Authorised users only
                 </p>
             </div>
         </div>

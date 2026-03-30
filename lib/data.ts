@@ -1,482 +1,56 @@
+import { createClient } from '@supabase/supabase-js';
 import { Package, Journey } from './types';
 
-export const packages: Package[] = [
-    /* ════════════════════════════════════════
-       LUXURY
-       ════════════════════════════════════════ */
-    {
-        id: '5',
-        slug: 'velora-luxe',
-        category: 'luxury',
-        title: 'Velora Luxe',
-        location: 'Sri Lanka',
-        days: 11,
-        image_url: '/Photos/Other sections/Velora Luxe Main photo.webp',
-        tag: 'Luxury',
-        highlights: ['Cultural Icons', 'Tea Country', 'Private Safari', 'Coastal Retreats'],
-        subtitle: 'Luxury, Thoughtfully Curated',
-        travelStyle: 'Luxury • Culture • Nature',
-        route: ['Airport', 'Negombo', 'Sigiriya', 'Kandy', 'Tea Country', 'Ella', 'Yala', 'South Coast', 'Departure'],
-        routeCoords: [
-            { name: 'Airport', lat: 7.18, lng: 79.89, description: 'VIP arrival, Colombo' },
-            { name: 'Negombo', lat: 7.21, lng: 79.84, description: 'Coastal town, first night' },
-            { name: 'Sigiriya', lat: 7.96, lng: 80.76, description: 'Geoffrey Bawa resort & rock fortress' },
-            { name: 'Kandy', lat: 7.29, lng: 80.63, description: 'Private temple viewing & luxury estate' },
-            { name: 'Tea Country', lat: 6.90, lng: 80.59, description: 'Private train carriage & colonial bungalow' },
-            { name: 'Ella', lat: 6.87, lng: 81.05, description: 'Nine Arches Bridge & mountain scenery' },
-            { name: 'Yala', lat: 6.37, lng: 81.52, description: 'Ultra-luxury tented safari lodge' },
-            { name: 'South Coast', lat: 6.03, lng: 80.21, description: 'Premier beachfront villa & Galle Fort' },
-        ],
-        whySpecial: [
-            'Stay at architecturally iconic boutique properties',
-            'Private scenic train carriage through tea country',
-            'Exclusive early access to heritage sites',
-            'Personal chauffeur and naturalist guide',
-        ],
-        perfectFor: ['Luxury travellers', 'Special occasions', 'Boutique hotel enthusiasts', 'Couples seeking refined experiences'],
-        accommodation: 'Handpicked Stays\nA curated collection of Sri Lanka’s finest boutique hotels and heritage properties from Geoffrey Bawa-inspired jungle retreats and restored colonial tea bungalows to luxury safari lodges and refined coastal villas. Final hotel selection will be confirmed based on availability and your preferences.',
-        included: [
-            'Private chauffeur-guide for the entire journey',
-            'All luxury hotel accommodation (10 nights)',
-            'Daily breakfast and dinner (half board basis)',
-            'All private air-conditioned transport',
-            'Private scenic train carriage',
-            'Exclusive Yala safari with naturalist',
-            'All entrance fees and experiences',
-            '24/7 concierge support',
-        ],
-        notIncluded: [
-            'International flights',
-            'Visa Fees and travel insurance',
-            'Meals not specified',
-            'Personal expenses, spa treatments, and tips',
-            'Optional helicopter transfers',
-            'Early check-in and late check-out unless specified',
-        ],
-        galleryImages: [
-            '/Photos/Other sections/Velora Luxe Main photo.webp',
-            '/Photos/Other sections/Destination Tea.jpeg',
-            '/Photos/Other sections/Destination Dambulla.jpg',
-            '/Photos/Hero Slide 2 Cape Weligama.jpg',
-            '/Photos/Other sections/Collection page.jpeg',
-        ],
-        description: 'A refined journey designed for travellers seeking Sri Lanka\'s most iconic destinations while enjoying carefully selected boutique hotels, private experiences, and a seamless travel pace.',
-        itinerary: [
-            { day: 1, title: 'VIP Arrival', description: 'Premium airport welcome. Transfer to a luxury boutique hotel in Colombo. Evening fine dining experience.', highlights: ['VIP clearance', 'Boutique hotel', 'Relax after your journey'] },
-            { day: 2, title: 'Negambo to Dambulla', description: 'Journey to the Cultural Triangle and check into your hotel, an iconic property inspired by Geoffrey Bawa.', highlights: ['Journey to Cultural Triangle', 'Geoffrey Bawa resort', 'Jungle luxury'] },
-            { day: 3, title: 'Dambulla', description: 'Private early access to Sigiriya Rock Fortress with an expert historian guide. Afternoon luxury spa treatment.', highlights: ['Exclusive Sigiriya access', 'Historian guide', 'Spa afternoon'] },
-            { day: 4, title: 'Dambulla to Kandy', description: 'Chauffeured drive to Kandy. Private viewing at the Temple of the Tooth. Stay at a secluded luxury estate.', highlights: ['Chauffeured drive', 'Private temple viewing', 'Luxury estate'] },
-            { day: 5, title: 'Kandy to Nuwara Eliya', description: 'Board a private carriage on the scenic train to the tea country. Check into a restored colonial tea planter\'s bungalow.', highlights: ['Private train carriage', 'Colonial bungalow', 'High tea'] },
-            { day: 6, title: 'Nuwara Eliya to Ella', description: 'Private tea tasting with a master blender. Gourmet picnic lunch amidst the rolling tea fields.', highlights: ['Master tea tasting', 'Gourmet picnic', 'Estate walks'] },
-            { day: 7, title: 'Ella', description: 'Adventure to the wild. Arrive at an ultra-luxury tented safari lodge bordering Yala National Park.', highlights: ['Adventure to wild', 'Ultra-luxury lodge', 'Wilderness immersion'] },
-            { day: 8, title: 'Ella to Yala', description: 'Exclusive full-day private jeep safari in Yala with a specialized naturalist. Sundowners in the bush.', highlights: ['Private jeep safari', 'Expert naturalist', 'Bush sundowners'] },
-            { day: 9, title: 'Yala to Weligama', description: 'Transfer to a premier beachfront resort near Galle. Private villa check-in. Evening at leisure.', highlights: ['Premier beach resort', 'Private villa', 'Ocean views'] },
-            { day: 10, title: 'Weligama', description: 'Relaxed beach day. Evening private guided tour of Galle Fort followed by a curated chef\'s tasting menu.', highlights: ['Beach relaxation', 'Galle Fort twilight tour', 'Chef\'s tasting menu'] },
-            { day: 11, title: 'Weligama to Airport', description: 'Final luxury breakfast. Private transfer to the airport with priority boarding assistance.', highlights: ['Luxury breakfast', 'Private transfer', 'VIP departure'] },
-        ],
-    },
+const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
-    /* ════════════════════════════════════════
-       HONEYMOON
-       ════════════════════════════════════════ */
-    {
-        id: '8',
-        slug: 'velora-serene',
-        category: 'wellness',
-        title: 'Velora Serene',
-        location: 'Sri Lanka',
-        days: 15,
-        image_url: '/Photos/Other sections/Velora Serene new.avif',
-        tag: 'Wellness',
-        highlights: ['Ayurveda', 'Gentle Exploration', 'Slow Travel'],
-        subtitle: 'A Gentle Wellness Journey Through Sri Lanka',
-        travelStyle: 'Wellness • Ayurveda • Nature',
-        route: ['Airport', 'Negombo', 'Bentota (Ayurveda)', 'Wellawaya', 'Nuwara Eliya', 'Kandy', 'Habarana', 'Departure'],
-        routeCoords: [
-            { name: 'Airport', lat: 7.18, lng: 79.89, description: 'Gentle arrival, Colombo' },
-            { name: 'Negombo', lat: 7.21, lng: 79.84, description: 'Wellness resort, first night' },
-            { name: 'Bentota', lat: 6.43, lng: 80.01, description: 'Authentic Ayurveda centre' },
-            { name: 'Wellawaya', lat: 6.73, lng: 81.10, description: 'Countryside wellness stay' },
-            { name: 'Nuwara Eliya', lat: 6.97, lng: 80.77, description: 'Mountain wellness estate & tea healing' },
-            { name: 'Kandy', lat: 7.29, lng: 80.63, description: 'Highland sanctuary & sacred sounds' },
-            { name: 'Habarana', lat: 8.04, lng: 80.76, description: 'Final wellness retreat' },
-        ],
-        whySpecial: [
-            'Authentic Ayurveda under medical supervision',
-            'Gentle, unhurried pace designed for wellbeing',
-            'Peaceful countryside and wellness properties',
-            'Dosha-specific nutrition and treatments',
-            'Digital detox and mindful travel experiences',
-        ],
-        perfectFor: ['Senior travellers', 'Wellness seekers', 'Slow travellers', 'Solo retreats'],
-        accommodation: 'Handpicked Stays\nStay in a carefully curated collection of tranquil retreats and boutique properties from beachfront Ayurveda sanctuaries in Bentota to peaceful countryside lodges, cool hill country escapes, and nature-inspired stays in Sri Lanka\'s cultural heartland. Final hotel selection will be confirmed based on availability and your preferences.',
-        included: [
-            'Private chauffeur for all transfers',
-            'All wellness resort accommodation (14 nights)',
-            'Daily Ayurvedic treatments as prescribed',
-            'All meals (Dosha-specific cuisine, half board basis)',
-            'Doctor consultations and wellness plans',
-            'Yoga and meditation sessions',
-            'All entrance fees for gentle excursions',
-            '24/7 wellness support',
-        ],
-        notIncluded: [
-            'International flights',
-            'Visa Fees and travel insurance',
-            'Additional spa treatments not in plan',
-            'Personal expenses and tips',
-            'Optional cultural excursions',
-            'Early check-in and late check-out unless specified',
-        ],
-        galleryImages: [
-            '/Photos/Other sections/Velora Serene new.avif',
-            '/Photos/Other sections/Peradeniya Garden.jpeg',
-            '/Photos/Other sections/Rice Field.jpeg',
-            '/Photos/Other sections/new-6.jpg',
-            '/Photos/Other sections/new-7.webp',
-        ],
-        description: 'A carefully designed wellness journey combining authentic Ayurveda treatments, peaceful countryside retreats, and gentle cultural exploration. This itinerary balances wellness and slow travel experiences for a calm and restorative journey.',
-        itinerary: [
-            { day: 1, title: 'Airport to Negombo', description: 'Arrive in Sri Lanka and meet your private chauffeur-guide. Transfer to Negombo and settle into your beachfront hotel, allowing time to relax and recover after your journey.', highlights: ['Soft arrival', 'Beachfront hotel', 'Rest and recovery'] },
-            { day: 2, title: 'Negombo to Bentota', description: 'Travel south to Bentota and check into your Ayurveda retreat. Begin your personalised wellness programme with a consultation and gentle introduction to treatments.', highlights: ['Ayurveda retreat', 'Wellness consultation', 'Begin treatments'] },
-            { day: 3, title: 'Bentota', description: 'Enjoy your daily wellness routine, including personalised Ayurvedic treatments, nourishing herbal meals, and time for rest and reflection.', highlights: ['Ayurvedic treatments', 'Herbal meals', 'Rest and reflection'] },
-            { day: 4, title: 'Bentota', description: 'Continue your tailored Ayurveda programme focused on relaxation, detoxification, and restoring balance to body and mind.', highlights: ['Detoxification', 'Rejuvenation', 'Body and mind balance'] },
-            { day: 5, title: 'Bentota', description: 'A day dedicated to healing, with treatments, meditation, and quiet time within the peaceful surroundings of your retreat.', highlights: ['Healing treatments', 'Meditation', 'Peaceful surroundings'] },
-            { day: 6, title: 'Bentota', description: 'Follow your personalised treatment plan, with time to unwind, read, or simply enjoy the calm coastal setting.', highlights: ['Personalised treatments', 'Coastal calm', 'Wellness at your pace'] },
-            { day: 7, title: 'Bentota', description: 'Deepen your wellness experience through continued treatments and mindful relaxation.', highlights: ['Continued treatments', 'Mindful relaxation', 'Restore and renew'] },
-            { day: 8, title: 'Bentota', description: 'Your final full day at the retreat, allowing time to fully absorb the benefits of your personalised wellness programme.', highlights: ['Final Ayurveda day', 'Programme completion', 'Wellness absorption'] },
-            { day: 9, title: 'Bentota to Wellawaya', description: 'Journey inland to Wellawaya, a peaceful rural setting. Enjoy gentle village walks and time to reconnect with nature.', highlights: ['Countryside journey', 'Village walks', 'Nature reconnection'] },
-            { day: 10, title: 'Wellawaya', description: 'A slow day with optional meditation sessions and a visit to a serene meditation centre near Ella.', highlights: ['Meditation sessions', 'Meditation centre', 'Mindfulness and nature'] },
-            { day: 11, title: 'Wellawaya to Nuwara Eliya', description: 'Travel into Sri Lanka\'s hill country. Enjoy cooler temperatures, scenic tea plantations, and fresh mountain air.', highlights: ['Hill country', 'Tea plantations', 'Mountain air'] },
-            { day: 12, title: 'Nuwara Eliya to Kandy', description: 'Continue to Kandy. Visit the Temple of the Tooth and explore the botanical gardens, with optional cultural performances in the evening.', highlights: ['Temple of the Tooth', 'Botanical gardens', 'Cultural performances'] },
-            { day: 13, title: 'Kandy to Habarana', description: 'Travel to Habarana. Experience a gentle elephant safari and explore nearby cultural sites.', highlights: ['Elephant safari', 'Cultural sites', 'Cultural heartland'] },
-            { day: 14, title: 'Habarana', description: 'Optional visits to Anuradhapura or Polonnaruwa, or enjoy a relaxed day surrounded by nature.', highlights: ['Anuradhapura', 'Polonnaruwa', 'Ancient cities'] },
-            { day: 15, title: 'Habarana to Airport', description: 'Transfer to the airport for your onward journey, concluding your wellness experience in Sri Lanka.', highlights: ['Airport transfer', 'Wellness conclusion', 'Departure'] },
-        ],
-    },
+export function mapDbToPackage(dbPkg: any): Package {
+    return {
+        id: dbPkg.id,
+        slug: dbPkg.slug,
+        category: dbPkg.category,
+        title: dbPkg.title,
+        location: dbPkg.location,
+        days: dbPkg.days,
+        image_url: dbPkg.image_url,
+        tag: dbPkg.tag,
+        subtitle: dbPkg.subtitle,
+        travelStyle: dbPkg.travel_style,
+        description: dbPkg.description,
+        accommodation: dbPkg.accommodation,
+        highlights: dbPkg.highlights,
+        whySpecial: dbPkg.why_special,
+        perfectFor: dbPkg.perfect_for,
+        route: dbPkg.route,
+        routeCoords: dbPkg.route_coords,
+        included: dbPkg.included,
+        notIncluded: dbPkg.not_included,
+        itinerary: dbPkg.itinerary,
+        galleryImages: dbPkg.gallery_images,
+    };
+}
 
-    /* ════════════════════════════════════════
-       WELLNESS
-       ════════════════════════════════════════ */
-    {
-        id: '10',
-        slug: 'serendipity-of-sri-lanka',
-        category: 'adventure',
-        title: 'Serendipity of Sri Lanka',
-        location: 'Sri Lanka',
-        days: 8,
-        image_url: '/Photos/Other sections/Hill Country.jpg',
-        tag: 'Signature',
-        highlights: ['Heritage', 'Highlands', 'Wildlife', 'Southern Coast'],
-        subtitle: 'A Perfect Introduction to the Island',
-        travelStyle: 'Culture • Nature • Scenic Landscapes',
-        route: ['Airport', 'Sigiriya', 'Kandy', 'Nuwara Eliya', 'Ella', 'Yala', 'Galle', 'Departure'],
-        routeCoords: [
-            { name: 'Airport', lat: 7.18, lng: 79.89, description: 'Bandaranaike International Airport, arrival' },
-            { name: 'Sigiriya', lat: 7.96, lng: 80.76, description: 'Ancient rock fortress & cultural triangle' },
-            { name: 'Kandy', lat: 7.29, lng: 80.63, description: 'Sacred city & Temple of the Tooth' },
-            { name: 'Nuwara Eliya', lat: 6.97, lng: 80.77, description: 'Misty tea country highlands' },
-            { name: 'Ella', lat: 6.87, lng: 81.05, description: 'Nine Arches Bridge & mountain scenery' },
-            { name: 'Yala', lat: 6.37, lng: 81.52, description: 'Wildlife safari & leopard territory' },
-            { name: 'Galle', lat: 6.05, lng: 80.22, description: 'UNESCO Fort & southern coast' },
-        ],
-        whySpecial: [
-            'Carefully balanced pace with no rushed travel days',
-            'Handpicked boutique and luxury hotels',
-            'Private chauffeur-guided travel throughout',
-            'Flexible experiences tailored to your travel style',
-            'Seamless coordination from arrival to departure',
-        ],
-        perfectFor: ['First-time visitors', 'Couples', 'Families', 'Culture & scenic travel lovers'],
-        accommodation: 'Handpicked Stays\nA curated collection of Sri Lanka’s finest boutique hotels and heritage properties from Geoffrey Bawa-inspired jungle retreats and restored colonial tea bungalows to luxury safari lodges and refined coastal villas. Final hotel selection will be confirmed based on availability and your preferences.',
-        included: [
-            'Private chauffeur-guide for the entire journey',
-            'All hotel accommodation (7 nights)',
-            'Daily breakfast and dinner (half board basis)',
-            'All private air-conditioned transport',
-            'Entrance fees to all listed sites',
-            'Yala National Park safari',
-            'Scenic train journey (subject to availability)',
-            '24/7 local support',
-        ],
-        notIncluded: [
-            'International flights',
-            'Visa Fees and travel insurance',
-            'Meals not specified in the itinerary',
-            'Personal expenses and tips',
-            'Optional activities',
-            'Early check-in and late check-out unless specified',
-        ],
-        galleryImages: [
-            '/Photos/Other sections/serendipity-new-1.webp',
-            '/Photos/Other sections/Nuwara Eliya.jpeg',
-            '/Photos/Other sections/Destination Ella.jpeg',
-            '/Photos/Other sections/Destination Galle.jpeg',
-            '/Photos/Other sections/serendipity-new-5.webp',
-            '/Photos/Other sections/Hill Country.jpg',
-        ],
-        description: 'An unforgettable journey through Sri Lanka\'s cultural heartland, misty hill country, and tropical coastline. This carefully curated itinerary blends ancient heritage sites, scenic landscapes, and boutique hotels to create a seamless introduction to the island.',
-        itinerary: [
-            { day: 1, title: 'Arrival & Negombo', description: 'Welcome to Sri Lanka. Meet your private chauffeur-guide and transfer to your hotel in Negombo.', highlights: ['Airport welcome', 'Coastal relaxation', 'Relax after your journey'] },
-            { day: 2, title: 'Negambo to Sigiriya', description: 'Drive to the Cultural Triangle. Visit the ancient Dambulla Cave Temple. Relax at your jungle resort.', highlights: ['Dambulla Cave Temple', 'Jungle resort', 'Cultural immersion'] },
-            { day: 3, title: 'Sigiriya to Kandy', description: 'Early morning climb of Sigiriya Rock Fortress. Travel to Kandy, stopping at a traditional spice garden en route.', highlights: ['Sigiriya Rock', 'Spice garden tour', 'Arrival in Kandy'] },
-            { day: 4, title: 'Kandy to Nuwara Eliya', description: 'Visit the Temple of the Tooth. Journey up into the misty tea plantations of Nuwara Eliya. Tea factory tour.', highlights: ['Temple of the Tooth', 'Scenic highland drive', 'Tea factory visit'] },
-            { day: 5, title: 'Nuwara Eliya to Ella → Yala', description: 'Board the iconic scenic train to Ella. Enjoy the breathtaking views. Meet your driver and continue to Yala.', highlights: ['Scenic train ride', 'Ella mountain views', 'Journey to the wild'] },
-            { day: 6, title: 'Yala to Galle to Ahungalla', description: 'Dawn jeep safari in Yala National Park searching for leopards. Travel along the beautiful southern coast to your beach resort.', highlights: ['Yala dawn safari', 'Wildlife spotting', 'Southern coast arrival'] },
-            { day: 7, title: 'Ahungalla', description: 'Morning guided walk through the UNESCO-listed Galle Fort. Afternoon at leisure on the beach.', highlights: ['Galle Fort tour', 'Colonial history', 'Beach relaxation'] },
-            { day: 8, title: 'Ahungalla to Airport', description: 'Enjoy your final morning by the ocean before transferring to the airport for your departure flight.', highlights: ['Final beach walk', 'Airport transfer', 'Farewell to Sri Lanka'] },
-        ],
-    },
+export async function getAllPackages(): Promise<Package[]> {
+    const { data } = await supabase.from('packages').select('*').eq('is_active', true).order('created_at', { ascending: true });
+    return (data || []).map(mapDbToPackage);
+}
 
-    /* ════════════════════════════════════════
-       ADVENTURE - SERENDIPITY
-       ════════════════════════════════════════ */
-    {
-        id: '11',
-        slug: 'grand-explorer',
-        category: 'adventure',
-        title: 'Grand Explorer',
-        location: 'Sri Lanka',
-        days: 20,
-        image_url: '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg',
-        tag: 'Explorer',
-        highlights: ['Ancient Kingdoms', 'Surf Coast', 'Wildlife Safaris', 'Hill Country'],
-        subtitle: 'Sri Lanka\'s Grand Adventure',
-        travelStyle: 'Adventure • Culture • Nature • Beach',
-        route: ['Airport', 'Bentota', 'Kitulgala', 'Kandy', 'Sigiriya', 'Trincomalee', 'Pasikuda', 'Arugam Bay', 'Ella', 'Hambantota', 'Departure'],
-        routeCoords: [
-            { name: 'Airport', lat: 7.18, lng: 79.89, description: 'International arrival, Colombo' },
-            { name: 'Bentota', lat: 6.43, lng: 80.01, description: 'Coastal relaxation & water sports' },
-            { name: 'Kitulgala', lat: 6.99, lng: 80.42, description: 'White-water rafting & jungle' },
-            { name: 'Kandy', lat: 7.29, lng: 80.63, description: 'Temple of the Tooth & Botanical Gardens' },
-            { name: 'Sigiriya', lat: 7.96, lng: 80.76, description: 'Rock fortress & ancient ruins' },
-            { name: 'Trincomalee', lat: 8.57, lng: 81.23, description: 'East coast beaches & whale watching' },
-            { name: 'Pasikuda', lat: 7.92, lng: 81.55, description: 'Pristine east coast lagoon' },
-            { name: 'Arugam Bay', lat: 6.84, lng: 81.84, description: 'World-class surf coast' },
-            { name: 'Ella', lat: 6.87, lng: 81.05, description: 'Nine Arches Bridge & highlands' },
-            { name: 'Hambantota', lat: 6.12, lng: 81.12, description: 'Southern coast & departure' },
-        ],
-        whySpecial: [
-            'The most comprehensive Sri Lanka journey available',
-            'Explore regions most travellers never see',
-            'Blend of east coast, west coast, and highland experiences',
-            'Both cultural immersion and wildlife adventure',
-            'Private chauffeur-guide for the entire journey',
-        ],
-        perfectFor: ['Active travellers', 'Returning visitors to Sri Lanka', 'Multi-region explorers', 'Photography enthusiasts'],
-        accommodation: 'Handpicked Stays Across Sri Lanka\nA carefully curated collection of boutique hotels, eco-lodges, and luxury resorts selected for their location, comfort, and authentic character. From rainforest retreats to east coast beaches and southern luxury resorts, each stay enhances your journey. Final hotel selection will be confirmed based on availability and your preferences.',
-        included: [
-            'Private chauffeur-guide for 20 days',
-            'All hotel accommodation (19 nights)',
-            'Daily breakfast and dinner (half board basis)',
-            'All private air-conditioned transport',
-            'Yala and Minneriya safari experiences',
-            'All entrance fees to listed sites',
-            '24/7 local support',
-        ],
-        notIncluded: [
-            'International flights',
-            'Visa Fees and travel insurance',
-            'Meals not specified in the itinerary',
-            'Personal expenses, surf lessons, and tips',
-            'Optional water sports activities',
-            'Early check-in and late check-out unless specified',
-        ],
-        galleryImages: [
-            '/Photos/Other sections/Our Journeys_Classic Discovery.jpeg',
-            '/Photos/Other sections/Polonnaruwa.jpeg',
-            '/Photos/Other sections/Anuradhapura.jpeg',
-            '/Photos/Other sections/Destination Ella.jpeg',
-            '/Photos/Other sections/Bentota water sports.webp',
-            '/Photos/Other sections/Section 2 _ Coast.jpeg',
-        ],
-        description: 'A comprehensive 20-day journey exploring Sri Lanka\'s ancient kingdoms, lush rainforests, remote east-coast beaches, mountain landscapes, and wildlife reserves. Designed for travellers who want to experience the island in depth.',
-        itinerary: [
-            { day: 1, title: 'Airport to Bentota', description: 'Arrive in Sri Lanka and travel to Bentota. Unwind on the beach, explore the lagoon, or enjoy optional water sports and a Madu River safari.', highlights: ['Airport welcome', 'Bentota transfer', 'Beach & River Life'] },
-            { day: 2, title: 'Bentota', description: 'A full day to enjoy Bentota. Beach relaxation, water sports, and a Madu River boat safari through the mangroves.', highlights: ['Beach day', 'Water sports', 'Madu River safari'] },
-            { day: 3, title: 'Bentota to Kitulgala', description: 'Journey inland to Kitulgala. Experience white-water rafting, jungle walks, waterfalls, and optional birdwatching in a lush rainforest setting.', highlights: ['White-water rafting', 'Jungle walks', 'Rainforest adventure'] },
-            { day: 4, title: 'Kitulgala', description: 'A full day of rainforest adventure. Explore waterfalls, enjoy optional birdwatching and nature walks through the lush jungle.', highlights: ['Waterfall exploration', 'Birdwatching', 'Nature walks'] },
-            { day: 5, title: 'Kitulgala to Kandy', description: 'Travel to Kandy, Sri Lanka\'s cultural capital. Visit the Temple of the Tooth, stroll through botanical gardens, and enjoy a traditional dance performance.', highlights: ['Temple of the Tooth', 'Botanical gardens', 'Dance performance'] },
-            { day: 6, title: 'Kandy', description: 'Explore Kandy further. Visit the Royal Botanical Gardens, browse local markets, and experience the city\'s spiritual heart.', highlights: ['Botanical Gardens', 'Local markets', 'Cultural capital'] },
-            { day: 7, title: 'Kandy to Sigiriya', description: 'Explore the Cultural Triangle. Climb Sigiriya Rock Fortress, visit Dambulla Cave Temple, enjoy an elephant safari, and experience village life by the lake.', highlights: ['Sigiriya Rock', 'Dambulla Cave Temple', 'Ancient Kingdoms'] },
-            { day: 8, title: 'Sigiriya', description: 'Continue exploring the ancient kingdoms. Visit Polonnaruwa ruins, enjoy an elephant gathering safari at Minneriya, and experience traditional village life.', highlights: ['Polonnaruwa ruins', 'Minneriya safari', 'Village life'] },
-            { day: 9, title: 'Sigiriya to Trincomalee', description: 'Head to the east coast. Visit Koneswaram Temple and Fort Frederick, relax on Nilaveli beach, and enjoy optional snorkelling at Pigeon Island.', highlights: ['Koneswaram Temple', 'Nilaveli beach', 'East Coast'] },
-            { day: 10, title: 'Trincomalee', description: 'A full day on the east coast. Beach relaxation, optional whale watching, and snorkelling at Pigeon Island.', highlights: ['Pigeon Island', 'Whale watching', 'Marine life'] },
-            { day: 11, title: 'Trincomalee', description: 'Continue enjoying the east coast. Visit Fort Frederick, explore local markets, and enjoy fresh seafood.', highlights: ['Fort Frederick', 'Local markets', 'Seafood'] },
-            { day: 12, title: 'Trincomalee to Pasikuda', description: 'Travel along the east coast to Pasikuda, known for its shallow turquoise waters. Enjoy a relaxed beach day with optional kayaking or snorkelling.', highlights: ['Pasikuda transfer', 'Turquoise waters', 'Calm coastal escape'] },
-            { day: 13, title: 'Pasikuda to Arugam Bay', description: 'Continue south to Arugam Bay. Enjoy optional surfing, lagoon safaris, elephant sightings at Lahugala, and birdwatching in Kumana National Park.', highlights: ['Arugam Bay', 'Lagoon safaris', 'Laid-back coast'] },
-            { day: 14, title: 'Arugam Bay', description: 'Morning surf or beach relaxation. Afternoon lagoon boat safari and exploring the surf town lifestyle.', highlights: ['Surfing', 'Lagoon safari', 'Coastal living'] },
-            { day: 15, title: 'Arugam Bay', description: 'Optional visit to Kumana National Park for birdwatching, or enjoy another day of surf and sand.', highlights: ['Kumana NP', 'Birdwatching', 'Beach time'] },
-            { day: 16, title: 'Arugam Bay to Ella', description: 'Travel to Ella in the hill country. Visit the Nine Arches Bridge, hike Little Adam\'s Peak, or enjoy optional adventure activities.', highlights: ['Nine Arches Bridge', 'Little Adam\'s Peak', 'Hill country'] },
-            { day: 17, title: 'Ella', description: 'Continue exploring Ella. Hike to Ravana Falls, visit local tea estates, and soak in the mountain atmosphere.', highlights: ['Ravana Falls', 'Tea estates', 'Mountain air'] },
-            { day: 18, title: 'Ella to Hambantota', description: 'Head south for a safari experience in Yala National Park, followed by time to relax at your coastal resort.', highlights: ['Yala safari', 'Leopard tracking', 'Wildlife & Southern Coast'] },
-            { day: 19, title: 'Hambantota', description: 'Relaxed day at your southern coast resort. Optional visit to Galle Fort or whale watching.', highlights: ['Beach relaxation', 'Galle Fort', 'Southern coast'] },
-            { day: 20, title: 'Hambantota to Airport', description: 'Transfer to the airport for your onward journey, concluding your exploration of Sri Lanka.', highlights: ['Airport transfer', 'Island memories', 'Departure'] },
-        ],
-    },
+export async function getPackagesByCategory(category: string): Promise<Package[]> {
+    const { data } = await supabase.from('packages').select('*').eq('category', category).eq('is_active', true).order('created_at', { ascending: true });
+    return (data || []).map(mapDbToPackage);
+}
 
-    /* ════════════════════════════════════════
-       ADVENTURE - GRAND EXPLORER
-       ════════════════════════════════════════ */
-    {
-        id: '16',
-        slug: 'velora-honeymoon',
-        category: 'honeymoon',
-        title: 'Velora Honeymoon Journey',
-        location: 'Sri Lanka',
-        days: 12,
-        image_url: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
-        tag: 'Romance',
-        highlights: ['Romantic Stays', 'Tea Country', 'Safari', 'Beach Sunsets'],
-        subtitle: 'A Romantic Escape Through Sri Lanka',
-        travelStyle: 'Romantic • Scenic • Luxury',
-        route: ['Airport', 'Negombo', 'Sigiriya', 'Tea Country', 'Ella', 'Yala', 'South Coast', 'Departure'],
-        routeCoords: [
-            { name: 'Airport', lat: 7.18, lng: 79.89, description: 'VIP arrival, Colombo' },
-            { name: 'Negombo', lat: 7.21, lng: 79.84, description: 'Boutique beach hotel & candlelit dinner' },
-            { name: 'Sigiriya', lat: 7.96, lng: 80.76, description: 'Private jungle villa with plunge pool' },
-            { name: 'Tea Country', lat: 6.90, lng: 80.59, description: 'Colonial bungalow & mountain romance' },
-            { name: 'Ella', lat: 6.87, lng: 81.05, description: 'Nine Arches Bridge at golden hour' },
-            { name: 'Yala', lat: 6.37, lng: 81.52, description: 'Luxury safari lodge & wilderness sundowners' },
-            { name: 'South Coast', lat: 6.03, lng: 80.21, description: 'Beachfront resort & Galle Fort' },
-        ],
-        whySpecial: [
-            'Romantic candlelit dinners at every destination',
-            'Private couple experiences throughout',
-            'Handpicked honeymoon-friendly boutique hotels',
-            'Blend of adventure, culture, and relaxation',
-            'Seamless private travel with no group tours',
-        ],
-        perfectFor: ['Honeymoon couples', 'Anniversary travellers', 'Romantic getaways', 'Couples seeking luxury & adventure'],
-        accommodation: 'Handpicked Stays\nA curated collection of romantic boutique hotels and luxury retreats from private jungle villas with plunge pools to colonial tea estate bungalows and oceanfront suites with sunset views. Final hotel selection will be confirmed based on availability and your preferences.',
-        included: [
-            'Private chauffeur-guide for 12 days',
-            'All luxury accommodation (11 nights)',
-            'Daily breakfast and romantic dinner (half board basis)',
-            'All private air-conditioned transport',
-            'Private Yala safari experience',
-            'Scenic train journey (subject to availability)',
-            'Entrance fees to all listed sites',
-            'Honeymoon amenities at each hotel',
-            '24/7 local support',
-        ],
-        notIncluded: [
-            'International flights',
-            'Visa Fees and travel insurance',
-            'Meals not specified in the itinerary',
-            'Personal expenses, spa treatments, and tips',
-            'Optional water sports and activities',
-            'Early check-in and late check-out unless specified',
-        ],
-        galleryImages: [
-            '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
-            '/Photos/Other sections/Section 2 Honeymoon.jpg',
-            '/Photos/Other sections/Destination Mirissa.jpeg',
-            '/Photos/Other sections/new-3.webp',
-            '/Photos/Other sections/new-4.webp',
-        ],
-        description: 'A carefully designed honeymoon experience combining Sri Lanka\'s ancient wonders, misty tea estates, scenic mountain landscapes, wildlife safaris, and luxury coastal retreats.',
-        itinerary: [
-            { day: 1, title: 'Arrival & Negombo', description: 'VIP airport welcome. Transfer to a boutique beach hotel in Negombo. Candlelit welcome dinner by the ocean.', highlights: ['VIP arrival', 'Beach hotel', 'Candlelit dinner'] },
-            { day: 2, title: 'Journey to Sigiriya', description: 'Drive to the Cultural Triangle. Check into a private jungle villa with plunge pool. Sunset cocktails.', highlights: ['Private villa', 'Plunge pool', 'Jungle sunset'] },
-            { day: 3, title: 'Sigiriya & Ancient Wonders', description: 'Sunrise climb of Sigiriya Rock Fortress. Afternoon couples\' village cycling experience.', highlights: ['Sigiriya sunrise', 'Village cycling', 'Romantic picnic'] },
-            { day: 4, title: 'Sacred Kandy', description: 'Visit the Temple of the Tooth in Kandy. Private Kandyan dance performance. Evening spice garden walk.', highlights: ['Temple of the Tooth', 'Dance performance', 'Spice garden'] },
-            { day: 5, title: 'Into the Tea Country', description: 'Scenic drive up to the misty tea plantations. Check into a restored colonial tea planter\'s bungalow. High tea together.', highlights: ['Tea country drive', 'Colonial bungalow', 'High tea'] },
-            { day: 6, title: 'Mountain Romance', description: 'Private tea estate walk and tasting. Couples\' spa treatment. Dinner by the fireplace.', highlights: ['Tea tasting', 'Couples\' spa', 'Fireside dinner'] },
-            { day: 7, title: 'Scenic Train to Ella', description: 'Board the iconic scenic train through tea country to Ella. Visit the Nine Arches Bridge at golden hour.', highlights: ['Scenic train ride', 'Nine Arches Bridge', 'Mountain views'] },
-            { day: 8, title: 'Ella to Yala', description: 'Morning hike to Little Adam\'s Peak. Afternoon drive to Yala. Check into a luxury safari lodge.', highlights: ['Little Adam\'s Peak', 'Safari lodge', 'Bush dinner'] },
-            { day: 9, title: 'Safari & Sunsets', description: 'Dawn jeep safari in Yala National Park. Afternoon at leisure. Sundowner cocktails in the wilderness.', highlights: ['Dawn safari', 'Leopard spotting', 'Wilderness sundowners'] },
-            { day: 10, title: 'Southern Coast Arrival', description: 'Transfer to a luxury beachfront resort on the southern coast. Afternoon at leisure. Private beach dinner.', highlights: ['Beach resort', 'Ocean views', 'Private dinner'] },
-            { day: 11, title: 'Galle Fort & Leisure', description: 'Morning guided walk through Galle Fort. Afternoon spa and relaxation. Farewell romantic dinner.', highlights: ['Galle Fort', 'Couples\' spa', 'Farewell dinner'] },
-            { day: 12, title: 'Departure', description: 'Final morning by the ocean. Private transfer to the airport with lasting honeymoon memories.', highlights: ['Beach sunrise', 'Airport transfer', 'Farewell'] },
-        ],
-    },
+export async function getPackageBySlug(category: string, slug: string): Promise<Package | undefined> {
+    const { data } = await supabase.from('packages').select('*').eq('category', category).eq('slug', slug).single();
+    return data ? mapDbToPackage(data) : undefined;
+}
 
-    /* ════════════════════════════════════════
-       ADVENTURE - VELORA WILD
-       ════════════════════════════════════════ */
-    {
-        id: '17',
-        slug: 'velora-wild',
-        category: 'adventure',
-        title: 'Velora Wild',
-        location: 'Sri Lanka',
-        days: 17,
-        image_url: '/Photos/Other sections/Journey_Velora Wild new.jpg',
-        tag: 'Wildlife',
-        highlights: ['Wetlands', 'National Parks', 'Rainforests', 'Mountain Ecosystems'],
-        subtitle: 'Sri Lanka\'s Ultimate Wildlife Expedition',
-        travelStyle: 'Wildlife • Birding • Nature',
-        route: ['Airport', 'Chilaw', 'Wilpattu', 'Trincomalee', 'Arugam Bay', 'Gal Oya', 'Nuwara Eliya', 'Sinharaja', 'Kitulgala', 'Departure'],
-        routeCoords: [
-            { name: 'Airport', lat: 7.18, lng: 79.89, description: 'International arrival, Colombo' },
-            { name: 'Chilaw', lat: 7.57, lng: 79.80, description: 'Wetlands & lagoon birding' },
-            { name: 'Wilpattu', lat: 8.35, lng: 80.05, description: 'Leopard & sloth bear safaris' },
-            { name: 'Trincomalee', lat: 8.57, lng: 81.23, description: 'Whale watching & Pigeon Island' },
-            { name: 'Arugam Bay', lat: 6.84, lng: 81.84, description: 'Kumana NP & surf coast' },
-            { name: 'Gal Oya', lat: 7.17, lng: 81.33, description: 'Swimming elephants boat safari' },
-            { name: 'Nuwara Eliya', lat: 6.97, lng: 80.77, description: 'Horton Plains & cloud forest' },
-            { name: 'Sinharaja', lat: 6.41, lng: 80.49, description: 'UNESCO rainforest & endemic birds' },
-            { name: 'Kitulgala', lat: 6.99, lng: 80.42, description: 'White-water rafting & jungle' },
-        ],
-        whySpecial: [
-            'Sri Lanka\'s most comprehensive wildlife journey',
-            'Expert naturalist guides at every national park',
-            'Cover all major ecosystems, wetlands to mountains',
-            'Exceptional birding opportunities (400+ species)',
-            'Remote wilderness camps and eco-lodges',
-        ],
-        perfectFor: ['Wildlife enthusiasts', 'Photographers', 'Birders', 'Nature travellers seeking immersive safaris'],
-        accommodation: 'Handpicked Stays\nA curated collection of Sri Lanka’s finest boutique hotels and heritage properties from Geoffrey Bawa-inspired jungle retreats and restored colonial tea bungalows to luxury safari lodges and refined coastal villas. Final hotel selection will be confirmed based on availability and your preferences.',
-        included: [
-            'Private chauffeur and naturalist guide',
-            'All accommodation (16 nights)',
-            'Daily breakfast and dinner (half board basis)',
-            'All private air-conditioned transport',
-            'All national park entrance fees',
-            'All safari jeep experiences',
-            'Boat safaris and nature walks',
-            'Sinharaja rainforest trekking permits',
-            '24/7 wildlife support team',
-        ],
-        notIncluded: [
-            'International flights',
-            'Visa Fees and travel insurance',
-            'Meals not specified in the itinerary',
-            'Personal expenses and tips',
-            'Camera and photography equipment',
-            'Early check-in and late check-out unless specified',
-        ],
-        galleryImages: [
-            '/Photos/Other sections/Journey_Velora Wild new.jpg',
-            '/Photos/Other sections/Section 2 _ Wildlife Expedition.jpeg',
-            '/Photos/Other sections/Our Journeys_Wildlife.jpeg',
-            '/Photos/Other sections/Wild life .jpeg',
-            '/Photos/Other sections/Water Rafting Kitulgala.jpg',
-            '/Photos/Other sections/new-8.webp',
-        ],
-        description: 'A comprehensive wildlife journey across Sri Lanka\'s most diverse ecosystems, from wetlands and coastal lagoons to remote rainforests and mountain landscapes. Designed for wildlife lovers, photographers, and nature travellers seeking immersive safaris and birding experiences.',
-        itinerary: [
-            { day: 1, title: 'Arrival & Chilaw Wetlands', description: 'Airport welcome. Transfer to Chilaw. Afternoon boat safari through the Mundel Lake wetlands.', highlights: ['Airport welcome', 'Chilaw transfer', 'Wetland boat safari'] },
-            { day: 2, title: 'Chilaw Lagoon Birding', description: 'Dawn birding expedition along the Chilaw lagoon. Spot herons, kingfishers, and migratory species.', highlights: ['Dawn birding', 'Lagoon exploration', 'Migratory species'] },
-            { day: 3, title: 'Wilpattu National Park', description: 'Transfer to Wilpattu NP. Afternoon safari exploring one of Asia\'s oldest wildlife reserves.', highlights: ['Wilpattu NP', 'Leopard territory', 'Wilderness camp'] },
-            { day: 4, title: 'Full Day Wilpattu Safari', description: 'Full-day safari with expert tracker. Search for sloth bears, leopards, and sambar deer.', highlights: ['Full-day safari', 'Sloth bears', 'Expert tracker'] },
-            { day: 5, title: 'Journey to the East Coast', description: 'Cross-island drive to Trincomalee. Afternoon whale and dolphin watching excursion.', highlights: ['Cross-island drive', 'Whale watching', 'Dolphin spotting'] },
-            { day: 6, title: 'Pigeon Island Marine Sanctuary', description: 'Snorkeling at Pigeon Island, reef sharks, sea turtles, and coral formations.', highlights: ['Pigeon Island', 'Reef sharks', 'Sea turtles'] },
-            { day: 7, title: 'Coastal Birding & Lagoons', description: 'Visit Kokilai Lagoon, one of Sri Lanka\'s premier birding sites. Spot flamingos and pelicans.', highlights: ['Kokilai Lagoon', 'Flamingos', 'Pelicans'] },
-            { day: 8, title: 'Arugam Bay & Kumana', description: 'Transfer to Arugam Bay. Afternoon safari at Kumana National Park, nesting waterbirds.', highlights: ['Kumana NP', 'Waterbird nesting', 'Lagoon safari'] },
-            { day: 9, title: 'Arugam Bay Surf & Nature', description: 'Morning at leisure in Arugam Bay. Afternoon lagoon boat safari spotting crocodiles and monitor lizards.', highlights: ['Surf coast', 'Crocodiles', 'Monitor lizards'] },
-            { day: 10, title: 'Gal Oya Wilderness', description: 'Transfer to Gal Oya National Park. Unique boat safari on Senanayake Samudra, swimming elephants.', highlights: ['Gal Oya NP', 'Boat safari', 'Swimming elephants'] },
-            { day: 11, title: 'Gal Oya Indigenous Walk', description: 'Guided forest walk with indigenous Vedda community. Afternoon nature photography session.', highlights: ['Vedda community', 'Forest walk', 'Nature photography'] },
-            { day: 12, title: 'Into the Mountains', description: 'Ascend to Nuwara Eliya. Visit Horton Plains National Park and World\'s End. Cloud forest exploration.', highlights: ['Horton Plains NP', 'World\'s End', 'Cloud forest'] },
-            { day: 13, title: 'Highland Birding', description: 'Dawn birding in the highland forests, endemic Sri Lanka wood pigeon and yellow-eared bulbul.', highlights: ['Endemic species', 'Highland forests', 'Mountain birding'] },
-            { day: 14, title: 'Sinharaja Rainforest', description: 'Transfer to Sinharaja, UNESCO World Heritage rainforest. Trek with expert ornithologist.', highlights: ['Sinharaja UNESCO', 'Rainforest trek', 'Bird flocks'] },
-            { day: 15, title: 'Deep Sinharaja Exploration', description: 'Full-day rainforest expedition. Search for endemic mixed-species bird flocks and rare amphibians.', highlights: ['Endemic birds', 'Rare amphibians', 'Pristine forest'] },
-            { day: 16, title: 'Kitulgala Adventure', description: 'Transfer to Kitulgala. White-water rafting on the Kelani River. Jungle night walk.', highlights: ['White-water rafting', 'Kelani River', 'Night walk'] },
-            { day: 17, title: 'Departure', description: 'Morning forest birding walk. Transfer to Colombo airport for departure.', highlights: ['Final birding', 'Airport transfer', 'Farewell'] },
-        ],
-    },
-]
+export async function getPackageById(id: string): Promise<Package | undefined> {
+    const { data } = await supabase.from('packages').select('*').eq('id', id).single();
+    return data ? mapDbToPackage(data) : undefined;
+}
 
 export const journeys: Journey[] = [
     {
@@ -504,30 +78,3 @@ export const journeys: Journey[] = [
         color: 'from-emerald-600/80 to-teal-900/80',
     },
 ];
-
-export const heroSlides = [
-    {
-        image: '/images/coastline.jpg',
-        title: 'Uncover the Soul of Sri Lanka',
-        subtitle: '& The Heart of the Maldives',
-    },
-    {
-        image: '/images/temple.jpg',
-        title: 'Where Ancient Temples',
-        subtitle: 'Meet Crystal Waters',
-    },
-    {
-        image: '/images/sigiriya.jpg',
-        title: 'Luxury Beyond',
-        subtitle: 'Imagination',
-    },
-];
-
-/* ── Helpers ── */
-export function getPackagesByCategory(category: string): Package[] {
-    return packages.filter((p) => p.category === category);
-}
-
-export function getPackageBySlug(category: string, slug: string): Package | undefined {
-    return packages.find((p) => p.category === category && p.slug === slug);
-}

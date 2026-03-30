@@ -7,18 +7,18 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     const { data: { user } } = await supabase.auth.getUser();
 
     // Not logged in — render children directly (login page needs this)
-    // Middleware already blocks all protected routes and redirects to /admin/login
     if (!user) {
         return <>{children}</>;
     }
 
     return (
         <ToastProvider>
-            <div className="min-h-screen bg-[#0f1117] flex">
+            <div className="min-h-screen bg-[#f8f9fb] flex">
                 <AdminSidebar userEmail={user.email ?? ''} />
-                {/* pt gives space below top bar + gap; pb gives space above bottom tab + gap */}
-                <main className="flex-1 pt-[72px] pb-28 px-4 sm:px-6 lg:ml-72 lg:p-10 overflow-y-auto min-h-screen">
-                    {children}
+                <main className="flex-1 pt-[72px] pb-28 px-4 sm:px-6 lg:ml-64 lg:pt-8 lg:pb-10 lg:px-8 overflow-y-auto min-h-screen">
+                    <div className="w-full max-w-7xl mx-auto">
+                        {children}
+                    </div>
                 </main>
             </div>
         </ToastProvider>

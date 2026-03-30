@@ -20,7 +20,6 @@ import {
     Clock,
 } from 'lucide-react';
 import { Package } from '@/lib/types';
-import { packages } from '@/lib/data';
 
 // Lazy-load the Leaflet map (client-only, no SSR)
 const JourneyMap = dynamic(() => import('@/components/JourneyMap'), {
@@ -48,7 +47,13 @@ const pricing: Record<number, string> = {
     20: '6,200',
 };
 
-export default function PackageDetail({ pkg }: { pkg: Package }) {
+export default function PackageDetail({ 
+    pkg, 
+    relatedPackages 
+}: { 
+    pkg: Package; 
+    relatedPackages: Package[];
+}) {
     const [expandedDays, setExpandedDays] = useState<Set<number>>(new Set([0]));
     
     const toggleDay = (i: number) => {
@@ -71,12 +76,6 @@ export default function PackageDetail({ pkg }: { pkg: Package }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const price = pricing[pkg.days];
-
-    // Determine 2 related packages (prioritize same category, then others)
-    const relatedPackages = packages
-        .filter((p) => p.category === pkg.category && p.id !== pkg.id)
-        .concat(packages.filter((p) => p.category !== pkg.category && p.id !== pkg.id))
-        .slice(0, 2);
 
     // Auto-slider for the photo gallery
     useEffect(() => {

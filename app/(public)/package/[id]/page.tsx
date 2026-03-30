@@ -18,20 +18,24 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { packages } from '@/lib/data';
+import { getAllPackages, getPackageById } from '@/lib/data';
 import Timeline from '@/components/Timeline';
 
 // Generate static paths for all packages
-export function generateStaticParams() {
+export async function generateStaticParams() {
+    const packages = await getAllPackages();
     return packages.map((pkg) => ({
         id: pkg.id,
     }));
 }
 
-export function generateMetadata({ params: _params }: { params: Promise<{ id: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+    const pkg = await getPackageById(id);
+    if (!pkg) return { title: 'Package Not Found | Velora Journeys' };
     return {
-        title: 'Package Details | Velora Journeys',
-        description: 'Explore your dream travel package with Velora Journeys.',
+        title: `${pkg.title} | Velora Journeys`,
+        description: pkg.description || 'Explore your dream travel package with Velora Journeys.',
     };
 }
 
@@ -73,14 +77,18 @@ export default async function PackageDetailPage({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params;
-    const pkg = packages.find((p) => p.id === id);
+    
+    // Fetch all active packages to find the current one and the "other" ones
+    const allPkgs = await getAllPackages();
+    const pkg = allPkgs.find((p) => p.id === id);
 
     if (!pkg) {
         notFound();
     }
 
+    // "validPackageIds" hardcodes some IDs like '5', '8', '10', '11'
     const validPackageIds = ['5', '8', '10', '11'];
-    const otherPackages = packages.filter((p) => p.id !== id && validPackageIds.includes(p.id));
+    const otherPackages = allPkgs.filter((p) => p.id !== id && validPackageIds.includes(p.id));
 
     return (
         <div className="min-h-screen bg-[#faf7f2]">
