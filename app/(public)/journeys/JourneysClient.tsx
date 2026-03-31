@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, MapPin } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 import { journeysPageContent } from '@/lib/content';
 import { Package } from '@/lib/types';
 

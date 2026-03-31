@@ -28,11 +28,6 @@ export default function Hero() {
         setCurrent((prev) => (prev + 1) % slides.length);
     }, []);
 
-    const prev = useCallback(() => {
-        setDirection(-1);
-        setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-    }, []);
-
     useEffect(() => {
         if (isPaused) return;
         const timer = setInterval(next, INTERVAL);

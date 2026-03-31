@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState, useState, useEffect, useCallback } from 'react';
+import { useActionState, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, Save, AlertCircle, X } from 'lucide-react';
 import DynamicList from './DynamicList';
@@ -75,18 +75,14 @@ export default function PackageForm({
     const [mainImage, setMainImage] = useState<string[]>(pkg?.image_url ? [pkg.image_url] : []);
     const [galleryImages, setGalleryImages] = useState<string[]>(pkg?.gallery_images ?? []);
 
-    useEffect(() => {
-        if (!slugManual && title) {
-            setSlug(
-                title
-                    .toLowerCase()
-                    .replace(/[^a-z0-9\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-')
-                    .trim()
-            );
-        }
-    }, [title, slugManual]);
+    const slugify = useCallback((value: string) => (
+        value
+            .toLowerCase()
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .trim()
+    ), []);
 
     const getError = useCallback((field: string): string | undefined => {
         // Client-side errors take priority
@@ -189,7 +185,7 @@ export default function PackageForm({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label className={labelCls}>Title *</label>
-                        <input value={title} onChange={(e) => { setTitle(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.title; return n; }); }} placeholder="e.g. Velora Luxe" className={`${inputCls} ${hasFieldError('title') ? 'border-red-300 ring-2 ring-red-100 focus:ring-red-200' : ''}`} />
+                        <input value={title} onChange={(e) => { const value = e.target.value; setTitle(value); if (!slugManual) setSlug(slugify(value)); setClientErrors((prev) => { const n = {...prev}; delete n.title; return n; }); }} placeholder="e.g. Velora Luxe" className={`${inputCls} ${hasFieldError('title') ? 'border-red-300 ring-2 ring-red-100 focus:ring-red-200' : ''}`} />
                         {getError('title') && <p className={errorCls}>{getError('title')}</p>}
                     </div>
                     <div>

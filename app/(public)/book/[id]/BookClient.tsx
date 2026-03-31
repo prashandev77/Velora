@@ -34,7 +34,7 @@ const steps = [
     { id: 4, title: 'Summary', icon: ClipboardCheck },
 ];
 
-export default function BookClient({ packId, pkg }: { packId: string, pkg: Package }) {
+export default function BookClient({ packId: _packId, pkg }: { packId: string, pkg: Package }) {
     const router = useRouter();
     const [currentStep, setCurrentStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);

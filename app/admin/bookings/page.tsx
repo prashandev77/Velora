@@ -24,7 +24,7 @@ export default async function BookingsPage({
     const { status } = await searchParams;
     const supabase = await createClient();
 
-    let query = supabase.from('bookings').select('*').order('created_at', { ascending: false });
+    let query = supabase.from('bookings').select('*', { count: 'exact' }).order('created_at', { ascending: false }).limit(100);
     if (status && status !== 'all') query = query.eq('status', status);
 
     const { data: bookings } = await query;

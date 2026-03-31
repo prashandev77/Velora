@@ -3,15 +3,23 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 
 export default function AdminLoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [error, setError] = useState('');
+    const sessionError = searchParams.get('error');
+    const initialError =
+        sessionError === 'session_expired'
+            ? 'Your admin session timed out. Please sign in again.'
+            : sessionError === 'forbidden'
+                ? 'Admin access is required for this area.'
+                : '';
+    const [error, setError] = useState(initialError);
     const [loading, setLoading] = useState(false);
 
     const handleLogin = async (e: React.FormEvent) => {

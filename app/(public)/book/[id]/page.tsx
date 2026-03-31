@@ -1,11 +1,11 @@
-import { getPackageById, getAllPackages } from '@/lib/data';
+import { getPackageById, getPackageRouteParams } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import BookClient from './BookClient';
 
 // Generate static paths for all packages
 export async function generateStaticParams() {
-    const packages = await getAllPackages();
-    return packages.map((pkg) => ({
+    const routeParams = await getPackageRouteParams();
+    return routeParams.map((pkg) => ({
         id: pkg.id,
     }));
 }

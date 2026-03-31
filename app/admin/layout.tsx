@@ -1,13 +1,14 @@
 import { createClient } from '@/utils/supabase/server';
 import AdminSidebar from './components/AdminSidebar';
 import { ToastProvider } from './components/ToastProvider';
+import { isAdminUser } from '@/utils/supabase/admin-auth';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
     // Not logged in — render children directly (login page needs this)
-    if (!user) {
+    if (!user || !isAdminUser(user)) {
         return <>{children}</>;
     }
 

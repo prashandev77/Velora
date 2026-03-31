@@ -1,28 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/utils/supabase/server';
 import sharp from 'sharp';
+import { AdminAuthError, requireAdminAccess } from '@/utils/supabase/admin-auth';
 
 // Increase timeout for image optimization and upload
 export const maxDuration = 60; // 60 seconds (requires Pro/Enterprise on Vercel, but works fine locally)
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const MAX_WIDTH = 1920;
 const WEBP_QUALITY = 82;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+const SAFE_FOLDER = /^[a-z0-9/_-]+$/i;
 
 export async function POST(request: NextRequest) {
     try {
-        const supabase = await createClient();
-
-        // Check auth
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const { supabase } = await requireAdminAccess();
 
         const formData = await request.formData();
         const file = formData.get('file') as File | null;
-        const folder = (formData.get('folder') as string) || 'general';
+        const folder = ((formData.get('folder') as string) || 'general').replace(/^\/+|\/+$/g, '');
+        if (!SAFE_FOLDER.test(folder) || folder.includes('..')) {
+            return NextResponse.json({ error: 'Invalid folder path' }, { status: 400 });
+        }
+
 
         if (!file) {
             return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -92,6 +91,9 @@ export async function POST(request: NextRequest) {
             savedPercent: Math.round((1 - optimized.length / file.size) * 100),
         });
     } catch (error) {
+        if (error instanceof AdminAuthError) {
+            return NextResponse.json({ error: error.message }, { status: error.status });
+        }
         console.error('Image upload error:', error);
         return NextResponse.json(
             { error: 'Internal server error' },
@@ -102,21 +104,21 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     try {
-        const supabase = await createClient();
-
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-        }
+        const { supabase } = await requireAdminAccess();
 
         const { path } = await request.json();
         if (!path) {
             return NextResponse.json({ error: 'No path provided' }, { status: 400 });
         }
 
+        const normalizedPath = String(path).replace(/^\/+/, '');
+        if (!SAFE_FOLDER.test(normalizedPath) || normalizedPath.includes('..')) {
+            return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
+        }
+
         const { error } = await supabase.storage
             .from('journey-images')
-            .remove([path]);
+            .remove([normalizedPath]);
 
         if (error) {
             console.error('Delete error:', error);
@@ -125,6 +127,9 @@ export async function DELETE(request: NextRequest) {
 
         return NextResponse.json({ success: true });
     } catch (error) {
+        if (error instanceof AdminAuthError) {
+            return NextResponse.json({ error: error.message }, { status: error.status });
+        }
         console.error('Image delete error:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }

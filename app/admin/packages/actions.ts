@@ -1,9 +1,9 @@
 'use server';
 
-import { createClient } from '@/utils/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { journeySchema } from '@/lib/validations/journey-schema';
+import { AdminAuthError, requireAdminAccess } from '@/utils/supabase/admin-auth';
 
 export type ActionState = {
     success?: boolean;
@@ -13,7 +13,16 @@ export type ActionState = {
 
 export async function savePackage(_prev: ActionState, formData: FormData): Promise<ActionState> {
     const id = formData.get('id') as string | null;
-    const supabase = await createClient();
+    let auth;
+    try {
+        auth = await requireAdminAccess();
+    } catch (error) {
+        if (error instanceof AdminAuthError) {
+            return { errors: { _form: ['You are not authorized to perform this action.'] } };
+        }
+        throw error;
+    }
+    const { supabase } = auth;
 
     // Parse all fields from the raw JSON payload
     let raw: Record<string, unknown>;
@@ -85,7 +94,14 @@ export async function savePackage(_prev: ActionState, formData: FormData): Promi
 
 export async function deletePackage(formData: FormData) {
     const id = formData.get('id') as string;
-    const supabase = await createClient();
+    let auth;
+    try {
+        auth = await requireAdminAccess();
+    } catch (error) {
+        if (error instanceof AdminAuthError) return;
+        throw error;
+    }
+    const { supabase } = auth;
 
     // Get the package first to find associated images
     const { data: pkg } = await supabase

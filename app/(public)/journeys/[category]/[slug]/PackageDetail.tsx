@@ -622,7 +622,7 @@ export default function PackageDetail({
                         </motion.div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-                            {relatedPackages.map((relatedPkg, i) => (
+                            {relatedPackages.map((relatedPkg) => (
                                 <Link
                                     key={relatedPkg.id}
                                     href={`/journeys/${relatedPkg.category}/${relatedPkg.slug}`}

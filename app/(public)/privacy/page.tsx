@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { privacyPageContent } from '@/lib/content';
 
 export const metadata = {

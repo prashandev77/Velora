@@ -54,9 +54,10 @@ export default function ImageUploader({
             const data = await res.json();
             setUploading((prev) => prev.filter((u) => u.id !== id));
             return data.url;
-        } catch (err: any) {
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Upload failed';
             console.error('Upload error:', err);
-            setLocalError(err.message || 'Upload failed');
+            setLocalError(message);
             setUploading((prev) => prev.filter((u) => u.id !== id));
             return null;
         }
@@ -162,7 +163,7 @@ export default function ImageUploader({
                             {localError ? localError : dragOver ? 'Drop to upload' : 'Click or drag images here'}
                         </p>
                         <p className="text-gray-300 text-xs mt-1">
-                            JPEG, PNG, WebP • Max 10MB • Auto-optimized to WebP
+                            JPEG, PNG, WebP • Max 5MB • Auto-optimized to WebP
                         </p>
                         {!single && <p className="text-gray-300 text-[11px] mt-0.5">{images.length}/{effectiveMax} images</p>}
                     </div>

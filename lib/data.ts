@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { unstable_cache } from 'next/cache';
 import { Package, Journey } from './types';
 
 const supabase = createClient(
@@ -6,7 +7,34 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export function mapDbToPackage(dbPkg: any): Package {
+const PACKAGE_COLUMNS = 'id,slug,category,title,location,days,image_url,tag,subtitle,travel_style,description,accommodation,highlights,why_special,perfect_for,route,route_coords,included,not_included,itinerary,gallery_images,is_active,created_at';
+const PACKAGE_ROUTE_COLUMNS = 'id,slug,category';
+
+type DbPackage = {
+    id: string;
+    slug: string;
+    category: Package['category'];
+    title: string;
+    location: string;
+    days: number;
+    image_url: string;
+    tag: string;
+    subtitle: string | null;
+    travel_style: string | null;
+    description: string;
+    accommodation: string | null;
+    highlights: string[];
+    why_special: string[];
+    perfect_for: string[];
+    route: string[];
+    route_coords: Package['routeCoords'];
+    included: string[];
+    not_included: string[];
+    itinerary: Package['itinerary'];
+    gallery_images: string[];
+};
+
+export function mapDbToPackage(dbPkg: DbPackage): Package {
     return {
         id: dbPkg.id,
         slug: dbPkg.slug,
@@ -16,10 +44,10 @@ export function mapDbToPackage(dbPkg: any): Package {
         days: dbPkg.days,
         image_url: dbPkg.image_url,
         tag: dbPkg.tag,
-        subtitle: dbPkg.subtitle,
-        travelStyle: dbPkg.travel_style,
+        subtitle: dbPkg.subtitle ?? undefined,
+        travelStyle: dbPkg.travel_style ?? undefined,
         description: dbPkg.description,
-        accommodation: dbPkg.accommodation,
+        accommodation: dbPkg.accommodation ?? undefined,
         highlights: dbPkg.highlights,
         whySpecial: dbPkg.why_special,
         perfectFor: dbPkg.perfect_for,
@@ -33,23 +61,85 @@ export function mapDbToPackage(dbPkg: any): Package {
 }
 
 export async function getAllPackages(): Promise<Package[]> {
-    const { data } = await supabase.from('packages').select('*').eq('is_active', true).order('created_at', { ascending: true });
-    return (data || []).map(mapDbToPackage);
+    const getCached = unstable_cache(
+        async () => {
+            const { data } = await supabase
+                .from('packages')
+                .select(PACKAGE_COLUMNS)
+                .eq('is_active', true)
+                .order('created_at', { ascending: true });
+            return (data || []).map(mapDbToPackage);
+        },
+        ['packages-all'],
+        { revalidate: 300, tags: ['packages'] }
+    );
+    return getCached();
 }
 
 export async function getPackagesByCategory(category: string): Promise<Package[]> {
-    const { data } = await supabase.from('packages').select('*').eq('category', category).eq('is_active', true).order('created_at', { ascending: true });
-    return (data || []).map(mapDbToPackage);
+    const getCached = unstable_cache(
+        async () => {
+            const { data } = await supabase
+                .from('packages')
+                .select(PACKAGE_COLUMNS)
+                .eq('category', category)
+                .eq('is_active', true)
+                .order('created_at', { ascending: true });
+            return (data || []).map(mapDbToPackage);
+        },
+        ['packages-category', category],
+        { revalidate: 300, tags: ['packages', `packages-category-${category}`] }
+    );
+    return getCached();
 }
 
 export async function getPackageBySlug(category: string, slug: string): Promise<Package | undefined> {
-    const { data } = await supabase.from('packages').select('*').eq('category', category).eq('slug', slug).single();
-    return data ? mapDbToPackage(data) : undefined;
+    const getCached = unstable_cache(
+        async () => {
+            const { data } = await supabase
+                .from('packages')
+                .select(PACKAGE_COLUMNS)
+                .eq('category', category)
+                .eq('slug', slug)
+                .single();
+            return data ? mapDbToPackage(data) : undefined;
+        },
+        ['package-by-slug', category, slug],
+        { revalidate: 300, tags: ['packages', `package-${category}-${slug}`] }
+    );
+    return getCached();
 }
 
 export async function getPackageById(id: string): Promise<Package | undefined> {
-    const { data } = await supabase.from('packages').select('*').eq('id', id).single();
-    return data ? mapDbToPackage(data) : undefined;
+    const getCached = unstable_cache(
+        async () => {
+            const { data } = await supabase
+                .from('packages')
+                .select(PACKAGE_COLUMNS)
+                .eq('id', id)
+                .single();
+            return data ? mapDbToPackage(data) : undefined;
+        },
+        ['package-by-id', id],
+        { revalidate: 300, tags: ['packages', `package-${id}`] }
+    );
+    return getCached();
+}
+
+export async function getPackageRouteParams(): Promise<Array<{ id: string; slug: string; category: string }>> {
+    const getCached = unstable_cache(
+        async () => {
+            const { data } = await supabase
+                .from('packages')
+                .select(PACKAGE_ROUTE_COLUMNS)
+                .eq('is_active', true)
+                .order('created_at', { ascending: true });
+            return (data || []) as Array<{ id: string; slug: string; category: string }>;
+        },
+        ['packages-route-params'],
+        { revalidate: 300, tags: ['packages'] }
+    );
+    return getCached();
 }
 
 export const journeys: Journey[] = [

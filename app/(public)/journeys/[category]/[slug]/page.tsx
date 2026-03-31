@@ -1,4 +1,4 @@
-import { getAllPackages, getPackageBySlug } from '@/lib/data';
+import { getAllPackages, getPackageBySlug, getPackageRouteParams } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import PackageDetail from './PackageDetail';
 
@@ -7,8 +7,8 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-    const packages = await getAllPackages();
-    return packages.map((p) => ({
+    const routeParams = await getPackageRouteParams();
+    return routeParams.map((p) => ({
         category: p.category,
         slug: p.slug,
     }));
@@ -26,9 +26,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function PackagePage({ params }: PageProps) {
     const { category, slug } = await params;
-    const allPkgs = await getAllPackages();
-    const pkg = allPkgs.find((p) => p.category === category && p.slug === slug);
+    const pkg = await getPackageBySlug(category, slug);
     if (!pkg) notFound();
+
+    const allPkgs = await getAllPackages();
 
     const relatedPackages = allPkgs
         .filter((p) => p.category === pkg.category && p.id !== pkg.id)

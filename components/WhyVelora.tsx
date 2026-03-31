@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { Shield, Compass, Headphones, Sparkles } from 'lucide-react';
 import { whyVeloraContent } from '@/lib/content';
-import Image from 'next/image';
 
 const values = [
     {

@@ -1,5 +1,12 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import {
+    clearAdminSessionCookies,
+    isAdminUser,
+    isSessionExpired,
+    readAdminSessionTimestamps,
+    setAdminSessionCookies,
+} from '@/utils/supabase/admin-auth';
 
 export async function updateSession(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -32,12 +39,35 @@ export async function updateSession(request: NextRequest) {
 
     const { data: { user } } = await supabase.auth.getUser();
     const { pathname } = request.nextUrl;
+    const now = Date.now();
 
     // Protect /admin/* — redirect to login if not authenticated
     if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
         if (!user) {
             return NextResponse.redirect(new URL('/admin/login', request.url));
         }
+
+        if (!isAdminUser(user)) {
+            await supabase.auth.signOut();
+            clearAdminSessionCookies((name, opts) => supabaseResponse.cookies.set(name, '', opts));
+            return NextResponse.redirect(new URL('/admin/login?error=forbidden', request.url));
+        }
+
+        const { createdAt, lastActivityAt } = readAdminSessionTimestamps(
+            (name) => request.cookies.get(name)?.value
+        );
+        const timeout = isSessionExpired(createdAt, lastActivityAt, now);
+        if (timeout.expired) {
+            await supabase.auth.signOut();
+            clearAdminSessionCookies((name, opts) => supabaseResponse.cookies.set(name, '', opts));
+            return NextResponse.redirect(new URL('/admin/login?error=session_expired', request.url));
+        }
+
+        setAdminSessionCookies(
+            (name, value, opts) => supabaseResponse.cookies.set(name, value, opts),
+            now,
+            createdAt
+        );
     }
 
     // If already logged in, redirect away from login page

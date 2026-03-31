@@ -18,13 +18,13 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
-import { getAllPackages, getPackageById } from '@/lib/data';
+import { getAllPackages, getPackageById, getPackageRouteParams } from '@/lib/data';
 import Timeline from '@/components/Timeline';
 
 // Generate static paths for all packages
 export async function generateStaticParams() {
-    const packages = await getAllPackages();
-    return packages.map((pkg) => ({
+    const routeParams = await getPackageRouteParams();
+    return routeParams.map((pkg) => ({
         id: pkg.id,
     }));
 }
@@ -78,13 +78,13 @@ export default async function PackageDetailPage({
 }) {
     const { id } = await params;
     
-    // Fetch all active packages to find the current one and the "other" ones
-    const allPkgs = await getAllPackages();
-    const pkg = allPkgs.find((p) => p.id === id);
-
+    const pkg = await getPackageById(id);
     if (!pkg) {
         notFound();
     }
+
+    // Fetch all active packages to find related journeys
+    const allPkgs = await getAllPackages();
 
     // "validPackageIds" hardcodes some IDs like '5', '8', '10', '11'
     const validPackageIds = ['5', '8', '10', '11'];
