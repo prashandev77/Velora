@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -21,6 +21,11 @@ export default function AdminLoginPage() {
                 : '';
     const [error, setError] = useState(initialError);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setError(initialError);
+        setLoading(false);
+    }, [initialError]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();

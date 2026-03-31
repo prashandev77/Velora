@@ -51,7 +51,9 @@ export function readAdminSessionTimestamps(getCookie: (name: string) => string |
 
 export function isSessionExpired(createdAt: number | null, lastActivityAt: number | null, now = Date.now()) {
     if (!createdAt || !lastActivityAt) {
-        return { expired: true, reason: 'missing' as const };
+        // First request after login may not have our timeout markers yet.
+        // Treat as active and let callers initialize fresh timestamps.
+        return { expired: false as const, reason: null };
     }
 
     if (now - createdAt > ADMIN_ABSOLUTE_TIMEOUT_MS) {
