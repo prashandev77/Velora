@@ -36,6 +36,11 @@ export default function ImageUploader({
     const effectiveMax = single ? 1 : maxImages;
 
     const uploadFile = useCallback(async (file: File): Promise<string | null> => {
+        if (file.size > 10 * 1024 * 1024) {
+            setLocalError(`File "${file.name}" is too large. Maximum size is 10MB.`);
+            return null;
+        }
+
         const id = Math.random().toString(36).substring(2);
         setUploading((prev) => [...prev, { id, name: file.name }]);
         setLocalError(null);
@@ -47,8 +52,15 @@ export default function ImageUploader({
 
             const res = await fetch('/api/admin/upload-image', { method: 'POST', body: formData });
             if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.error || 'Upload failed');
+                if (res.status === 413) {
+                    throw new Error('Image file is too large. Maximum size is 10MB.');
+                }
+                const contentType = res.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await res.json();
+                    throw new Error(data.error || 'Upload failed');
+                }
+                throw new Error(`Upload failed with status: ${res.status}`);
             }
 
             const data = await res.json();
@@ -155,15 +167,15 @@ export default function ImageUploader({
                         ${dragOver ? 'border-gray-400 bg-gray-50' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50/50'}
                         ${localError ? 'border-red-200 bg-red-50/30' : ''}`}
                 >
-                    <div className={`p-3 rounded-xl ${dragOver ? 'bg-gray-100' : localError ? 'bg-red-50' : 'bg-gray-50'} transition-colors`}>
+                    <div className={`pointer-events-none p-3 rounded-xl ${dragOver ? 'bg-gray-100' : localError ? 'bg-red-50' : 'bg-gray-50'} transition-colors`}>
                         {dragOver ? <Upload className="w-6 h-6 text-gray-600" /> : localError ? <AlertCircle className="w-6 h-6 text-red-400" /> : <ImageIcon className="w-6 h-6 text-gray-300" />}
                     </div>
-                    <div className="text-center">
+                    <div className="pointer-events-none text-center">
                         <p className={`text-sm font-medium ${localError ? 'text-red-600' : 'text-gray-500'}`}>
                             {localError ? localError : dragOver ? 'Drop to upload' : 'Click or drag images here'}
                         </p>
                         <p className="text-gray-300 text-xs mt-1">
-                            JPEG, PNG, WebP • Max 5MB • Auto-optimized to WebP
+                            JPEG, PNG, WebP • Max 10MB • Auto-optimized to WebP
                         </p>
                         {!single && <p className="text-gray-300 text-[11px] mt-0.5">{images.length}/{effectiveMax} images</p>}
                     </div>
