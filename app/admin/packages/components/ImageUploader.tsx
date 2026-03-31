@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { Upload, X, Loader2, ImageIcon } from 'lucide-react';
+import { Upload, X, Loader2, ImageIcon, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 
 interface ImageUploaderProps {
@@ -28,6 +28,7 @@ export default function ImageUploader({
     error,
     single = false,
 }: ImageUploaderProps) {
+    const [localError, setLocalError] = useState<string | null>(null);
     const [uploading, setUploading] = useState<UploadingFile[]>([]);
     const [dragOver, setDragOver] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -37,6 +38,7 @@ export default function ImageUploader({
     const uploadFile = useCallback(async (file: File): Promise<string | null> => {
         const id = Math.random().toString(36).substring(2);
         setUploading((prev) => [...prev, { id, name: file.name }]);
+        setLocalError(null);
 
         try {
             const formData = new FormData();
@@ -52,14 +54,16 @@ export default function ImageUploader({
             const data = await res.json();
             setUploading((prev) => prev.filter((u) => u.id !== id));
             return data.url;
-        } catch (err) {
+        } catch (err: any) {
             console.error('Upload error:', err);
+            setLocalError(err.message || 'Upload failed');
             setUploading((prev) => prev.filter((u) => u.id !== id));
             return null;
         }
     }, [folder]);
 
     const handleFiles = useCallback(async (files: FileList | File[]) => {
+        setLocalError(null);
         const fileArray = Array.from(files);
         const remaining = effectiveMax - images.length;
         const toUpload = fileArray.slice(0, remaining);
@@ -147,17 +151,18 @@ export default function ImageUploader({
                     onDrop={handleDrop}
                     onClick={() => inputRef.current?.click()}
                     className={`relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border-2 border-dashed cursor-pointer transition-all
-                        ${dragOver ? 'border-gray-400 bg-gray-50' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50/50'}`}
+                        ${dragOver ? 'border-gray-400 bg-gray-50' : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50/50'}
+                        ${localError ? 'border-red-200 bg-red-50/30' : ''}`}
                 >
-                    <div className={`p-3 rounded-xl ${dragOver ? 'bg-gray-100' : 'bg-gray-50'} transition-colors`}>
-                        {dragOver ? <Upload className="w-6 h-6 text-gray-600" /> : <ImageIcon className="w-6 h-6 text-gray-300" />}
+                    <div className={`p-3 rounded-xl ${dragOver ? 'bg-gray-100' : localError ? 'bg-red-50' : 'bg-gray-50'} transition-colors`}>
+                        {dragOver ? <Upload className="w-6 h-6 text-gray-600" /> : localError ? <AlertCircle className="w-6 h-6 text-red-400" /> : <ImageIcon className="w-6 h-6 text-gray-300" />}
                     </div>
                     <div className="text-center">
-                        <p className="text-gray-500 text-sm font-medium">
-                            {dragOver ? 'Drop to upload' : 'Click or drag images here'}
+                        <p className={`text-sm font-medium ${localError ? 'text-red-600' : 'text-gray-500'}`}>
+                            {localError ? localError : dragOver ? 'Drop to upload' : 'Click or drag images here'}
                         </p>
                         <p className="text-gray-300 text-xs mt-1">
-                            JPEG, PNG, WebP • Max 5MB • Auto-optimized to WebP
+                            JPEG, PNG, WebP • Max 10MB • Auto-optimized to WebP
                         </p>
                         {!single && <p className="text-gray-300 text-[11px] mt-0.5">{images.length}/{effectiveMax} images</p>}
                     </div>
@@ -172,7 +177,7 @@ export default function ImageUploader({
                 </div>
             )}
 
-            {error && <p className="text-red-500 text-xs mt-1.5">{error}</p>}
+            {(error || localError) && <p className="text-red-500 text-xs mt-1.5">{localError || error}</p>}
         </div>
     );
 }
