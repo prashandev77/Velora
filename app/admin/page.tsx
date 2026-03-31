@@ -36,7 +36,7 @@ export default async function AdminDashboard() {
         { count: confirmedBookings },
         { data: recentBookings },
     ] = await Promise.all([
-        supabase.from('packages').select('id', { count: 'planned', head: true }),
+        supabase.from('packages').select('id', { count: 'exact', head: true }).eq('is_active', true),
         supabase.from('bookings').select('id', { count: 'planned', head: true }),
         supabase.from('bookings').select('id', { count: 'planned', head: true }).eq('status', 'pending'),
         supabase.from('bookings').select('id', { count: 'planned', head: true }).eq('status', 'confirmed'),
