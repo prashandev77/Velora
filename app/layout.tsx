@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: 'Velora Journeys | Luxury Travel to Sri Lanka & Maldives',
   description:
     'Handcrafted luxury journeys across Sri Lanka and the Maldives. Bespoke itineraries for honeymoons, wellness retreats, and cultural adventures.',
+  icons: {
+    icon: '/favicon.svg',
+  },
   keywords: ['luxury travel', 'Sri Lanka', 'Maldives', 'honeymoon', 'wellness retreat', 'adventure tour', 'bespoke travel'],
   openGraph: {
     title: 'Velora Journeys | Luxury Travel',
