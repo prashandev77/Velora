@@ -1,5 +1,5 @@
 import { createClient } from '@/utils/supabase/server';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
     ArrowLeft,
@@ -13,7 +13,7 @@ import {
     Clock,
     Sparkles,
 } from 'lucide-react';
-import { updateBookingStatus, deleteBooking } from '../actions';
+import BookingActions from './BookingActions';
 
 const statusColors: Record<string, string> = {
     pending: 'bg-amber-50 text-amber-600 border-amber-200',
@@ -101,38 +101,8 @@ export default async function BookingDetailPage({ params }: { params: Promise<{ 
             )}
 
             {/* Actions */}
-            <div className="flex gap-3 flex-wrap">
-                <form action={updateBookingStatus}>
-                    <input type="hidden" name="id" value={bk.id} />
-                    <div className="flex items-center gap-2">
-                        <select
-                            name="status"
-                            defaultValue={bk.status}
-                            className="bg-white border border-gray-200 rounded-xl text-gray-700 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900/10 transition-shadow"
-                        >
-                            {['pending', 'confirmed', 'cancelled'].map((s) => (
-                                <option key={s} value={s}>{s}</option>
-                            ))}
-                        </select>
-                        <button type="submit" className="bg-gray-900 hover:bg-gray-800 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-all shadow-sm">
-                            Update Status
-                        </button>
-                    </div>
-                </form>
-
-
-
-                <form action={async (fd) => {
-                    'use server';
-                    await deleteBooking(fd);
-                    redirect('/admin/bookings');
-                }}>
-                    <input type="hidden" name="id" value={bk.id} />
-                    <button className="flex items-center gap-2 bg-red-50 hover:bg-red-100 border border-red-200 text-red-500 text-sm font-medium px-4 py-2 rounded-xl transition-all">
-                        Delete
-                    </button>
-                </form>
-            </div>
+            <BookingActions id={bk.id} currentStatus={bk.status} />
         </div>
     );
 }
+

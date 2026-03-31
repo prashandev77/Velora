@@ -1,7 +1,8 @@
 'use client';
 
 import { useActionState, useState, useEffect, useCallback } from 'react';
-import { Loader2, Save, AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Loader2, Save, AlertCircle, X } from 'lucide-react';
 import DynamicList from './DynamicList';
 import ImageUploader from './ImageUploader';
 import ItineraryBuilder from './ItineraryBuilder';
@@ -45,6 +46,8 @@ export default function PackageForm({
     pkg?: PackageData;
 }) {
     const [state, formAction, isPending] = useActionState(action, null);
+    const router = useRouter();
+    const [clientErrors, setClientErrors] = useState<Record<string, string>>({});
 
     // ── Form state ──
     const [title, setTitle] = useState(pkg?.title ?? '');
@@ -86,11 +89,43 @@ export default function PackageForm({
     }, [title, slugManual]);
 
     const getError = useCallback((field: string): string | undefined => {
+        // Client-side errors take priority
+        if (clientErrors[field]) return clientErrors[field];
         if (!state?.errors) return undefined;
         return state.errors[field]?.[0];
-    }, [state]);
+    }, [state, clientErrors]);
+
+    const hasFieldError = useCallback((field: string): boolean => {
+        return !!(clientErrors[field] || state?.errors?.[field]?.[0]);
+    }, [clientErrors, state]);
 
     const handleSubmit = (formData: FormData) => {
+        // Client-side required field validation
+        const errors: Record<string, string> = {};
+        if (!title.trim()) errors.title = 'Title is required';
+        if (!slug.trim()) errors.slug = 'Slug is required';
+        if (!category) errors.category = 'Category is required';
+        if (!location.trim()) errors.location = 'Location is required';
+        if (!days || days < 1) errors.days = 'Duration must be at least 1 day';
+        if (!tag.trim()) errors.tag = 'Badge tag is required';
+        if (!description.trim()) errors.description = 'Description is required';
+        if (mainImage.length === 0) errors.imageUrl = 'Main image is required';
+        if (highlights.filter(Boolean).length === 0) errors.highlights = 'At least one highlight is required';
+
+        setClientErrors(errors);
+
+        if (Object.keys(errors).length > 0) {
+            // Scroll to top so the user sees the error banner
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+
+        const confirmMsg = pkg?.id
+            ? 'Are you sure you want to update this journey?'
+            : 'Are you sure you want to create this journey?';
+
+        if (!window.confirm(confirmMsg)) return;
+
         const payload = {
             title,
             slug,
@@ -137,6 +172,13 @@ export default function PackageForm({
                 </div>
             )}
 
+            {Object.keys(clientErrors).length > 0 && (
+                <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-2xl px-5 py-4 animate-pulse">
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                    <p className="text-red-600 text-sm font-medium">Please fill out the highlighted fields before saving.</p>
+                </div>
+            )}
+
             {/* ═══ SECTION 1: Basic Information ═══ */}
             <div className="bg-white border border-gray-200/80 rounded-2xl p-6 space-y-5">
                 <h3 className="text-gray-900 font-semibold text-sm border-b border-gray-100 pb-3 flex items-center gap-2">
@@ -147,7 +189,7 @@ export default function PackageForm({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                         <label className={labelCls}>Title *</label>
-                        <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g. Velora Luxe" className={`${inputCls} ${getError('title') ? 'border-red-300 focus:ring-red-100' : ''}`} />
+                        <input value={title} onChange={(e) => { setTitle(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.title; return n; }); }} placeholder="e.g. Velora Luxe" className={`${inputCls} ${hasFieldError('title') ? 'border-red-300 ring-2 ring-red-100 focus:ring-red-200' : ''}`} />
                         {getError('title') && <p className={errorCls}>{getError('title')}</p>}
                     </div>
                     <div>
@@ -159,12 +201,12 @@ export default function PackageForm({
                                 </button>
                             )}
                         </label>
-                        <input value={slug} onChange={(e) => { setSlug(e.target.value); setSlugManual(true); }} placeholder="e.g. velora-luxe" className={`${inputCls} ${!slugManual ? 'bg-gray-50 text-gray-400' : ''} ${getError('slug') ? 'border-red-300' : ''}`} readOnly={!slugManual} />
+                        <input value={slug} onChange={(e) => { setSlug(e.target.value); setSlugManual(true); setClientErrors((prev) => { const n = {...prev}; delete n.slug; return n; }); }} placeholder="e.g. velora-luxe" className={`${inputCls} ${!slugManual ? 'bg-gray-50 text-gray-400' : ''} ${hasFieldError('slug') ? 'border-red-300 ring-2 ring-red-100' : ''}`} readOnly={!slugManual} />
                         {getError('slug') && <p className={errorCls}>{getError('slug')}</p>}
                     </div>
                     <div>
                         <label className={labelCls}>Category *</label>
-                        <select value={category} onChange={(e) => setCategory(e.target.value)} className={`${inputCls} cursor-pointer ${getError('category') ? 'border-red-300' : ''}`}>
+                        <select value={category} onChange={(e) => { setCategory(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.category; return n; }); }} className={`${inputCls} cursor-pointer ${hasFieldError('category') ? 'border-red-300 ring-2 ring-red-100' : ''}`}>
                             <option value="">Select category</option>
                             {categories.map((c) => (<option key={c} value={c} className="capitalize">{c}</option>))}
                         </select>
@@ -172,17 +214,17 @@ export default function PackageForm({
                     </div>
                     <div>
                         <label className={labelCls}>Location *</label>
-                        <input value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Sri Lanka" className={`${inputCls} ${getError('location') ? 'border-red-300' : ''}`} />
+                        <input value={location} onChange={(e) => { setLocation(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.location; return n; }); }} placeholder="Sri Lanka" className={`${inputCls} ${hasFieldError('location') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
                         {getError('location') && <p className={errorCls}>{getError('location')}</p>}
                     </div>
                     <div>
                         <label className={labelCls}>Duration (days) *</label>
-                        <input type="number" value={days || ''} onChange={(e) => setDays(parseInt(e.target.value) || 0)} min={1} max={60} placeholder="10" className={`${inputCls} ${getError('days') ? 'border-red-300' : ''}`} />
+                        <input type="number" value={days || ''} onChange={(e) => { setDays(parseInt(e.target.value) || 0); setClientErrors((prev) => { const n = {...prev}; delete n.days; return n; }); }} min={1} max={60} placeholder="10" className={`${inputCls} ${hasFieldError('days') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
                         {getError('days') && <p className={errorCls}>{getError('days')}</p>}
                     </div>
                     <div>
                         <label className={labelCls}>Badge Tag *</label>
-                        <input value={tag} onChange={(e) => setTag(e.target.value)} placeholder="e.g. Luxury" className={`${inputCls} ${getError('tag') ? 'border-red-300' : ''}`} />
+                        <input value={tag} onChange={(e) => { setTag(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.tag; return n; }); }} placeholder="e.g. Luxury" className={`${inputCls} ${hasFieldError('tag') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
                         {getError('tag') && <p className={errorCls}>{getError('tag')}</p>}
                     </div>
                     <div>
@@ -211,7 +253,7 @@ export default function PackageForm({
                     Images
                 </h3>
 
-                <ImageUploader images={mainImage} onChange={setMainImage} folder="main" single label="Main Image *" error={getError('imageUrl')} />
+                <ImageUploader images={mainImage} onChange={(imgs) => { setMainImage(imgs); setClientErrors((prev) => { const n = {...prev}; delete n.imageUrl; return n; }); }} folder="main" single label="Main Image *" error={getError('imageUrl')} />
                 <ImageUploader images={galleryImages} onChange={setGalleryImages} folder="gallery" maxImages={8} label="Gallery Images (max 8)" error={getError('galleryImages')} />
             </div>
 
@@ -224,7 +266,7 @@ export default function PackageForm({
 
                 <div>
                     <label className={labelCls}>Description *</label>
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4} placeholder="A compelling description of this journey…" className={`${inputCls} resize-none ${getError('description') ? 'border-red-300' : ''}`} />
+                    <textarea value={description} onChange={(e) => { setDescription(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.description; return n; }); }} rows={4} placeholder="A compelling description of this journey…" className={`${inputCls} resize-none ${hasFieldError('description') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
                     {getError('description') && <p className={errorCls}>{getError('description')}</p>}
                 </div>
 
@@ -269,17 +311,30 @@ export default function PackageForm({
                             </span>
                         )}
                     </div>
-                    <button
-                        type="submit"
-                        disabled={isPending}
-                        className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm px-8 py-3 rounded-xl transition-all disabled:opacity-60 active:scale-95"
-                    >
-                        {isPending ? (
-                            <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>
-                        ) : (
-                            <><Save className="w-4 h-4" /> {pkg?.id ? 'Update Journey' : 'Create Journey'}</>
-                        )}
-                    </button>
+                    <div className="flex items-center gap-3">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (window.confirm('Discard unsaved changes?')) {
+                                    router.push('/admin/packages');
+                                }
+                            }}
+                            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold text-sm px-6 py-3 rounded-xl transition-all active:scale-95"
+                        >
+                            <X className="w-4 h-4" /> Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={isPending}
+                            className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm px-8 py-3 rounded-xl transition-all disabled:opacity-60 active:scale-95"
+                        >
+                            {isPending ? (
+                                <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>
+                            ) : (
+                                <><Save className="w-4 h-4" /> {pkg?.id ? 'Update Journey' : 'Create Journey'}</>
+                            )}
+                        </button>
+                    </div>
                 </div>
             </div>
         </form>

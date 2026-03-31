@@ -9,7 +9,14 @@ export default function StatusSelect({ id, currentStatus }: { id: string; curren
             <select
                 name="status"
                 defaultValue={currentStatus}
-                onChange={(e) => (e.target.form as HTMLFormElement).requestSubmit()}
+                onChange={(e) => {
+                    const newStatus = e.target.value;
+                    if (window.confirm(`Change status to "${newStatus}"?`)) {
+                        (e.target.form as HTMLFormElement).requestSubmit();
+                    } else {
+                        e.target.value = currentStatus;
+                    }
+                }}
                 className="text-[11px] bg-white border border-gray-200 rounded-lg text-gray-600 px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-gray-900/10 cursor-pointer hover:border-gray-300 transition-colors"
             >
                 {['pending', 'confirmed', 'cancelled'].map((s) => (
