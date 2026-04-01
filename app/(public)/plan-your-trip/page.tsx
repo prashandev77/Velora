@@ -315,23 +315,16 @@ export default function PlanYourTripPage() {
                                             }
                                             placeholder="you@example.com"
                                             aria-invalid={!!emailError}
-                                            aria-describedby={emailError ? 'email-error' : formData.email.trim() && isValidEmail(formData.email) ? 'email-ok' : undefined}
+                                            aria-describedby={emailError ? 'email-error' : undefined}
                                             className={`bg-stone-50 text-stone-900 placeholder:text-stone-300 focus:border-gold/60 ${
                                                 emailError
                                                     ? 'border-red-300 ring-2 ring-red-100'
-                                                    : formData.email.trim() && isValidEmail(formData.email)
-                                                        ? 'border-emerald-300 ring-1 ring-emerald-100'
-                                                        : 'border-stone-200'
+                                                    : 'border-stone-200'
                                             }`}
                                         />
                                         {emailError && (
                                             <p id="email-error" className="text-sm text-red-600 mt-1.5">
                                                 {emailError}
-                                            </p>
-                                        )}
-                                        {!emailError && formData.email.trim() && isValidEmail(formData.email) && (
-                                            <p id="email-ok" className="text-xs text-emerald-600 mt-1.5">
-                                                Looks good
                                             </p>
                                         )}
                                     </div>
@@ -349,23 +342,16 @@ export default function PlanYourTripPage() {
                                             }
                                             placeholder="+61 412 345 678"
                                             aria-invalid={!!phoneError}
-                                            aria-describedby={phoneError ? 'phone-error' : formData.phone.trim() && !phoneError ? 'phone-ok' : undefined}
+                                            aria-describedby={phoneError ? 'phone-error' : undefined}
                                             className={`bg-stone-50 text-stone-900 placeholder:text-stone-300 focus:border-gold/60 ${
                                                 phoneError
                                                     ? 'border-red-300 ring-2 ring-red-100'
-                                                    : formData.phone.trim() && !phoneError
-                                                        ? 'border-emerald-300 ring-1 ring-emerald-100'
-                                                        : 'border-stone-200'
+                                                    : 'border-stone-200'
                                             }`}
                                         />
                                         {phoneError && (
                                             <p id="phone-error" className="text-sm text-red-600 mt-1.5">
                                                 {phoneError}
-                                            </p>
-                                        )}
-                                        {!phoneError && formData.phone.trim() && (
-                                            <p id="phone-ok" className="text-xs text-emerald-600 mt-1.5">
-                                                Looks good
                                             </p>
                                         )}
                                     </div>

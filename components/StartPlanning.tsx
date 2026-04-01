@@ -216,16 +216,11 @@ export default function StartPlanning() {
                                 className={`w-full h-11 rounded-xl bg-white text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60 ${
                                     emailError
                                         ? 'border-2 border-red-300 ring-2 ring-red-50'
-                                        : email.trim() && isValidEmail(email)
-                                            ? 'border border-emerald-300 ring-1 ring-emerald-50'
-                                            : 'border border-stone-200'
+                                        : 'border border-stone-200'
                                 }`}
                             />
                             {emailError && (
                                 <p className="text-sm text-red-600 mt-1.5">{emailError}</p>
-                            )}
-                            {!emailError && email.trim() && isValidEmail(email) && (
-                                <p className="text-xs text-emerald-600 mt-1.5">Looks good</p>
                             )}
                         </div>
                         <div>
@@ -243,16 +238,11 @@ export default function StartPlanning() {
                                 className={`w-full h-11 rounded-xl bg-white text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60 ${
                                     phoneError
                                         ? 'border-2 border-red-300 ring-2 ring-red-50'
-                                        : phone.trim() && !phoneError
-                                            ? 'border border-emerald-300 ring-1 ring-emerald-50'
-                                            : 'border border-stone-200'
+                                        : 'border border-stone-200'
                                 }`}
                             />
                             {phoneError && (
                                 <p className="text-sm text-red-600 mt-1.5">{phoneError}</p>
-                            )}
-                            {!phoneError && phone.trim() && (
-                                <p className="text-xs text-emerald-600 mt-1.5">Looks good</p>
                             )}
                         </div>
                     </div>
