@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Send,
@@ -17,6 +17,12 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
 import { submitInquiry } from './actions';
+import {
+    getEmailErrorMessage,
+    getPhoneErrorMessage,
+    isValidEmail,
+    isPhoneValidOrEmpty,
+} from '@/lib/contact-validation';
 
 const TOTAL_STEPS = 3;
 
@@ -83,6 +89,9 @@ export default function PlanYourTripPage() {
         message: '',
     });
 
+    const emailError = useMemo(() => getEmailErrorMessage(formData.email), [formData.email]);
+    const phoneError = useMemo(() => getPhoneErrorMessage(formData.phone), [formData.phone]);
+
     const toggleStyle = (style: string) => {
         setFormData((prev) => {
             const styles = prev.selectedStyles.includes(style)
@@ -107,16 +116,30 @@ export default function PlanYourTripPage() {
     };
 
     const canProceed = () => {
-        if (step === 0) return formData.fullName.trim() !== '' && formData.email.trim() !== '';
+        if (step === 0) {
+            const step0Ok =
+                formData.fullName.trim() !== '' &&
+                formData.email.trim() !== '' &&
+                isValidEmail(formData.email) &&
+                isPhoneValidOrEmpty(formData.phone);
+            return step0Ok;
+        }
         if (step === 1) return formData.tripLength !== '' && formData.selectedStyles.length > 0;
         return true;
     };
 
     const handleSubmit = async () => {
+        if (
+            !formData.fullName.trim() ||
+            !isValidEmail(formData.email) ||
+            !isPhoneValidOrEmpty(formData.phone)
+        ) {
+            return;
+        }
         setIsSubmitting(true);
         const fd = new FormData();
         fd.set('name', formData.fullName);
-        fd.set('email', formData.email);
+        fd.set('email', formData.email.trim());
         fd.set('phone', formData.phone);
         fd.set('departing_city', formData.departingCity);
         fd.set('travel_dates', formData.travelMonth || 'Flexible');
@@ -125,7 +148,11 @@ export default function PlanYourTripPage() {
         fd.set('num_travelers', formData.travellers);
         fd.set('message', formData.message);
 
-        await submitInquiry(fd);
+        const result = await submitInquiry(fd);
+        if (result && typeof result === 'object' && 'success' in result && result.success === false) {
+            setIsSubmitting(false);
+            return;
+        }
         setIsSubmitted(true);
         setIsSubmitting(false);
     };
@@ -281,13 +308,32 @@ export default function PlanYourTripPage() {
                                             id="email"
                                             type="email"
                                             required
+                                            autoComplete="email"
                                             value={formData.email}
                                             onChange={(e) =>
                                                 setFormData({ ...formData, email: e.target.value })
                                             }
                                             placeholder="you@example.com"
-                                            className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
+                                            aria-invalid={!!emailError}
+                                            aria-describedby={emailError ? 'email-error' : formData.email.trim() && isValidEmail(formData.email) ? 'email-ok' : undefined}
+                                            className={`bg-stone-50 text-stone-900 placeholder:text-stone-300 focus:border-gold/60 ${
+                                                emailError
+                                                    ? 'border-red-300 ring-2 ring-red-100'
+                                                    : formData.email.trim() && isValidEmail(formData.email)
+                                                        ? 'border-emerald-300 ring-1 ring-emerald-100'
+                                                        : 'border-stone-200'
+                                            }`}
                                         />
+                                        {emailError && (
+                                            <p id="email-error" className="text-sm text-red-600 mt-1.5">
+                                                {emailError}
+                                            </p>
+                                        )}
+                                        {!emailError && formData.email.trim() && isValidEmail(formData.email) && (
+                                            <p id="email-ok" className="text-xs text-emerald-600 mt-1.5">
+                                                Looks good
+                                            </p>
+                                        )}
                                     </div>
                                     <div>
                                         <Label htmlFor="phone" className="text-stone-600 mb-2 block">
@@ -296,13 +342,32 @@ export default function PlanYourTripPage() {
                                         <Input
                                             id="phone"
                                             type="tel"
+                                            autoComplete="tel"
                                             value={formData.phone}
                                             onChange={(e) =>
                                                 setFormData({ ...formData, phone: e.target.value })
                                             }
                                             placeholder="+61 412 345 678"
-                                            className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
+                                            aria-invalid={!!phoneError}
+                                            aria-describedby={phoneError ? 'phone-error' : formData.phone.trim() && !phoneError ? 'phone-ok' : undefined}
+                                            className={`bg-stone-50 text-stone-900 placeholder:text-stone-300 focus:border-gold/60 ${
+                                                phoneError
+                                                    ? 'border-red-300 ring-2 ring-red-100'
+                                                    : formData.phone.trim() && !phoneError
+                                                        ? 'border-emerald-300 ring-1 ring-emerald-100'
+                                                        : 'border-stone-200'
+                                            }`}
                                         />
+                                        {phoneError && (
+                                            <p id="phone-error" className="text-sm text-red-600 mt-1.5">
+                                                {phoneError}
+                                            </p>
+                                        )}
+                                        {!phoneError && formData.phone.trim() && (
+                                            <p id="phone-ok" className="text-xs text-emerald-600 mt-1.5">
+                                                Looks good
+                                            </p>
+                                        )}
                                     </div>
                                     <div>
                                         <Label htmlFor="departingCity" className="text-stone-600 mb-2 block">

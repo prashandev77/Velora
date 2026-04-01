@@ -1,10 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, Send } from 'lucide-react';
 import { startPlanningContent } from '@/lib/content';
+import {
+    getEmailErrorMessage,
+    getPhoneErrorMessage,
+    isValidEmail,
+    isPhoneValidOrEmpty,
+} from '@/lib/contact-validation';
 
 const travelStyles = startPlanningContent.travelStyles;
 const tripLengths = startPlanningContent.tripLengths;
@@ -17,8 +23,12 @@ export default function StartPlanning() {
     const [travellers, setTravellers] = useState('2');
     const [departingCity, setDepartingCity] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const emailError = useMemo(() => getEmailErrorMessage(email), [email]);
+    const phoneError = useMemo(() => getPhoneErrorMessage(phone), [phone]);
 
     const toggleStyle = (style: string) => {
         setSelectedStyles((prev) =>
@@ -30,7 +40,9 @@ export default function StartPlanning() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real app, submit to API
+        if (!email.trim() || !isValidEmail(email) || !isPhoneValidOrEmpty(phone)) {
+            return;
+        }
         setIsSubmitted(true);
     };
 
@@ -187,39 +199,83 @@ export default function StartPlanning() {
                     </div>
 
                     {/* Email + Message */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label className="text-stone-700 text-sm font-medium mb-2 block">
+                            <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-email">
                                 Email *
                             </label>
                             <input
+                                id="start-email"
                                 type="email"
                                 required
+                                autoComplete="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="you@example.com"
-                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
+                                aria-invalid={!!emailError}
+                                className={`w-full h-11 rounded-xl bg-white text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60 ${
+                                    emailError
+                                        ? 'border-2 border-red-300 ring-2 ring-red-50'
+                                        : email.trim() && isValidEmail(email)
+                                            ? 'border border-emerald-300 ring-1 ring-emerald-50'
+                                            : 'border border-stone-200'
+                                }`}
                             />
+                            {emailError && (
+                                <p className="text-sm text-red-600 mt-1.5">{emailError}</p>
+                            )}
+                            {!emailError && email.trim() && isValidEmail(email) && (
+                                <p className="text-xs text-emerald-600 mt-1.5">Looks good</p>
+                            )}
                         </div>
                         <div>
-                            <label className="text-stone-700 text-sm font-medium mb-2 block">
-                                Message (Optional)
+                            <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-phone">
+                                Phone (Optional)
                             </label>
                             <input
-                                type="text"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                placeholder="Tell us anything else..."
-                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
+                                id="start-phone"
+                                type="tel"
+                                autoComplete="tel"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                placeholder="+61 412 345 678"
+                                aria-invalid={!!phoneError}
+                                className={`w-full h-11 rounded-xl bg-white text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60 ${
+                                    phoneError
+                                        ? 'border-2 border-red-300 ring-2 ring-red-50'
+                                        : phone.trim() && !phoneError
+                                            ? 'border border-emerald-300 ring-1 ring-emerald-50'
+                                            : 'border border-stone-200'
+                                }`}
                             />
+                            {phoneError && (
+                                <p className="text-sm text-red-600 mt-1.5">{phoneError}</p>
+                            )}
+                            {!phoneError && phone.trim() && (
+                                <p className="text-xs text-emerald-600 mt-1.5">Looks good</p>
+                            )}
                         </div>
+                    </div>
+                    <div className="mb-8">
+                        <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-message">
+                            Message (Optional)
+                        </label>
+                        <input
+                            id="start-message"
+                            type="text"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="Tell us anything else..."
+                            className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
+                        />
                     </div>
 
                     {/* Submit */}
                     <div className="text-center">
                         <button
                             type="submit"
-                            className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-base px-10 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/25 hover:scale-[1.02] group"
+                            disabled={!email.trim() || !isValidEmail(email) || !isPhoneValidOrEmpty(phone)}
+                            className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-base px-10 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/25 hover:scale-[1.02] group disabled:opacity-40 disabled:pointer-events-none disabled:hover:scale-100"
                         >
                             <Send className="w-4 h-4" />
                             {startPlanningContent.submitButton}
