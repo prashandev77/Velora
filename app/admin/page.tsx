@@ -37,9 +37,10 @@ export default async function AdminDashboard() {
         { data: recentBookings },
     ] = await Promise.all([
         supabase.from('packages').select('id', { count: 'exact', head: true }).eq('is_active', true),
-        supabase.from('bookings').select('id', { count: 'planned', head: true }),
-        supabase.from('bookings').select('id', { count: 'planned', head: true }).eq('status', 'pending'),
-        supabase.from('bookings').select('id', { count: 'planned', head: true }).eq('status', 'confirmed'),
+        // Use exact counts — 'planned' is a planner estimate and can show wrong totals (e.g. pending: 1 when 0 rows).
+        supabase.from('bookings').select('id', { count: 'exact', head: true }),
+        supabase.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
+        supabase.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'confirmed'),
         supabase.from('bookings').select('id,booking_ref,package_title,name,email,status,created_at,guest_count')
             .order('created_at', { ascending: false }).limit(8),
     ]);

@@ -1,8 +1,9 @@
 'use client';
 
-import { useActionState, useState, useCallback } from 'react';
+import { useActionState, useState, useCallback, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, Save, AlertCircle, X } from 'lucide-react';
+import ConfirmDialog from '@/app/admin/components/ConfirmDialog';
 import DynamicList from './DynamicList';
 import ImageUploader from './ImageUploader';
 import ItineraryBuilder from './ItineraryBuilder';
@@ -48,6 +49,22 @@ export default function PackageForm({
     const [state, formAction, isPending] = useActionState(action, null);
     const router = useRouter();
     const [clientErrors, setClientErrors] = useState<Record<string, string>>({});
+    const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+    const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
+    const [saveAwaitingComplete, setSaveAwaitingComplete] = useState(false);
+    const saveHadPendingRef = useRef(false);
+
+    useEffect(() => {
+        if (isPending && saveAwaitingComplete) saveHadPendingRef.current = true;
+    }, [isPending, saveAwaitingComplete]);
+
+    useEffect(() => {
+        if (!isPending && saveAwaitingComplete && saveHadPendingRef.current) {
+            saveHadPendingRef.current = false;
+            setSaveAwaitingComplete(false);
+            setSaveDialogOpen(false);
+        }
+    }, [isPending, saveAwaitingComplete]);
 
     // ── Form state ──
     const [title, setTitle] = useState(pkg?.title ?? '');
@@ -111,17 +128,14 @@ export default function PackageForm({
         setClientErrors(errors);
 
         if (Object.keys(errors).length > 0) {
-            // Scroll to top so the user sees the error banner
             window.scrollTo({ top: 0, behavior: 'smooth' });
             return;
         }
 
-        const confirmMsg = pkg?.id
-            ? 'Are you sure you want to update this journey?'
-            : 'Are you sure you want to create this journey?';
+        setSaveDialogOpen(true);
+    };
 
-        if (!window.confirm(confirmMsg)) return;
-
+    const executeSave = () => {
         const payload = {
             title,
             slug,
@@ -149,10 +163,12 @@ export default function PackageForm({
             isActive: isActive,
         };
 
-        formData.set('payload', JSON.stringify(payload));
-        if (pkg?.id) formData.set('id', pkg.id);
+        const fd = new FormData();
+        fd.set('payload', JSON.stringify(payload));
+        if (pkg?.id) fd.set('id', pkg.id);
 
-        formAction(formData);
+        setSaveAwaitingComplete(true);
+        formAction(fd);
     };
 
     const inputCls = 'w-full bg-white border border-gray-200 rounded-xl text-gray-900 text-sm px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400 transition-all placeholder:text-gray-300';
@@ -160,6 +176,37 @@ export default function PackageForm({
     const errorCls = 'text-red-500 text-xs mt-1';
 
     return (
+        <>
+            <ConfirmDialog
+                open={saveDialogOpen}
+                variant="neutral"
+                title={pkg?.id ? 'Update this journey?' : 'Create this journey?'}
+                message={
+                    pkg?.id
+                        ? 'Your changes will be saved and visible on the site (if the journey is active).'
+                        : 'A new journey will be added to your catalogue.'
+                }
+                confirmLabel={pkg?.id ? 'Save changes' : 'Create journey'}
+                cancelLabel="Keep editing"
+                confirmLoading={isPending && saveAwaitingComplete}
+                onConfirm={executeSave}
+                onCancel={() => {
+                    if (!isPending && !saveAwaitingComplete) setSaveDialogOpen(false);
+                }}
+            />
+            <ConfirmDialog
+                open={discardDialogOpen}
+                variant="warning"
+                title="Discard unsaved changes?"
+                message="You will lose any edits that have not been saved."
+                confirmLabel="Discard"
+                cancelLabel="Keep editing"
+                onConfirm={() => {
+                    setDiscardDialogOpen(false);
+                    router.push('/admin/packages');
+                }}
+                onCancel={() => setDiscardDialogOpen(false)}
+            />
         <form action={handleSubmit} className="space-y-6 pb-24">
             {state?.errors?._form && (
                 <div className="flex items-center gap-3 bg-red-50 border border-red-200 rounded-2xl px-5 py-4">
@@ -310,11 +357,7 @@ export default function PackageForm({
                     <div className="flex items-center gap-3">
                         <button
                             type="button"
-                            onClick={() => {
-                                if (window.confirm('Discard unsaved changes?')) {
-                                    router.push('/admin/packages');
-                                }
-                            }}
+                            onClick={() => setDiscardDialogOpen(true)}
                             className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold text-sm px-6 py-3 rounded-xl transition-all active:scale-95"
                         >
                             <X className="w-4 h-4" /> Cancel
@@ -334,5 +377,6 @@ export default function PackageForm({
                 </div>
             </div>
         </form>
+        </>
     );
 }

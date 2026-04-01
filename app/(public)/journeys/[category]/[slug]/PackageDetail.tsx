@@ -20,6 +20,7 @@ import {
     Clock,
 } from 'lucide-react';
 import { Package } from '@/lib/types';
+import BookPackageLink from '@/components/BookPackageLink';
 
 // Lazy-load the Leaflet map (client-only, no SSR)
 const JourneyMap = dynamic(() => import('@/components/JourneyMap'), {
@@ -172,6 +173,23 @@ export default function PackageDetail({
                                 From AUD {price}
                             </span>
                         )}
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.85 }}
+                        className="mt-8"
+                    >
+                        <BookPackageLink
+                            packageId={pkg.id}
+                            className="inline-flex rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+                        >
+                            <span className="inline-flex items-center gap-2 bg-gold hover:bg-gold/90 text-stone-900 font-semibold px-6 py-3 rounded-full text-sm transition-all shadow-lg shadow-black/20">
+                                Book this journey
+                                <ArrowRight className="w-4 h-4" />
+                            </span>
+                        </BookPackageLink>
                     </motion.div>
                 </div>
             </section>

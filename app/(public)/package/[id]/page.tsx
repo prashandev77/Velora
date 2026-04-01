@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getAllPackages, getPackageById, getPackageRouteParams } from '@/lib/data';
 import Timeline from '@/components/Timeline';
+import BookPackageLink from '@/components/BookPackageLink';
 
 // Generate static paths for all packages
 export async function generateStaticParams() {
@@ -148,12 +149,12 @@ export default async function PackageDetailPage({
                         <Separator orientation="vertical" className="h-6 bg-stone-200 hidden sm:block" />
                         <span>All inclusive</span>
                     </div>
-                    <Link href={`/book/${pkg.id}`}>
+                    <BookPackageLink packageId={pkg.id}>
                         <Button className="bg-gold hover:bg-gold-dark text-white font-semibold px-6 rounded-xl transition-all shadow-sm">
                             <CalendarDays className="w-4 h-4 mr-2" />
                             Book Now
                         </Button>
-                    </Link>
+                    </BookPackageLink>
                 </div>
             </div>
 
@@ -379,7 +380,7 @@ export default async function PackageDetailPage({
                         will tailor every detail to perfection.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Link href={`/book/${pkg.id}`}>
+                        <BookPackageLink packageId={pkg.id}>
                             <Button
                                 size="lg"
                                 className="bg-gold hover:bg-gold-dark text-stone-900 font-semibold px-10 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 border-none"
@@ -387,7 +388,7 @@ export default async function PackageDetailPage({
                                 <CalendarDays className="w-5 h-5 mr-2" />
                                 Book This Journey
                             </Button>
-                        </Link>
+                        </BookPackageLink>
                         <Link href="/journeys">
                             <Button
                                 size="lg"
