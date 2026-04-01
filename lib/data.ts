@@ -1,11 +1,15 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { unstable_cache } from 'next/cache';
 import { Package, Journey } from './types';
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+function getPublicSupabase(): SupabaseClient | null {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url?.trim() || !key?.trim()) {
+        return null;
+    }
+    return createClient(url, key);
+}
 
 const PACKAGE_COLUMNS = 'id,slug,category,title,location,days,image_url,tag,subtitle,travel_style,description,accommodation,highlights,why_special,perfect_for,route,route_coords,included,not_included,itinerary,gallery_images,is_active,created_at';
 const PACKAGE_ROUTE_COLUMNS = 'id,slug,category';
@@ -63,6 +67,11 @@ export function mapDbToPackage(dbPkg: DbPackage): Package {
 export async function getAllPackages(): Promise<Package[]> {
     const getCached = unstable_cache(
         async () => {
+            const supabase = getPublicSupabase();
+            if (!supabase) {
+                console.error('[lib/data] NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is missing');
+                return [];
+            }
             const { data } = await supabase
                 .from('packages')
                 .select(PACKAGE_COLUMNS)
@@ -79,6 +88,11 @@ export async function getAllPackages(): Promise<Package[]> {
 export async function getPackagesByCategory(category: string): Promise<Package[]> {
     const getCached = unstable_cache(
         async () => {
+            const supabase = getPublicSupabase();
+            if (!supabase) {
+                console.error('[lib/data] Supabase env missing');
+                return [];
+            }
             const { data } = await supabase
                 .from('packages')
                 .select(PACKAGE_COLUMNS)
@@ -96,6 +110,11 @@ export async function getPackagesByCategory(category: string): Promise<Package[]
 export async function getPackageBySlug(category: string, slug: string): Promise<Package | undefined> {
     const getCached = unstable_cache(
         async () => {
+            const supabase = getPublicSupabase();
+            if (!supabase) {
+                console.error('[lib/data] Supabase env missing');
+                return undefined;
+            }
             const { data } = await supabase
                 .from('packages')
                 .select(PACKAGE_COLUMNS)
@@ -113,6 +132,11 @@ export async function getPackageBySlug(category: string, slug: string): Promise<
 export async function getPackageById(id: string): Promise<Package | undefined> {
     const getCached = unstable_cache(
         async () => {
+            const supabase = getPublicSupabase();
+            if (!supabase) {
+                console.error('[lib/data] Supabase env missing');
+                return undefined;
+            }
             const { data } = await supabase
                 .from('packages')
                 .select(PACKAGE_COLUMNS)
@@ -129,6 +153,11 @@ export async function getPackageById(id: string): Promise<Package | undefined> {
 export async function getPackageRouteParams(): Promise<Array<{ id: string; slug: string; category: string }>> {
     const getCached = unstable_cache(
         async () => {
+            const supabase = getPublicSupabase();
+            if (!supabase) {
+                console.error('[lib/data] Supabase env missing');
+                return [];
+            }
             const { data } = await supabase
                 .from('packages')
                 .select(PACKAGE_ROUTE_COLUMNS)
