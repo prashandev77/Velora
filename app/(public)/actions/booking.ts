@@ -30,6 +30,14 @@ export async function createBooking(formData: {
     guestNames: string[];
     specialRequests: string;
 }) {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()) {
+        console.error('createBooking: SUPABASE_SERVICE_ROLE_KEY is not set');
+        return {
+            success: false,
+            error: 'Booking service is not configured. Please contact support.',
+        };
+    }
+
     // Look up the package title from dynamic data
     const pkg = await getPackageById(formData.packageId);
     const packageTitle = pkg?.title ?? 'Unknown Package';
@@ -54,21 +62,18 @@ export async function createBooking(formData: {
         return { success: false, error: error.message };
     }
 
-    // Send confirmation emails (non-blocking — won't fail the booking)
+    // Send emails in the background — do not await. Awaiting Resend can hang or take
+    // a long time and leaves the client stuck on "submitting" with no response.
     const leadGuestName = formData.guestNames.find((n) => n.trim()) || 'Guest';
-    // The /book/[id] flow doesn't collect email, so we skip emails if there's none.
-    // If you later add an email field to this flow, it will work automatically.
-
-    // For now, send only the owner notification for package bookings
-    await sendBookingEmails({
-        customerEmail: '', // No email collected in this flow
+    void sendBookingEmails({
+        customerEmail: '',
         customerName: leadGuestName,
         bookingRef,
         packageTitle,
         travelDate: formData.travelDate,
         guestCount: formData.guestCount,
         specialRequests: formData.specialRequests || undefined,
-    });
+    }).catch((err) => console.error('Background booking email error:', err));
 
     return {
         success: true,

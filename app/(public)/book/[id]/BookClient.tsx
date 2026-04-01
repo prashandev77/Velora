@@ -27,6 +27,41 @@ import { createBooking } from '@/app/(public)/actions/booking';
 
 import { Package } from '@/lib/types';
 
+const MAX_SPECIAL_REQUESTS_LENGTH = 2000;
+const MIN_GUEST_NAME_LENGTH = 2;
+const MAX_GUEST_NAME_LENGTH = 120;
+
+function getTodayLocalISO(): string {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+}
+
+function isValidTravelDate(iso: string): boolean {
+    if (!iso) return false;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return false;
+    const selected = new Date(iso + 'T12:00:00');
+    if (Number.isNaN(selected.getTime())) return false;
+    return iso >= getTodayLocalISO();
+}
+
+function validateGuestName(name: string): string | undefined {
+    const t = name.trim();
+    if (!t) return 'Name is required.';
+    if (t.length < MIN_GUEST_NAME_LENGTH) return `Use at least ${MIN_GUEST_NAME_LENGTH} characters.`;
+    if (t.length > MAX_GUEST_NAME_LENGTH) return `Keep names under ${MAX_GUEST_NAME_LENGTH} characters.`;
+    if (/^\d+$/.test(t)) return 'Please enter a valid name.';
+    return undefined;
+}
+
+type BookingFieldErrors = {
+    travelDate?: string;
+    guestNames?: (string | undefined)[];
+    specialRequests?: string;
+};
+
 const steps = [
     { id: 1, title: 'Travel Date', icon: CalendarDays },
     { id: 2, title: 'Guests', icon: Users },
@@ -40,6 +75,8 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
     const [bookingId, setBookingId] = useState('');
+    const [submitError, setSubmitError] = useState('');
+    const [fieldErrors, setFieldErrors] = useState<BookingFieldErrors>({});
 
     const [formData, setFormData] = useState({
         travelDate: '',
@@ -68,44 +105,127 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
         while (newNames.length < newCount) newNames.push('');
         while (newNames.length > newCount) newNames.pop();
         setFormData({ ...formData, guestCount: newCount, guestNames: newNames });
+        setFieldErrors((prev) => ({ ...prev, guestNames: undefined }));
     };
 
     const setGuestName = (index: number, name: string) => {
         const newNames = [...formData.guestNames];
         newNames[index] = name;
         setFormData({ ...formData, guestNames: newNames });
+        setFieldErrors((prev) => {
+            const next = { ...prev, guestNames: prev.guestNames ? [...prev.guestNames] : undefined };
+            if (next.guestNames) next.guestNames[index] = undefined;
+            return next;
+        });
+    };
+
+    const validateStep1 = (): boolean => {
+        if (!formData.travelDate) {
+            setFieldErrors((prev) => ({ ...prev, travelDate: 'Please choose a travel date.' }));
+            return false;
+        }
+        if (!isValidTravelDate(formData.travelDate)) {
+            setFieldErrors((prev) => ({ ...prev, travelDate: 'Travel date must be today or in the future.' }));
+            return false;
+        }
+        setFieldErrors((prev) => ({ ...prev, travelDate: undefined }));
+        return true;
+    };
+
+    const validateStep2 = (): boolean => {
+        const guestNames: (string | undefined)[] = formData.guestNames.map((n) => validateGuestName(n));
+        const hasError = guestNames.some((e) => e !== undefined);
+        if (hasError) {
+            setFieldErrors((prev) => ({ ...prev, guestNames }));
+            return false;
+        }
+        setFieldErrors((prev) => ({ ...prev, guestNames: undefined }));
+        return true;
+    };
+
+    const validateStep3 = (): boolean => {
+        if (formData.specialRequests.length > MAX_SPECIAL_REQUESTS_LENGTH) {
+            setFieldErrors((prev) => ({
+                ...prev,
+                specialRequests: `Please keep special requests under ${MAX_SPECIAL_REQUESTS_LENGTH} characters.`,
+            }));
+            return false;
+        }
+        setFieldErrors((prev) => ({ ...prev, specialRequests: undefined }));
+        return true;
+    };
+
+    const validateAllForSubmit = (): boolean => {
+        const travelOk = isValidTravelDate(formData.travelDate);
+        const guestNames = formData.guestNames.map((n) => validateGuestName(n));
+        const guestsOk = !guestNames.some((e) => e !== undefined);
+        const requestsOk = formData.specialRequests.length <= MAX_SPECIAL_REQUESTS_LENGTH;
+
+        setFieldErrors({
+            travelDate: travelOk ? undefined : !formData.travelDate
+                ? 'Please choose a travel date.'
+                : 'Travel date must be today or in the future.',
+            guestNames: guestsOk ? undefined : guestNames,
+            specialRequests: requestsOk
+                ? undefined
+                : `Please keep special requests under ${MAX_SPECIAL_REQUESTS_LENGTH} characters.`,
+        });
+
+        return travelOk && guestsOk && requestsOk;
+    };
+
+    const goNext = () => {
+        if (currentStep === 1 && !validateStep1()) return;
+        if (currentStep === 2 && !validateStep2()) return;
+        if (currentStep === 3 && !validateStep3()) return;
+        setCurrentStep((s) => Math.min(4, s + 1));
+    };
+
+    const goPrevious = () => {
+        setCurrentStep((s) => Math.max(1, s - 1));
     };
 
     const canProceed = () => {
         switch (currentStep) {
             case 1:
-                return formData.travelDate !== '';
+                return formData.travelDate !== '' && isValidTravelDate(formData.travelDate);
             case 2:
-                return formData.guestNames.every((n) => n.trim() !== '');
+                return formData.guestNames.every((n) => validateGuestName(n) === undefined);
             case 3:
-                return true;
+                return formData.specialRequests.length <= MAX_SPECIAL_REQUESTS_LENGTH;
             default:
                 return false;
         }
     };
 
     const handleSubmit = async () => {
+        setSubmitError('');
+        if (!validateAllForSubmit()) {
+            const firstInvalid =
+                !isValidTravelDate(formData.travelDate) ? 1
+                    : formData.guestNames.some((n) => validateGuestName(n) !== undefined) ? 2
+                        : 3;
+            setCurrentStep(firstInvalid);
+            return;
+        }
         setIsSubmitting(true);
         try {
             const result = await createBooking({
                 packageId: pkg.id,
                 travelDate: formData.travelDate,
                 guestCount: formData.guestCount,
-                guestNames: formData.guestNames,
-                specialRequests: formData.specialRequests,
+                guestNames: formData.guestNames.map((n) => n.trim()),
+                specialRequests: formData.specialRequests.trim(),
             });
 
             if (result.success) {
                 setBookingId(result.bookingId || '');
                 setIsComplete(true);
+            } else {
+                setSubmitError(result.error || 'Could not complete your booking. Please try again.');
             }
         } catch {
-            alert('Something went wrong. Please try again.');
+            setSubmitError('Something went wrong. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
@@ -244,12 +364,24 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                                         id="travel-date"
                                         type="date"
                                         value={formData.travelDate}
-                                        onChange={(e) =>
-                                            setFormData({ ...formData, travelDate: e.target.value })
-                                        }
-                                        min={new Date().toISOString().split('T')[0]}
-                                        className="bg-stone-50 border-stone-200 text-stone-900 focus:border-gold/50 focus:ring-gold/20 max-w-xs"
+                                        onChange={(e) => {
+                                            setFormData({ ...formData, travelDate: e.target.value });
+                                            setFieldErrors((prev) => ({ ...prev, travelDate: undefined }));
+                                        }}
+                                        min={getTodayLocalISO()}
+                                        aria-invalid={!!fieldErrors.travelDate}
+                                        aria-describedby={fieldErrors.travelDate ? 'travel-date-error' : undefined}
+                                        className={`bg-stone-50 text-stone-900 focus:border-gold/50 focus:ring-gold/20 max-w-xs ${
+                                            fieldErrors.travelDate
+                                                ? 'border-red-300 ring-2 ring-red-100'
+                                                : 'border-stone-200'
+                                        }`}
                                     />
+                                    {fieldErrors.travelDate && (
+                                        <p id="travel-date-error" className="text-sm text-red-600 mt-1.5">
+                                            {fieldErrors.travelDate}
+                                        </p>
+                                    )}
                                 </div>
                             </motion.div>
                         )}
@@ -299,15 +431,30 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                                 {/* Guest Names */}
                                 <div className="space-y-4">
                                     <Label className="text-stone-700">Guest Names</Label>
-                                    {formData.guestNames.map((name, i) => (
-                                        <Input
-                                            key={i}
-                                            placeholder={`Guest ${i + 1} full name`}
-                                            value={name}
-                                            onChange={(e) => setGuestName(i, e.target.value)}
-                                            className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400 focus:border-gold/50 focus:ring-gold/20"
-                                        />
-                                    ))}
+                                    {formData.guestNames.map((name, i) => {
+                                        const guestErr = fieldErrors.guestNames?.[i];
+                                        return (
+                                            <div key={i}>
+                                                <Input
+                                                    placeholder={`Guest ${i + 1} full name`}
+                                                    value={name}
+                                                    onChange={(e) => setGuestName(i, e.target.value)}
+                                                    aria-invalid={!!guestErr}
+                                                    aria-describedby={guestErr ? `guest-${i}-error` : undefined}
+                                                    className={`bg-stone-50 text-stone-900 placeholder:text-stone-400 focus:border-gold/50 focus:ring-gold/20 ${
+                                                        guestErr
+                                                            ? 'border-red-300 ring-2 ring-red-100'
+                                                            : 'border-stone-200'
+                                                    }`}
+                                                />
+                                                {guestErr && (
+                                                    <p id={`guest-${i}-error`} className="text-sm text-red-600 mt-1">
+                                                        {guestErr}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </motion.div>
                         )}
@@ -331,15 +478,34 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                                 <Textarea
                                     placeholder="E.g., Anniversary celebration, vegetarian meals, wheelchair accessibility, connecting rooms..."
                                     value={formData.specialRequests}
-                                    onChange={(e) =>
+                                    onChange={(e) => {
                                         setFormData({
                                             ...formData,
                                             specialRequests: e.target.value,
-                                        })
-                                    }
+                                        });
+                                        setFieldErrors((prev) => ({ ...prev, specialRequests: undefined }));
+                                    }}
                                     rows={6}
-                                    className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400 focus:border-gold/50 focus:ring-gold/20 resize-none"
+                                    maxLength={MAX_SPECIAL_REQUESTS_LENGTH}
+                                    aria-invalid={!!fieldErrors.specialRequests}
+                                    aria-describedby={fieldErrors.specialRequests ? 'requests-error' : 'requests-hint'}
+                                    className={`bg-stone-50 text-stone-900 placeholder:text-stone-400 focus:border-gold/50 focus:ring-gold/20 resize-none ${
+                                        fieldErrors.specialRequests
+                                            ? 'border-red-300 ring-2 ring-red-100'
+                                            : 'border-stone-200'
+                                    }`}
                                 />
+                                <div className="flex justify-between items-center mt-2">
+                                    {fieldErrors.specialRequests ? (
+                                        <p id="requests-error" className="text-sm text-red-600">
+                                            {fieldErrors.specialRequests}
+                                        </p>
+                                    ) : (
+                                        <span id="requests-hint" className="text-xs text-stone-400">
+                                            {formData.specialRequests.length} / {MAX_SPECIAL_REQUESTS_LENGTH} characters
+                                        </span>
+                                    )}
+                                </div>
                             </motion.div>
                         )}
 
@@ -427,10 +593,15 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                 </div>
 
                 {/* Navigation Buttons */}
+                {submitError && currentStep === 4 && (
+                    <div className="mt-8 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {submitError}
+                    </div>
+                )}
                 <div className="flex items-center justify-between mt-8">
                     <Button
                         variant="ghost"
-                        onClick={() => setCurrentStep(Math.max(1, currentStep - 1))}
+                        onClick={goPrevious}
                         disabled={currentStep === 1}
                         className="text-stone-500 hover:text-stone-900 hover:bg-stone-100"
                     >
@@ -440,7 +611,7 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
 
                     {currentStep < 4 ? (
                         <Button
-                            onClick={() => setCurrentStep(currentStep + 1)}
+                            onClick={goNext}
                             disabled={!canProceed()}
                             className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 disabled:opacity-30 disabled:cursor-not-allowed"
                         >

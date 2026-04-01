@@ -21,6 +21,11 @@ function getAdminClient() {
 }
 
 export async function submitInquiry(formData: FormData) {
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()) {
+        console.error('submitInquiry: SUPABASE_SERVICE_ROLE_KEY is not set');
+        return { success: false, error: 'Service not configured.' };
+    }
+
     const supabase = getAdminClient();
 
     const name = formData.get('name') as string;
@@ -53,11 +58,10 @@ export async function submitInquiry(formData: FormData) {
 
     if (error) {
         console.error('Booking insert error:', error.message);
-        return { success: false };
+        return { success: false, error: error.message };
     }
 
-    // Send confirmation emails to customer + business owner
-    await sendBookingEmails({
+    void sendBookingEmails({
         customerEmail: email,
         customerName: name,
         bookingRef,
@@ -66,7 +70,7 @@ export async function submitInquiry(formData: FormData) {
         guestCount: numTravelers ? parseInt(numTravelers) || 1 : 1,
         travelStyles: travelStyles.length > 0 ? travelStyles : undefined,
         message: message || undefined,
-    });
+    }).catch((err) => console.error('Background inquiry email error:', err));
 
     return { success: true, bookingRef };
 }
