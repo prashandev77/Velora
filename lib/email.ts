@@ -1,6 +1,14 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+/** Lazy init — module-level `new Resend()` throws if RESEND_API_KEY is missing, which breaks any importer (e.g. server actions) with 500. */
+let resendClient: Resend | null = null;
+
+function getResend(): Resend | null {
+    const key = process.env.RESEND_API_KEY?.trim();
+    if (!key) return null;
+    if (!resendClient) resendClient = new Resend(key);
+    return resendClient;
+}
 
 const BUSINESS_EMAIL = 'journeys@velorajourneys.com.au';
 const FROM_EMAIL = 'Velora Journeys <journeys@velorajourneys.com.au>';
@@ -46,7 +54,7 @@ function buildCustomerHtml(data: BookingEmailData): string {
     <!-- Main Card -->
     <div style="background:#ffffff;border-radius:16px;padding:40px 32px;border:1px solid #e7e5e4;">
       <p style="color:#78716c;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 8px;">Booking Confirmed</p>
-      <h2 style="font-size:22px;color:#1c1917;margin:0 0 8px;">Thank you, ${data.customerName.split(' ')[0]}!</h2>
+      <h2 style="font-size:22px;color:#1c1917;margin:0 0 8px;">Thank you, ${(data.customerName ?? '').split(/\s+/).filter(Boolean)[0] || 'there'}!</h2>
       <p style="font-size:14px;color:#57534e;line-height:1.6;margin:0 0 24px;">
         Your enquiry has been received and a dedicated Velora travel designer will be in touch within 24 hours to begin crafting your perfect journey.
       </p>
@@ -95,7 +103,7 @@ function buildCustomerHtml(data: BookingEmailData): string {
 
 function buildOwnerHtml(data: BookingEmailData): string {
     const rows: string[] = [];
-    rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Name</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;font-weight:600;">${data.customerName}</td></tr>`);
+    rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Name</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;font-weight:600;">${data.customerName ?? '—'}</td></tr>`);
     rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Email</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;"><a href="mailto:${data.customerEmail}" style="color:#c8a55a;">${data.customerEmail}</a></td></tr>`);
     rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Reference</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;font-weight:700;">${data.bookingRef}</td></tr>`);
     if (data.packageTitle) rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Package</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;">${data.packageTitle}</td></tr>`);
@@ -138,6 +146,12 @@ function buildOwnerHtml(data: BookingEmailData): string {
 // ─── Send emails ────────────────────────────────────────────────────────────
 
 export async function sendBookingEmails(data: BookingEmailData): Promise<void> {
+    const resend = getResend();
+    if (!resend) {
+        console.warn('[email] RESEND_API_KEY is not set; skipping transactional emails.');
+        return;
+    }
+
     try {
         const promises: Promise<unknown>[] = [];
 
@@ -158,7 +172,7 @@ export async function sendBookingEmails(data: BookingEmailData): Promise<void> {
             resend.emails.send({
                 from: FROM_EMAIL,
                 to: BUSINESS_EMAIL,
-                subject: `New Booking: ${data.customerName} — ${data.bookingRef}`,
+                subject: `New Booking: ${data.customerName ?? 'Guest'} — ${data.bookingRef}`,
                 html: buildOwnerHtml(data),
             })
         );

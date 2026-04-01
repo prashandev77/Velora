@@ -14,10 +14,10 @@ function generateBookingRef(): string {
 
 // Service-role client — bypasses RLS so public visitors can insert
 function getAdminClient() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+    if (!url || !key) return null;
+    return createClient(url, key);
 }
 
 export async function submitInquiry(formData: FormData) {
@@ -27,8 +27,12 @@ export async function submitInquiry(formData: FormData) {
     }
 
     const supabase = getAdminClient();
+    if (!supabase) {
+        console.error('submitInquiry: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is invalid');
+        return { success: false, error: 'Service not configured.' };
+    }
 
-    const name = formData.get('name') as string;
+    const name = (formData.get('name') as string | null) ?? '';
     const email = formData.get('email') as string;
     const phone = (formData.get('phone') as string) || null;
     const departingCity = (formData.get('departing_city') as string) || null;
@@ -41,36 +45,48 @@ export async function submitInquiry(formData: FormData) {
 
     const bookingRef = generateBookingRef();
 
-    const { error } = await supabase.from('bookings').insert({
-        booking_ref: bookingRef,
-        name,
-        email,
-        phone,
-        departing_city: departingCity,
-        travel_month: travelMonth,
-        trip_length: tripLength,
-        travel_styles: travelStyles,
-        guest_count: numTravelers ? parseInt(numTravelers) || 1 : 1,
-        guest_names: [name],
-        message,
-        status: 'pending',
-    });
+    const parsedGuests = numTravelers ? parseInt(numTravelers, 10) : NaN;
+    const guestCount =
+        Number.isFinite(parsedGuests) && parsedGuests > 0 ? parsedGuests : 1;
 
-    if (error) {
-        console.error('Booking insert error:', error.message);
-        return { success: false, error: error.message };
+    try {
+        const { error } = await supabase.from('bookings').insert({
+            booking_ref: bookingRef,
+            name: name || null,
+            email,
+            phone,
+            departing_city: departingCity,
+            travel_month: travelMonth,
+            trip_length: tripLength,
+            travel_styles: travelStyles,
+            guest_count: guestCount,
+            guest_names: name ? [name] : [''],
+            message,
+            status: 'pending',
+        });
+
+        if (error) {
+            console.error('Booking insert error:', error.message);
+            return { success: false, error: error.message };
+        }
+
+        void sendBookingEmails({
+            customerEmail: email,
+            customerName: name,
+            bookingRef,
+            travelMonth: travelMonth || undefined,
+            tripLength: tripLength || undefined,
+            guestCount,
+            travelStyles: travelStyles.length > 0 ? travelStyles : undefined,
+            message: message || undefined,
+        }).catch((err) => console.error('Background inquiry email error:', err));
+
+        return { success: true, bookingRef };
+    } catch (err) {
+        console.error('submitInquiry:', err);
+        return {
+            success: false,
+            error: err instanceof Error ? err.message : 'Something went wrong.',
+        };
     }
-
-    void sendBookingEmails({
-        customerEmail: email,
-        customerName: name,
-        bookingRef,
-        travelMonth: travelMonth || undefined,
-        tripLength: tripLength || undefined,
-        guestCount: numTravelers ? parseInt(numTravelers) || 1 : 1,
-        travelStyles: travelStyles.length > 0 ? travelStyles : undefined,
-        message: message || undefined,
-    }).catch((err) => console.error('Background inquiry email error:', err));
-
-    return { success: true, bookingRef };
 }
