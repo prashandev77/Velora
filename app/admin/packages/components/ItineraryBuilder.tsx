@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Plus, X, ChevronDown, ChevronUp, GripVertical } from 'lucide-react';
 import type { ItineraryDay } from '@/lib/validations/journey-schema';
 
@@ -14,13 +14,17 @@ const inputCls = 'w-full bg-white border border-gray-200 rounded-xl text-gray-90
 
 export default function ItineraryBuilder({ days, onChange, error }: ItineraryBuilderProps) {
     const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+    const addingRef = useRef(false);
 
     const toggle = (index: number) => setExpanded((prev) => ({ ...prev, [index]: !prev[index] }));
 
     const addDay = () => {
+        if (addingRef.current) return;
+        addingRef.current = true;
         const dayNum = days.length + 1;
         onChange([...days, { day: dayNum, title: '', description: '', highlights: [''] }]);
         setExpanded((prev) => ({ ...prev, [days.length]: true }));
+        requestAnimationFrame(() => { addingRef.current = false; });
     };
 
     const removeDay = (index: number) => {
@@ -43,9 +47,12 @@ export default function ItineraryBuilder({ days, onChange, error }: ItineraryBui
     };
 
     const addHighlight = (dayIndex: number) => {
+        if (addingRef.current) return;
+        addingRef.current = true;
         const updated = [...days];
         updated[dayIndex] = { ...updated[dayIndex], highlights: [...updated[dayIndex].highlights, ''] };
         onChange(updated);
+        requestAnimationFrame(() => { addingRef.current = false; });
     };
 
     const updateHighlight = (dayIndex: number, hiIndex: number, value: string) => {

@@ -113,7 +113,6 @@ export default function PackageForm({
     }, [clientErrors, state]);
 
     const handleSubmit = (formData: FormData) => {
-        // Client-side required field validation
         const errors: Record<string, string> = {};
         if (!title.trim()) errors.title = 'Title is required';
         if (!slug.trim()) errors.slug = 'Slug is required';
@@ -121,9 +120,18 @@ export default function PackageForm({
         if (!location.trim()) errors.location = 'Location is required';
         if (!days || days < 1) errors.days = 'Duration must be at least 1 day';
         if (!tag.trim()) errors.tag = 'Badge tag is required';
+        if (!subtitle.trim()) errors.subtitle = 'Subtitle is required';
+        if (!travelStyle.trim()) errors.travelStyle = 'Travel style is required';
         if (!description.trim()) errors.description = 'Description is required';
+        if (!accommodation.trim()) errors.accommodation = 'Accommodation is required';
         if (mainImage.length === 0) errors.imageUrl = 'Main image is required';
         if (highlights.filter(Boolean).length === 0) errors.highlights = 'At least one highlight is required';
+        if (whySpecial.filter(Boolean).length === 0) errors.whySpecial = 'At least one "Why Special" item is required';
+        if (perfectFor.filter(Boolean).length === 0) errors.perfectFor = 'At least one "Perfect For" item is required';
+        if (route.filter(Boolean).length === 0) errors.route = 'At least one route stop is required';
+        if (included.filter(Boolean).length === 0) errors.included = 'At least one "Included" item is required';
+        if (notIncluded.filter(Boolean).length === 0) errors.notIncluded = 'At least one "Not Included" item is required';
+        if (itinerary.length === 0) errors.itinerary = 'At least one itinerary day is required';
 
         setClientErrors(errors);
 
@@ -271,12 +279,14 @@ export default function PackageForm({
                         {getError('tag') && <p className={errorCls}>{getError('tag')}</p>}
                     </div>
                     <div>
-                        <label className={labelCls}>Subtitle</label>
-                        <input value={subtitle} onChange={(e) => setSubtitle(e.target.value)} placeholder="e.g. Luxury, Thoughtfully Curated" className={inputCls} />
+                        <label className={labelCls}>Subtitle *</label>
+                        <input value={subtitle} onChange={(e) => { setSubtitle(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.subtitle; return n; }); }} placeholder="e.g. Luxury, Thoughtfully Curated" className={`${inputCls} ${hasFieldError('subtitle') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
+                        {getError('subtitle') && <p className={errorCls}>{getError('subtitle')}</p>}
                     </div>
                     <div>
-                        <label className={labelCls}>Travel Style</label>
-                        <input value={travelStyle} onChange={(e) => setTravelStyle(e.target.value)} placeholder="e.g. Luxury • Culture • Nature" className={inputCls} />
+                        <label className={labelCls}>Travel Style *</label>
+                        <input value={travelStyle} onChange={(e) => { setTravelStyle(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.travelStyle; return n; }); }} placeholder="e.g. Luxury • Culture • Nature" className={`${inputCls} ${hasFieldError('travelStyle') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
+                        {getError('travelStyle') && <p className={errorCls}>{getError('travelStyle')}</p>}
                     </div>
                 </div>
 
@@ -314,15 +324,16 @@ export default function PackageForm({
                 </div>
 
                 <div>
-                    <label className={labelCls}>Accommodation</label>
-                    <textarea value={accommodation} onChange={(e) => setAccommodation(e.target.value)} rows={3} placeholder="Describe the accommodation style…" className={`${inputCls} resize-none`} />
+                    <label className={labelCls}>Accommodation *</label>
+                    <textarea value={accommodation} onChange={(e) => { setAccommodation(e.target.value); setClientErrors((prev) => { const n = {...prev}; delete n.accommodation; return n; }); }} rows={3} placeholder="Describe the accommodation style…" className={`${inputCls} resize-none ${hasFieldError('accommodation') ? 'border-red-300 ring-2 ring-red-100' : ''}`} />
+                    {getError('accommodation') && <p className={errorCls}>{getError('accommodation')}</p>}
                 </div>
 
-                <DynamicList items={highlights} onChange={setHighlights} label="Highlights *" placeholder="Add a highlight…" error={getError('highlights')} />
-                <DynamicList items={whySpecial} onChange={setWhySpecial} label="Why Special" placeholder="What makes this journey special…" />
-                <DynamicList items={perfectFor} onChange={setPerfectFor} label="Perfect For" placeholder="e.g. Luxury travellers" />
-                <DynamicList items={included} onChange={setIncluded} label="Included" placeholder="e.g. Private chauffeur-guide" />
-                <DynamicList items={notIncluded} onChange={setNotIncluded} label="Not Included" placeholder="e.g. International flights" />
+                <DynamicList items={highlights} onChange={(v) => { setHighlights(v); setClientErrors((prev) => { const n = {...prev}; delete n.highlights; return n; }); }} label="Highlights *" placeholder="Add a highlight…" error={getError('highlights')} />
+                <DynamicList items={whySpecial} onChange={(v) => { setWhySpecial(v); setClientErrors((prev) => { const n = {...prev}; delete n.whySpecial; return n; }); }} label="Why Special *" placeholder="What makes this journey special…" error={getError('whySpecial')} />
+                <DynamicList items={perfectFor} onChange={(v) => { setPerfectFor(v); setClientErrors((prev) => { const n = {...prev}; delete n.perfectFor; return n; }); }} label="Perfect For *" placeholder="e.g. Luxury travellers" error={getError('perfectFor')} />
+                <DynamicList items={included} onChange={(v) => { setIncluded(v); setClientErrors((prev) => { const n = {...prev}; delete n.included; return n; }); }} label="Included *" placeholder="e.g. Private chauffeur-guide" error={getError('included')} />
+                <DynamicList items={notIncluded} onChange={(v) => { setNotIncluded(v); setClientErrors((prev) => { const n = {...prev}; delete n.notIncluded; return n; }); }} label="Not Included *" placeholder="e.g. International flights" error={getError('notIncluded')} />
             </div>
 
             {/* ═══ SECTION 4: Route & Map ═══ */}
@@ -331,16 +342,17 @@ export default function PackageForm({
                     <span className="w-6 h-6 rounded-lg bg-gray-100 text-gray-500 text-[11px] font-bold flex items-center justify-center">4</span>
                     Route &amp; Map
                 </h3>
-                <RouteEditor route={route} routeCoords={routeCoords} onRouteChange={setRoute} onCoordsChange={setRouteCoords} />
+                <RouteEditor route={route} routeCoords={routeCoords} onRouteChange={(v) => { setRoute(v); setClientErrors((prev) => { const n = {...prev}; delete n.route; return n; }); }} onCoordsChange={setRouteCoords} />
+                {getError('route') && <p className={errorCls}>{getError('route')}</p>}
             </div>
 
             {/* ═══ SECTION 5: Itinerary ═══ */}
             <div className="bg-white border border-gray-200/80 rounded-2xl p-6">
                 <h3 className="text-gray-900 font-semibold text-sm border-b border-gray-100 pb-3 mb-6 flex items-center gap-2">
                     <span className="w-6 h-6 rounded-lg bg-gray-100 text-gray-500 text-[11px] font-bold flex items-center justify-center">5</span>
-                    Itinerary
+                    Itinerary *
                 </h3>
-                <ItineraryBuilder days={itinerary} onChange={setItinerary} error={getError('itinerary')} />
+                <ItineraryBuilder days={itinerary} onChange={(v) => { setItinerary(v); setClientErrors((prev) => { const n = {...prev}; delete n.itinerary; return n; }); }} error={getError('itinerary')} />
             </div>
 
             {/* ═══ STICKY SAVE BUTTON ═══ */}

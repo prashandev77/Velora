@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Plus, X, ChevronUp, ChevronDown } from 'lucide-react';
 
 interface DynamicListProps {
@@ -21,12 +21,16 @@ export default function DynamicList({
     maxItems = 20,
 }: DynamicListProps) {
     const [draft, setDraft] = useState('');
+    const addingRef = useRef(false);
 
     const add = () => {
+        if (addingRef.current) return;
         const value = draft.trim();
         if (!value || items.length >= maxItems) return;
-        onChange([...items, value]);
+        addingRef.current = true;
         setDraft('');
+        onChange([...items, value]);
+        requestAnimationFrame(() => { addingRef.current = false; });
     };
 
     const remove = (index: number) => {
