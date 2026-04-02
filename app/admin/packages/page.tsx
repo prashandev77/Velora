@@ -1,7 +1,9 @@
+import { Suspense } from 'react';
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import { Plus, Pencil, Eye } from 'lucide-react';
 import DeletePackageButton from './components/DeletePackageButton';
+import PackageSaveSuccessToast from './components/PackageSaveSuccessToast';
 
 const categoryConfig: Record<string, { pill: string }> = {
     luxury: { pill: 'bg-amber-50 text-amber-700 border-amber-200' },
@@ -19,6 +21,9 @@ export default async function PackagesAdminPage() {
 
     return (
         <div className="max-w-6xl">
+            <Suspense fallback={null}>
+                <PackageSaveSuccessToast />
+            </Suspense>
             {/* Header */}
             <div className="flex items-center justify-between mb-8">
                 <div>

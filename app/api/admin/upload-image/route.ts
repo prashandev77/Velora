@@ -2,10 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { AdminAuthError, requireAdminAccess } from '@/utils/supabase/admin-auth';
 
-// Increase timeout for image optimization and upload
-export const maxDuration = 60; // 60 seconds (requires Pro/Enterprise on Vercel, but works fine locally)
+export const maxDuration = 60;
 
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB (Next.js App Router multipart limit is ~4.5MB)
 const MAX_WIDTH = 1920;
 const WEBP_QUALITY = 82;
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];

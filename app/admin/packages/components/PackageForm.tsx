@@ -53,6 +53,8 @@ export default function PackageForm({
     const [discardDialogOpen, setDiscardDialogOpen] = useState(false);
     const [saveAwaitingComplete, setSaveAwaitingComplete] = useState(false);
     const saveHadPendingRef = useRef(false);
+    const hiddenSaveFormRef = useRef<HTMLFormElement>(null);
+    const hiddenPayloadRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (isPending && saveAwaitingComplete) saveHadPendingRef.current = true;
@@ -144,6 +146,8 @@ export default function PackageForm({
     };
 
     const executeSave = () => {
+        if (isPending) return;
+
         const payload = {
             title,
             slug,
@@ -171,12 +175,15 @@ export default function PackageForm({
             isActive: isActive,
         };
 
-        const fd = new FormData();
-        fd.set('payload', JSON.stringify(payload));
-        if (pkg?.id) fd.set('id', pkg.id);
+        const formEl = hiddenSaveFormRef.current;
+        const payloadInput = hiddenPayloadRef.current;
+        if (!formEl || !payloadInput) return;
 
+        payloadInput.value = JSON.stringify(payload);
         setSaveAwaitingComplete(true);
-        formAction(fd);
+        // Submit via a real <form action={formAction}> so React schedules the action like a
+        // normal form post (avoids manual startTransition, which can clash with Next devtools).
+        formEl.requestSubmit();
     };
 
     const inputCls = 'w-full bg-white border border-gray-200 rounded-xl text-gray-900 text-sm px-4 py-3 focus:outline-none focus:ring-2 focus:ring-gray-900/10 focus:border-gray-400 transition-all placeholder:text-gray-300';
@@ -185,6 +192,16 @@ export default function PackageForm({
 
     return (
         <>
+            <form
+                ref={hiddenSaveFormRef}
+                action={formAction}
+                className="hidden"
+                aria-hidden
+                tabIndex={-1}
+            >
+                <input ref={hiddenPayloadRef} type="hidden" name="payload" defaultValue="" />
+                {pkg?.id ? <input type="hidden" name="id" value={pkg.id} readOnly /> : null}
+            </form>
             <ConfirmDialog
                 open={saveDialogOpen}
                 variant="neutral"

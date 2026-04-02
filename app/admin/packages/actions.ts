@@ -89,7 +89,7 @@ export async function savePackage(_prev: ActionState, formData: FormData): Promi
     }
 
     revalidatePath('/', 'layout');
-    redirect('/admin/packages');
+    redirect(id ? '/admin/packages?saved=updated' : '/admin/packages?saved=created');
 }
 
 export async function deletePackage(formData: FormData) {

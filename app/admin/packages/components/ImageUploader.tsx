@@ -4,6 +4,50 @@ import { useState, useCallback, useRef } from 'react';
 import { Upload, X, Loader2, ImageIcon, AlertCircle } from 'lucide-react';
 import Image from 'next/image';
 
+const MAX_UPLOAD_SIZE = 3.5 * 1024 * 1024; // target after compression (stays under Next.js ~4.5MB multipart limit)
+const CLIENT_MAX_WIDTH = 1920;
+const CLIENT_QUALITY = 0.82;
+
+/** Compress image on the client using Canvas before uploading */
+function compressImage(file: File): Promise<File> {
+    return new Promise((resolve, reject) => {
+        if (!file.type.startsWith('image/')) {
+            resolve(file);
+            return;
+        }
+        const img = new window.Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            let { width, height } = img;
+            if (width > CLIENT_MAX_WIDTH) {
+                height = Math.round(height * (CLIENT_MAX_WIDTH / width));
+                width = CLIENT_MAX_WIDTH;
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) { resolve(file); return; }
+            ctx.drawImage(img, 0, 0, width, height);
+            canvas.toBlob(
+                (blob) => {
+                    if (!blob || blob.size >= file.size) {
+                        resolve(file);
+                        return;
+                    }
+                    const ext = file.type === 'image/png' ? '.png' : '.jpg';
+                    resolve(new File([blob], file.name.replace(/\.[^.]+$/, ext), { type: blob.type }));
+                },
+                file.type === 'image/png' ? 'image/png' : 'image/jpeg',
+                CLIENT_QUALITY,
+            );
+        };
+        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Could not read image')); };
+        img.src = url;
+    });
+}
+
 interface ImageUploaderProps {
     images: string[];
     onChange: (images: string[]) => void;
@@ -36,24 +80,27 @@ export default function ImageUploader({
     const effectiveMax = single ? 1 : maxImages;
 
     const uploadFile = useCallback(async (file: File): Promise<string | null> => {
-        if (file.size > 10 * 1024 * 1024) {
-            setLocalError(`File "${file.name}" is too large. Maximum size is 10MB.`);
-            return null;
-        }
-
         const id = Math.random().toString(36).substring(2);
         setUploading((prev) => [...prev, { id, name: file.name }]);
         setLocalError(null);
 
         try {
+            let processed = file;
+            if (file.size > MAX_UPLOAD_SIZE) {
+                processed = await compressImage(file);
+            }
+            if (processed.size > MAX_UPLOAD_SIZE) {
+                throw new Error(`"${file.name}" is still ${(processed.size / 1024 / 1024).toFixed(1)}MB after compression. Try a smaller image.`);
+            }
+
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', processed);
             formData.append('folder', folder);
 
             const res = await fetch('/api/admin/upload-image', { method: 'POST', body: formData });
             if (!res.ok) {
                 if (res.status === 413) {
-                    throw new Error('Image file is too large. Maximum size is 10MB.');
+                    throw new Error('Image too large for the server. Try a smaller file.');
                 }
                 const contentType = res.headers.get('content-type');
                 if (contentType && contentType.includes('application/json')) {
@@ -175,7 +222,7 @@ export default function ImageUploader({
                             {localError ? localError : dragOver ? 'Drop to upload' : 'Click or drag images here'}
                         </p>
                         <p className="text-gray-300 text-xs mt-1">
-                            JPEG, PNG, WebP • Max 10MB • Auto-optimized to WebP
+                            JPEG, PNG, WebP • Max 5MB • Auto-compressed &amp; optimized to WebP
                         </p>
                         {!single && <p className="text-gray-300 text-[11px] mt-0.5">{images.length}/{effectiveMax} images</p>}
                     </div>
