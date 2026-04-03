@@ -56,17 +56,17 @@ export const journeySchema = z.object({
         .max(2000),
     accommodation: z.string().max(2000).optional().or(z.literal('')),
     highlights: z
-        .array(z.string().min(2, 'Highlight must be at least 2 characters').max(200))
-        .min(1, 'At least 1 highlight required'),
-    whySpecial: z.array(z.string().min(2).max(500)).optional().default([]),
-    perfectFor: z.array(z.string().min(2).max(200)).optional().default([]),
-    route: z.array(z.string().min(1)).optional().default([]),
+        .array(z.string().min(2, 'Each highlight must be at least 2 characters').max(200))
+        .min(2, 'Add at least 2 highlights'),
+    whySpecial: z.array(z.string().min(2).max(500)).min(2, 'Add at least 2 "Why Special" items'),
+    perfectFor: z.array(z.string().min(2).max(200)).min(2, 'Add at least 2 "Perfect For" items'),
+    route: z.array(z.string().min(1)).min(2, 'Add at least 2 route stops'),
     routeCoords: z.array(routeCoordSchema).optional().default([]),
-    included: z.array(z.string().min(2).max(500)).optional().default([]),
-    notIncluded: z.array(z.string().min(2).max(500)).optional().default([]),
+    included: z.array(z.string().min(2).max(500)).min(2, 'Add at least 2 "Included" items'),
+    notIncluded: z.array(z.string().min(2).max(500)).min(2, 'Add at least 2 "Not Included" items'),
     itinerary: z
         .array(itineraryDaySchema)
-        .min(1, 'At least 1 itinerary day required'),
+        .min(1, 'Add at least 1 itinerary day'),
     imageUrl: z.string().min(1, 'Main image is required'),
     galleryImages: z.array(z.string()).max(8, 'Maximum 8 gallery images').optional().default([]),
     isActive: z.boolean().default(true),
