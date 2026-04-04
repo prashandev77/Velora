@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import JourneyCategoryPage from '@/components/JourneyCategoryPage';
 
 export const metadata: Metadata = {
-    title: 'Luxury Collection | Velora Journeys',
+    title: 'Luxury Collection | Avelora Travel',
     description: 'Indulge in handcrafted luxury, private villas, curated fine dining, and exclusive access to the most extraordinary places in Sri Lanka and the Maldives.',
 };
 

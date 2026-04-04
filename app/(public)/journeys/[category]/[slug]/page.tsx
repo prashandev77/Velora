@@ -17,9 +17,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
     const { category, slug } = await params;
     const pkg = await getPackageBySlug(category, slug);
-    if (!pkg) return { title: 'Package Not Found | Velora Journeys' };
+    if (!pkg) return { title: 'Package Not Found | Avelora Travel' };
     return {
-        title: `${pkg.title} | Velora Journeys`,
+        title: `${pkg.title} | Avelora Travel`,
         description: pkg.description,
     };
 }

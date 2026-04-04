@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import JourneyCategoryPage from '@/components/JourneyCategoryPage';
 
 export const metadata: Metadata = {
-    title: 'Honeymoon Collection | Velora Journeys',
+    title: 'Honeymoon Collection | Avelora Travel',
     description: 'Celebrate your love with romantic escapes, private island retreats, sunset cruises, and intimate experiences across Sri Lanka and the Maldives.',
 };
 

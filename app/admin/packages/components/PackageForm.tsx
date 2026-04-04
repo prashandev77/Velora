@@ -307,7 +307,7 @@ export default function PackageForm({
                                 if (!slugManual) setSlug(slugify(value));
                                 clearServerError('title');
                             }}
-                            placeholder="e.g. Velora Luxe"
+                            placeholder="e.g. Avelora Signature"
                             className={`${inputCls} ${hasFieldError('title') ? 'border-red-300 ring-2 ring-red-100 focus:ring-red-200' : ''}`}
                         />
                         {getError('title') && <p className={errorCls}>{getError('title')}</p>}
@@ -324,7 +324,7 @@ export default function PackageForm({
                         <input
                             value={slug}
                             onChange={(e) => { setSlug(e.target.value); setSlugManual(true); clearServerError('slug'); }}
-                            placeholder="e.g. velora-luxe"
+                            placeholder="e.g. avelora-signature"
                             className={`${inputCls} ${!slugManual ? 'bg-gray-50 text-gray-400' : ''} ${hasFieldError('slug') ? 'border-red-300 ring-2 ring-red-100' : ''}`}
                             readOnly={!slugManual}
                         />

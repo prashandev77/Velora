@@ -16,6 +16,7 @@ import {
 const travelStyles = startPlanningContent.travelStyles;
 const tripLengths = startPlanningContent.tripLengths;
 const travellerCounts = startPlanningContent.travellerCounts;
+const budgetRanges = startPlanningContent.budgetRanges;
 
 export default function StartPlanning() {
     const [fullName, setFullName] = useState('');
@@ -27,6 +28,9 @@ export default function StartPlanning() {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
+    const [destinationInterest, setDestinationInterest] = useState('');
+    const [budgetRange, setBudgetRange] = useState('');
+    const [specialOccasion, setSpecialOccasion] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -71,7 +75,12 @@ export default function StartPlanning() {
         fd.set('duration', tripLength);
         fd.set('experiences', selectedStyles.join(', '));
         fd.set('num_travelers', travellers);
-        fd.set('message', message);
+        const extraLines: string[] = [];
+        if (destinationInterest.trim()) extraLines.push(`Destination interest: ${destinationInterest.trim()}`);
+        if (budgetRange) extraLines.push(`Budget range: ${budgetRange}`);
+        if (specialOccasion.trim()) extraLines.push(`Special occasion: ${specialOccasion.trim()}`);
+        const combinedMessage = [message.trim(), ...extraLines].filter(Boolean).join('\n');
+        fd.set('message', combinedMessage);
 
         try {
             const result = await submitInquiry(fd);
@@ -203,6 +212,38 @@ export default function StartPlanning() {
                         </div>
                     </div>
 
+                    {/* Destination + Budget */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-destination">
+                                {startPlanningContent.formLabels.destinationInterest}
+                            </label>
+                            <input
+                                id="start-destination"
+                                type="text"
+                                value={destinationInterest}
+                                onChange={(e) => setDestinationInterest(e.target.value)}
+                                placeholder={startPlanningContent.formLabels.destinationPlaceholder}
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
+                            />
+                        </div>
+                        <div>
+                            <label className="text-stone-700 text-sm font-medium mb-2 block">
+                                {startPlanningContent.formLabels.budgetRange}
+                            </label>
+                            <select
+                                value={budgetRange}
+                                onChange={(e) => setBudgetRange(e.target.value)}
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm focus:outline-none focus:border-gold/60"
+                            >
+                                <option value="">{startPlanningContent.formLabels.budgetPlaceholder}</option>
+                                {budgetRanges.map((b) => (
+                                    <option key={b} value={b}>{b}</option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
+
                     {/* Phone + Departing City */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
@@ -316,19 +357,34 @@ export default function StartPlanning() {
                         </div>
                     </div>
 
-                    {/* Message */}
-                    <div className="mb-8">
-                        <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-message">
-                            Message (Optional)
-                        </label>
-                        <input
-                            id="start-message"
-                            type="text"
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            placeholder="Tell us anything else..."
-                            className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
-                        />
+                    {/* Special occasion + Message */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-occasion">
+                                {startPlanningContent.formLabels.specialOccasion}
+                            </label>
+                            <input
+                                id="start-occasion"
+                                type="text"
+                                value={specialOccasion}
+                                onChange={(e) => setSpecialOccasion(e.target.value)}
+                                placeholder={startPlanningContent.formLabels.occasionPlaceholder}
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
+                            />
+                        </div>
+                        <div>
+                            <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-message">
+                                {startPlanningContent.formLabels.message}
+                            </label>
+                            <input
+                                id="start-message"
+                                type="text"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                placeholder={startPlanningContent.formLabels.messagePlaceholder}
+                                className="w-full h-11 rounded-xl bg-white border border-stone-200 text-stone-900 px-4 text-sm placeholder:text-stone-400 focus:outline-none focus:border-gold/60"
+                            />
+                        </div>
                     </div>
 
                     {/* Submit */}

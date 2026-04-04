@@ -5,7 +5,7 @@ import { Sun, Thermometer, Waves, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-    title: 'Maldives | Velora Journeys',
+    title: 'Maldives | Avelora Travel',
     description: 'Experience the pristine paradise of the Maldives, overwater villas, crystal lagoons, world-class diving, and unparalleled luxury.',
 };
 

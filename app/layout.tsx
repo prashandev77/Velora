@@ -3,16 +3,27 @@ import './globals.css';
 import Script from 'next/script';
 
 export const metadata: Metadata = {
-  title: 'Velora Journeys | Luxury Travel to Sri Lanka & Maldives',
+  title: 'Avelora Travel | Private Journeys — Sri Lanka, Maldives & Beyond',
   description:
-    'Handcrafted luxury journeys across Sri Lanka and the Maldives. Bespoke itineraries for honeymoons, wellness retreats, and cultural adventures.',
+    'Avelora Travel designs private journeys across Sri Lanka, the Maldives and beyond. Handcrafted itineraries — honeymoons, wellness, wildlife and celebration travel. Designed Around You.',
   icons: {
     icon: '/favicon.svg',
   },
-  keywords: ['luxury travel', 'Sri Lanka', 'Maldives', 'honeymoon', 'wellness retreat', 'adventure tour', 'bespoke travel'],
+  keywords: [
+    'Avelora Travel',
+    'luxury travel',
+    'Sri Lanka',
+    'Maldives',
+    'multi-country',
+    'honeymoon',
+    'wellness retreat',
+    'private journey',
+    'bespoke travel',
+  ],
   openGraph: {
-    title: 'Velora Journeys | Luxury Travel',
-    description: 'Handcrafted luxury journeys across Sri Lanka and the Maldives.',
+    title: 'Avelora Travel | Private Journeys',
+    description:
+      'Private journeys across Sri Lanka, the Maldives and beyond. Designed Around You.',
     type: 'website',
   },
 };

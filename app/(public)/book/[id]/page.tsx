@@ -13,10 +13,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const pkg = await getPackageById(id);
-    if (!pkg) return { title: 'Package Not Found | Velora Journeys' };
+    if (!pkg) return { title: 'Package Not Found | Avelora Travel' };
     return {
-        title: `Book ${pkg.title} | Velora Journeys`,
-        description: `Book your ${pkg.title} experience with Velora Journeys.`,
+        title: `Book ${pkg.title} | Avelora Travel`,
+        description: `Book your ${pkg.title} experience with Avelora Travel.`,
     };
 }
 

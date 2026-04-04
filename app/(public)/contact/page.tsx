@@ -49,8 +49,8 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.email.title}</h3>
                                     <p className="text-stone-500 text-sm mb-2">{contactPageContent.email.description}</p>
-                                    <a href="mailto:hello@velorajourneys.com" className="text-stone-800 font-medium hover:text-gold transition-colors block">
-                                        hello@velorajourneys.com
+                                    <a href="mailto:hello@aveloratravel.com" className="text-stone-800 font-medium hover:text-gold transition-colors block">
+                                        hello@aveloratravel.com
                                     </a>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ export default function ContactPage() {
                         <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm">
                             <Image
                                 src="/Photos/Other sections/Contact us.jpeg"
-                                alt="Contact Velora Journeys"
+                                alt="Contact Avelora Travel"
                                 fill
                                 className="object-cover"
                                 sizes="400px"

@@ -9,7 +9,7 @@ function generateBookingRef(): string {
     for (let i = 0; i < 6; i++) {
         ref += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return `VJ-${ref}`;
+    return `AT-${ref}`;
 }
 
 // Service-role client — bypasses RLS so public visitors can insert

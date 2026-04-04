@@ -26,7 +26,7 @@ export default function TermsPage() {
                 <div className="relative max-w-5xl mx-auto px-6 md:px-12 pt-36 pb-20 md:pt-44 md:pb-28">
                     <motion.div {...fadeUp} className="text-center">
                         <span className="text-gold/80 text-xs md:text-sm font-medium uppercase tracking-[0.3em] mb-4 block">
-                            Velora Journeys
+                            Avelora Travel
                         </span>
                         <h1 className="font-heading text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
                             {termsPageContent.hero.heading}

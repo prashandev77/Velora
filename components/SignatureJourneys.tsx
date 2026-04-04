@@ -15,14 +15,14 @@ export default function SignatureJourneys() {
                 {/* Header */}
                 <div className="text-center mb-14 md:mb-20">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        Signature Journeys
+                        {signatureJourneysContent.tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        Curated Experiences, Thoughtfully Designed
+                        {signatureJourneysContent.heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-                        Every Velora journey is privately tailored, combining boutique stays, trusted local experts, and seamless coordination from arrival to departure.
+                        Start with one of our signature itineraries, then tailor every detail to suit your dates, style and priorities.
                     </p>
                 </div>
 

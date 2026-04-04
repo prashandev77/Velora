@@ -204,8 +204,8 @@ export default function PlanYourTripPage() {
                         Plan Your <span className="text-gold">Journey</span>
                     </h1>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        Tell us a little about your travel plans and our Velora specialists will
-                        design a personalised Sri Lanka journey just for you.
+                        Tell us a little about your travel plans and an Avelora specialist will
+                        design a personalised journey across Sri Lanka, the Maldives, or beyond.
                     </p>
                 </div>
             </section>

@@ -33,10 +33,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
     const pkg = await getPackageById(id);
-    if (!pkg) return { title: 'Package Not Found | Velora Journeys' };
+    if (!pkg) return { title: 'Package Not Found | Avelora Travel' };
     return {
-        title: `${pkg.title} | Velora Journeys`,
-        description: pkg.description || 'Explore your dream travel package with Velora Journeys.',
+        title: `${pkg.title} | Avelora Travel`,
+        description: pkg.description || 'Explore your dream travel package with Avelora Travel.',
     };
 }
 
@@ -62,7 +62,7 @@ const reviews = [
         name: 'Akira T.',
         location: 'Melbourne, Australia',
         rating: 5,
-        text: 'Velora exceeded all expectations. The local guides were knowledgeable and passionate. Already planning our return trip.',
+        text: 'Avelora exceeded all expectations. The local guides were knowledgeable and passionate. Already planning our return trip.',
     },
     {
         name: 'Elena R.',
@@ -237,7 +237,7 @@ export default async function PackageDetailPage({
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
                         <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
-                            The Velora Difference
+                            The Avelora Difference
                         </span>
                         <h2 className="font-heading text-3xl md:text-4xl font-bold text-stone-900 mt-3 mb-6">
                             Why Choose This{' '}

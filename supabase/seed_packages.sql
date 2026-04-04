@@ -1,9 +1,16 @@
 -- ============================================================
--- Velora Journeys — Seed Script: Insert 6 Hardcoded Packages
+-- Avelora Travel — Seed Script: Insert 6 Hardcoded Packages
 -- Run this in: https://supabase.com → Your Project → SQL Editor
 -- WARNING: This script inserts data into the `packages` table.
 -- Make sure the table exists before running this!
 -- ============================================================
+
+-- Idempotent slug migration (safe if slugs already renamed)
+UPDATE public.packages SET slug = 'avelora-signature' WHERE slug = 'velora-luxe';
+UPDATE public.packages SET slug = 'avelora-wellness' WHERE slug = 'velora-serene';
+UPDATE public.packages SET slug = 'avelora-serendipity' WHERE slug = 'serendipity-of-sri-lanka';
+UPDATE public.packages SET slug = 'avelora-honeymoon' WHERE slug = 'velora-honeymoon';
+UPDATE public.packages SET slug = 'avelora-wild' WHERE slug = 'velora-wild';
 
 INSERT INTO public.packages (
     id, slug, category, title, location, days, image_url, tag, subtitle, 
@@ -12,7 +19,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000005', 'velora-luxe', 'luxury', 'Velora Luxe', 'Sri Lanka', 11, 
+    '00000000-0000-0000-0000-000000000005', 'avelora-signature', 'luxury', 'Avelora Signature', 'Sri Lanka', 11, 
     '/Photos/Other sections/Velora Luxe Main photo.webp', 'Luxury', 'Luxury, Thoughtfully Curated', 
     'Luxury • Culture • Nature', 
     'A refined journey designed for travellers seeking Sri Lanka''s most iconic destinations while enjoying carefully selected boutique hotels, private experiences, and a seamless travel pace.', 
@@ -28,7 +35,8 @@ INSERT INTO public.packages (
     ARRAY['/Photos/Other sections/Velora Luxe Main photo.webp', '/Photos/Other sections/Destination Tea.jpeg', '/Photos/Other sections/Destination Dambulla.jpg', '/Photos/Hero Slide 2 Cape Weligama.jpg', '/Photos/Other sections/Collection page.jpeg'], 
     true
 )
-ON CONFLICT (slug) DO UPDATE SET
+ON CONFLICT (id) DO UPDATE SET
+    slug = EXCLUDED.slug,
     category = EXCLUDED.category, title = EXCLUDED.title, location = EXCLUDED.location, days = EXCLUDED.days,
     image_url = EXCLUDED.image_url, tag = EXCLUDED.tag, subtitle = EXCLUDED.subtitle, travel_style = EXCLUDED.travel_style,
     description = EXCLUDED.description, accommodation = EXCLUDED.accommodation, highlights = EXCLUDED.highlights,
@@ -43,7 +51,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000008', 'velora-serene', 'wellness', 'Velora Serene', 'Sri Lanka', 15, 
+    '00000000-0000-0000-0000-000000000008', 'avelora-wellness', 'wellness', 'Avelora Wellness', 'Sri Lanka', 15, 
     '/Photos/Other sections/Velora Serene new.avif', 'Wellness', 'A Gentle Wellness Journey Through Sri Lanka', 
     'Wellness • Ayurveda • Nature', 
     'A carefully designed wellness journey combining authentic Ayurveda treatments, peaceful countryside retreats, and gentle cultural exploration. This itinerary balances wellness and slow travel experiences for a calm and restorative journey.', 
@@ -59,7 +67,8 @@ INSERT INTO public.packages (
     ARRAY['/Photos/Other sections/Velora Serene new.avif', '/Photos/Other sections/Peradeniya Garden.jpeg', '/Photos/Other sections/Rice Field.jpeg', '/Photos/Other sections/new-6.jpg', '/Photos/Other sections/new-7.webp'], 
     true
 )
-ON CONFLICT (slug) DO UPDATE SET
+ON CONFLICT (id) DO UPDATE SET
+    slug = EXCLUDED.slug,
     category = EXCLUDED.category, title = EXCLUDED.title, location = EXCLUDED.location, days = EXCLUDED.days,
     image_url = EXCLUDED.image_url, tag = EXCLUDED.tag, subtitle = EXCLUDED.subtitle, travel_style = EXCLUDED.travel_style,
     description = EXCLUDED.description, accommodation = EXCLUDED.accommodation, highlights = EXCLUDED.highlights,
@@ -74,7 +83,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000010', 'serendipity-of-sri-lanka', 'adventure', 'Serendipity of Sri Lanka', 'Sri Lanka', 8, 
+    '00000000-0000-0000-0000-000000000010', 'avelora-serendipity', 'adventure', 'Avelora Serendipity', 'Sri Lanka', 8, 
     '/Photos/Other sections/Hill Country.jpg', 'Signature', 'A Perfect Introduction to the Island', 
     'Culture • Nature • Scenic Landscapes', 
     'An unforgettable journey through Sri Lanka''s cultural heartland, misty hill country, and tropical coastline. This carefully curated itinerary blends ancient heritage sites, scenic landscapes, and boutique hotels to create a seamless introduction to the island.', 
@@ -90,7 +99,8 @@ INSERT INTO public.packages (
     ARRAY['/Photos/Other sections/serendipity-new-1.webp', '/Photos/Other sections/Nuwara Eliya.jpeg', '/Photos/Other sections/Destination Ella.jpeg', '/Photos/Other sections/Destination Galle.jpeg', '/Photos/Other sections/serendipity-new-5.webp', '/Photos/Other sections/Hill Country.jpg'], 
     true
 )
-ON CONFLICT (slug) DO UPDATE SET
+ON CONFLICT (id) DO UPDATE SET
+    slug = EXCLUDED.slug,
     category = EXCLUDED.category, title = EXCLUDED.title, location = EXCLUDED.location, days = EXCLUDED.days,
     image_url = EXCLUDED.image_url, tag = EXCLUDED.tag, subtitle = EXCLUDED.subtitle, travel_style = EXCLUDED.travel_style,
     description = EXCLUDED.description, accommodation = EXCLUDED.accommodation, highlights = EXCLUDED.highlights,
@@ -121,7 +131,8 @@ INSERT INTO public.packages (
     ARRAY['/Photos/Other sections/Our Journeys_Classic Discovery.jpeg', '/Photos/Other sections/Polonnaruwa.jpeg', '/Photos/Other sections/Anuradhapura.jpeg', '/Photos/Other sections/Destination Ella.jpeg', '/Photos/Other sections/Bentota water sports.webp', '/Photos/Other sections/Section 2 _ Coast.jpeg'], 
     true
 )
-ON CONFLICT (slug) DO UPDATE SET
+ON CONFLICT (id) DO UPDATE SET
+    slug = EXCLUDED.slug,
     category = EXCLUDED.category, title = EXCLUDED.title, location = EXCLUDED.location, days = EXCLUDED.days,
     image_url = EXCLUDED.image_url, tag = EXCLUDED.tag, subtitle = EXCLUDED.subtitle, travel_style = EXCLUDED.travel_style,
     description = EXCLUDED.description, accommodation = EXCLUDED.accommodation, highlights = EXCLUDED.highlights,
@@ -136,7 +147,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000016', 'velora-honeymoon', 'honeymoon', 'Velora Honeymoon Journey', 'Sri Lanka', 12, 
+    '00000000-0000-0000-0000-000000000016', 'avelora-honeymoon', 'honeymoon', 'Avelora Honeymoon', 'Sri Lanka', 12, 
     '/Photos/Other sections/Velora Luxury Honeymoon new.webp', 'Romance', 'A Romantic Escape Through Sri Lanka', 
     'Romantic • Scenic • Luxury', 
     'A carefully designed honeymoon experience combining Sri Lanka''s ancient wonders, misty tea estates, scenic mountain landscapes, wildlife safaris, and luxury coastal retreats.', 
@@ -152,7 +163,8 @@ INSERT INTO public.packages (
     ARRAY['/Photos/Other sections/Velora Luxury Honeymoon new.webp', '/Photos/Other sections/Section 2 Honeymoon.jpg', '/Photos/Other sections/Destination Mirissa.jpeg', '/Photos/Other sections/new-3.webp', '/Photos/Other sections/new-4.webp'], 
     true
 )
-ON CONFLICT (slug) DO UPDATE SET
+ON CONFLICT (id) DO UPDATE SET
+    slug = EXCLUDED.slug,
     category = EXCLUDED.category, title = EXCLUDED.title, location = EXCLUDED.location, days = EXCLUDED.days,
     image_url = EXCLUDED.image_url, tag = EXCLUDED.tag, subtitle = EXCLUDED.subtitle, travel_style = EXCLUDED.travel_style,
     description = EXCLUDED.description, accommodation = EXCLUDED.accommodation, highlights = EXCLUDED.highlights,
@@ -167,7 +179,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000017', 'velora-wild', 'adventure', 'Velora Wild', 'Sri Lanka', 17, 
+    '00000000-0000-0000-0000-000000000017', 'avelora-wild', 'adventure', 'Avelora Wild', 'Sri Lanka', 17, 
     '/Photos/Other sections/Journey_Velora Wild new.jpg', 'Wildlife', 'Sri Lanka''s Ultimate Wildlife Expedition', 
     'Wildlife • Birding • Nature', 
     'A comprehensive wildlife journey across Sri Lanka''s most diverse ecosystems, from wetlands and coastal lagoons to remote rainforests and mountain landscapes. Designed for wildlife lovers, photographers, and nature travellers seeking immersive safaris and birding experiences.', 
@@ -183,7 +195,8 @@ INSERT INTO public.packages (
     ARRAY['/Photos/Other sections/Journey_Velora Wild new.jpg', '/Photos/Other sections/Section 2 _ Wildlife Expedition.jpeg', '/Photos/Other sections/Our Journeys_Wildlife.jpeg', '/Photos/Other sections/Wild life .jpeg', '/Photos/Other sections/Water Rafting Kitulgala.jpg', '/Photos/Other sections/new-8.webp'], 
     true
 )
-ON CONFLICT (slug) DO UPDATE SET
+ON CONFLICT (id) DO UPDATE SET
+    slug = EXCLUDED.slug,
     category = EXCLUDED.category, title = EXCLUDED.title, location = EXCLUDED.location, days = EXCLUDED.days,
     image_url = EXCLUDED.image_url, tag = EXCLUDED.tag, subtitle = EXCLUDED.subtitle, travel_style = EXCLUDED.travel_style,
     description = EXCLUDED.description, accommodation = EXCLUDED.accommodation, highlights = EXCLUDED.highlights,

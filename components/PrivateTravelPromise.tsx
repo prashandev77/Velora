@@ -4,13 +4,6 @@ import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import { privateTravelPromiseContent } from '@/lib/content';
 
-const promises = [
-    'Privately curated — never fixed-date group tours',
-    'Fully flexible to your preferred travel dates',
-    'Designed around your pace and comfort',
-    'Supported locally with discreet assistance',
-];
-
 export default function PrivateTravelPromise() {
     return (
         <section className="min-h-screen flex items-center py-16 md:py-24 bg-white">
@@ -34,7 +27,7 @@ export default function PrivateTravelPromise() {
                     </p>
 
                     <div className="flex flex-col items-center gap-3 mb-8">
-                        {promises.map((p, i) => (
+                        {privateTravelPromiseContent.promises.map((p, i) => (
                             <motion.div
                                 key={p}
                                 initial={{ opacity: 0, x: -10 }}

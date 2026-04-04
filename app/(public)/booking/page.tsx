@@ -56,7 +56,7 @@ export default function BookingPage() {
                         {/* Gold divider */}
                         <div className="w-14 h-[2px] bg-gold mx-auto mb-8" />
                         <p className="text-white/80 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                            Planning your journey with Velora is simple and transparent. A small deposit
+                            Planning your journey with Avelora is simple and transparent. A small deposit
                             secures your itinerary, with the balance payable closer to your travel date.
                         </p>
                     </motion.div>
@@ -186,7 +186,7 @@ export default function BookingPage() {
                             <div className="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-4 text-left">
                                 <ShieldCheck className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                                 <p className="text-stone-400 text-xs leading-relaxed">
-                                    Velora Journeys works with carefully selected boutique hotels and partners
+                                    Avelora Travel works with carefully selected boutique hotels and partners
                                     across Sri Lanka. Early deposits allow us to secure the best availability
                                     for your travel dates.
                                 </p>

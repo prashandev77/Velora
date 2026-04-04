@@ -12,7 +12,7 @@ export default function HowItWorks() {
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 <div className="text-center mb-14 md:mb-20">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        How It Works
+                        {howItWorksContent.tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
                         {howItWorksContent.heading}

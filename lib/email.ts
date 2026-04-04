@@ -10,8 +10,8 @@ function getResend(): Resend | null {
     return resendClient;
 }
 
-const BUSINESS_EMAIL = 'journeys@velorajourneys.com.au';
-const FROM_EMAIL = 'Velora Journeys <journeys@velorajourneys.com.au>';
+const BUSINESS_EMAIL = process.env.BUSINESS_NOTIFICATION_EMAIL?.trim() || 'hello@aveloratravel.com';
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL?.trim() || 'Avelora Travel <hello@aveloratravel.com>';
 
 // ─── Customer confirmation email ────────────────────────────────────────────
 
@@ -47,7 +47,7 @@ function buildCustomerHtml(data: BookingEmailData): string {
     
     <!-- Logo -->
     <div style="text-align:center;margin-bottom:32px;">
-      <h1 style="font-size:24px;color:#1c1917;margin:0;letter-spacing:0.05em;">VELORA JOURNEYS</h1>
+      <h1 style="font-size:24px;color:#1c1917;margin:0;letter-spacing:0.05em;">AVELORA TRAVEL</h1>
       <div style="width:40px;height:2px;background:#c8a55a;margin:12px auto 0;"></div>
     </div>
 
@@ -56,7 +56,7 @@ function buildCustomerHtml(data: BookingEmailData): string {
       <p style="color:#78716c;font-size:12px;text-transform:uppercase;letter-spacing:0.15em;margin:0 0 8px;">Booking Confirmed</p>
       <h2 style="font-size:22px;color:#1c1917;margin:0 0 8px;">Thank you, ${(data.customerName ?? '').split(/\s+/).filter(Boolean)[0] || 'there'}!</h2>
       <p style="font-size:14px;color:#57534e;line-height:1.6;margin:0 0 24px;">
-        Your enquiry has been received and a dedicated Velora travel designer will be in touch within 24 hours to begin crafting your perfect journey.
+        Your enquiry has been received and a dedicated Avelora travel designer will be in touch within 24 hours to begin crafting your perfect journey.
       </p>
 
       <!-- Booking Ref -->
@@ -82,14 +82,14 @@ function buildCustomerHtml(data: BookingEmailData): string {
       <!-- Gold Accent -->
       <div style="background:linear-gradient(135deg,#c8a55a 0%,#dab96a 100%);border-radius:12px;padding:20px 24px;color:#ffffff;">
         <p style="font-size:13px;margin:0;line-height:1.5;">
-          ✨ A Velora specialist will personally reach out to discuss your itinerary, accommodation preferences, and any special touches to make your journey unforgettable.
+          ✨ An Avelora specialist will personally reach out to discuss your itinerary, accommodation preferences, and any special touches to make your journey unforgettable.
         </p>
       </div>
     </div>
 
     <!-- Footer -->
     <div style="text-align:center;margin-top:32px;">
-      <p style="font-size:12px;color:#a8a29e;margin:0 0 4px;">Velora Journeys — Sri Lanka & The Maldives</p>
+      <p style="font-size:12px;color:#a8a29e;margin:0 0 4px;">Avelora Travel — Sri Lanka, Maldives & Beyond</p>
       <p style="font-size:12px;color:#a8a29e;margin:0;">
         <a href="mailto:${BUSINESS_EMAIL}" style="color:#c8a55a;text-decoration:none;">${BUSINESS_EMAIL}</a>
       </p>
@@ -102,6 +102,9 @@ function buildCustomerHtml(data: BookingEmailData): string {
 // ─── Business owner notification email ──────────────────────────────────────
 
 function buildOwnerHtml(data: BookingEmailData): string {
+    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+    const adminBookingsUrl = baseUrl ? `${baseUrl}/admin/bookings` : 'https://example.com/admin/bookings';
+
     const rows: string[] = [];
     rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Name</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;font-weight:600;">${data.customerName ?? '—'}</td></tr>`);
     rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Email</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;"><a href="mailto:${data.customerEmail}" style="color:#c8a55a;">${data.customerEmail}</a></td></tr>`);
@@ -121,7 +124,7 @@ function buildOwnerHtml(data: BookingEmailData): string {
   <div style="max-width:560px;margin:0 auto;padding:32px 20px;">
     <div style="background:#ffffff;border-radius:12px;padding:28px 24px;border:1px solid #e2e8f0;">
       <h2 style="font-size:18px;color:#0f172a;margin:0 0 4px;">🔔 New Booking Enquiry</h2>
-      <p style="font-size:13px;color:#64748b;margin:0 0 20px;">A customer has submitted a new booking on velorajourneys.com.au</p>
+      <p style="font-size:13px;color:#64748b;margin:0 0 20px;">A customer has submitted a new enquiry via your website.</p>
       
       <table style="width:100%;border-collapse:collapse;background:#f8fafc;border-radius:8px;">
         ${rows.join('')}
@@ -135,7 +138,7 @@ function buildOwnerHtml(data: BookingEmailData): string {
       ` : ''}
 
       <div style="margin-top:20px;text-align:center;">
-        <a href="https://velorajourneys.com.au/admin/bookings" style="display:inline-block;background:#0f172a;color:#ffffff;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">View in Admin Dashboard →</a>
+        <a href="${adminBookingsUrl}" style="display:inline-block;background:#0f172a;color:#ffffff;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">View in Admin Dashboard →</a>
       </div>
     </div>
   </div>
@@ -161,7 +164,7 @@ export async function sendBookingEmails(data: BookingEmailData): Promise<void> {
                 resend.emails.send({
                     from: FROM_EMAIL,
                     to: data.customerEmail,
-                    subject: `Booking Confirmed — ${data.bookingRef} | Velora Journeys`,
+                    subject: `Booking Confirmed — ${data.bookingRef} | Avelora Travel`,
                     html: buildCustomerHtml(data),
                 })
             );

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import JourneyCategoryPage from '@/components/JourneyCategoryPage';
 
 export const metadata: Metadata = {
-    title: 'Wellness Collection | Velora Journeys',
+    title: 'Wellness Collection | Avelora Travel',
     description: 'Rejuvenate body and soul, Ayurvedic retreats, overwater spa rituals, and mindfulness journeys across Sri Lanka and the Maldives.',
 };
 

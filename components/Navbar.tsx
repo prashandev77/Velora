@@ -14,7 +14,7 @@ const navLinks = [
     { href: '/journeys', label: 'Journeys', icon: Plane },
     { href: '/destinations', label: 'Destinations', icon: MapPin },
     { href: '/about', label: 'About', icon: Info },
-    { href: '/booking', label: 'Booking', icon: CreditCard },
+    { href: '/booking', label: 'Plan', icon: CreditCard },
     { href: '/contact', label: 'Contact', icon: Phone },
 ];
 
@@ -89,7 +89,7 @@ export default function Navbar() {
                     <div className="hidden md:flex items-center">
                         <Link href="/plan-your-trip">
                             <Button className="bg-gold hover:bg-gold-dark text-deep font-semibold text-sm px-5 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gold/25">
-                                Plan Your Journey
+                                {navbarContent.ctaLabel}
                                 <ChevronRight className="w-4 h-4 ml-1" />
                             </Button>
                         </Link>
@@ -176,7 +176,7 @@ export default function Navbar() {
                             <p className="text-stone-400 text-xs tracking-widest uppercase mb-4">{navbarContent.mobileCtaLabel}</p>
                             <Link href="/plan-your-trip" onClick={closeMenu}>
                                 <Button className="w-full bg-gold hover:bg-gold-dark text-deep font-bold text-base py-6 rounded-2xl hover:shadow-xl hover:shadow-gold/25 active:scale-[0.98] transition-all">
-                                    Plan Your Journey
+                                    {navbarContent.ctaLabel}
                                     <ChevronRight className="w-5 h-5 ml-2" />
                                 </Button>
                             </Link>

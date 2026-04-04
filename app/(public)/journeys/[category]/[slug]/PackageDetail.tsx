@@ -695,7 +695,7 @@ export default function PackageDetail({
                     </h2>
                     <div className="w-12 h-[2px] bg-gold mx-auto mb-5" />
                     <p className="text-stone-400 text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-8">
-                        Every Velora journey is privately designed and tailored to your travel style and preferred travel dates.
+                        Every Avelora journey is privately designed and tailored to your travel style and preferred travel dates.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Link href="/plan-your-trip">

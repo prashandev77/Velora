@@ -6,28 +6,7 @@ import { Heart, Leaf } from 'lucide-react';
 import Link from 'next/link';
 import { aboutPageContent } from '@/lib/content';
 
-const sections = [
-    {
-        title: 'Our Story',
-        content:
-            'Velora was born from a deep connection to Sri Lanka , its landscapes, heritage, wildlife, and warm hospitality, combined with an understanding of what modern travellers expect: clarity, quality, and seamless coordination. We saw the opportunity to create something different from traditional tour operators: not volume-based tourism, not rigid departure schedules, but curated private journeys designed with care and precision. Velora brings together local expertise and international service standards, ensuring every journey feels effortless from arrival to departure.',
-    },
-    {
-        title: 'Our Vision',
-        content:
-            'To redefine how travellers experience Sri Lanka and the Maldives, through thoughtful design, personalised service, and meaningful cultural connection. We believe luxury is not defined by excess. It is defined by seamless coordination, attention to detail, authentic encounters, trusted partnerships, and space to travel at your own pace.',
-    },
-    {
-        title: 'Our Approach',
-        content:
-            'Every Velora journey begins with listening. We take time to understand your travel style, comfort preferences, and purpose for travel, whether it\'s exploration, relaxation, celebration, or renewal. From there, we curate handpicked stays, private chauffeurs and guides, experiences chosen for depth (not volume), and balanced pacing. Logistics are managed discreetly so you can focus on the experience.',
-    },
-    {
-        title: 'Why Velora',
-        content:
-            'Because travel should never feel crowded, rushed, or templated. We design journeys on your preferred dates, with private transport throughout, flexibility built into each day, and local support available when needed.',
-    },
-];
+const sections = aboutPageContent.sections;
 
 export default function AboutPage() {
     return (
@@ -56,7 +35,7 @@ export default function AboutPage() {
                 >
                     <Image
                         src="/Photos/Other sections/About Page.jpeg"
-                        alt="About Velora Journeys"
+                        alt="About Avelora Travel"
                         fill
                         className="object-cover"
                         sizes="100vw"
@@ -102,7 +81,7 @@ export default function AboutPage() {
                 >
                     <Heart className="w-6 h-6 text-gold/50 mb-4" />
                     <p className="text-stone-500 text-sm md:text-base leading-relaxed italic mb-6">
-                        &ldquo;Velora Journeys was created from a deep appreciation for Sri Lanka and a desire to present it in a way that feels refined, seamless, and personal. I recognised a gap between traditional group tourism and the private, well-paced journeys many discerning travellers seek. Velora was founded to bridge that gap, with thoughtful design, trusted local partnerships, and clear communication. Travel should never feel rushed or impersonal. It should feel considered, immersive, and effortless.&rdquo;
+                        &ldquo;{aboutPageContent.founderQuote}&rdquo;
                     </p>
                     <p className="text-gold text-sm font-semibold">
                         {aboutPageContent.founderAttribution}

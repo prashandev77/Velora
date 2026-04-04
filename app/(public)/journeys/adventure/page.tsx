@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import JourneyCategoryPage from '@/components/JourneyCategoryPage';
 
 export const metadata: Metadata = {
-    title: 'Adventure Collection | Velora Journeys',
+    title: 'Adventure Collection | Avelora Travel',
     description: 'Trek ancient fortresses, safari through leopard country, dive pristine reefs, and ride the world\'s most scenic trains across Sri Lanka and the Maldives.',
 };
 

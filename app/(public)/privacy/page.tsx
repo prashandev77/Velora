@@ -1,8 +1,8 @@
 import { privacyPageContent } from '@/lib/content';
 
 export const metadata = {
-    title: 'Privacy Policy | Velora Journeys',
-    description: 'Privacy Policy for Velora Journeys.',
+    title: 'Privacy Policy | Avelora Travel',
+    description: 'Privacy Policy for Avelora Travel.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
                     We may share necessary booking information with trusted travel partners such as hotels, guides, transport providers, or local tour operators in order to deliver your requested travel services.
                 </p>
                 <p className="text-stone-600 mb-8 font-medium">
-                    Velora Journeys does not sell, rent, or distribute your personal information to third parties for marketing purposes.
+                    Avelora Travel does not sell, rent, or distribute your personal information to third parties for marketing purposes.
                 </p>
 
                 <h2 className="text-2xl font-bold text-stone-800 mt-12 mb-4 font-heading">Website Analytics & Cookies</h2>
@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
                 <h2 className="text-2xl font-bold text-stone-800 mt-12 mb-4 font-heading">Contact</h2>
                 <p className="text-stone-600 mb-8">
                     If you have any questions regarding this Privacy Policy, please contact us at:{' '}
-                    <a href="mailto:info@velorajourneys.com" className="font-medium text-gold">info@velorajourneys.com</a>
+                    <a href="mailto:hello@aveloratravel.com" className="font-medium text-gold">hello@aveloratravel.com</a>
                 </p>
             </div>
         </main>

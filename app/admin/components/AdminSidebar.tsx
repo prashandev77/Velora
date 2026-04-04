@@ -68,8 +68,8 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 {/* ── Branding ── */}
                 <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-100">
                     <Image
-                        src="/velora_logo.svg"
-                        alt="Velora Journeys"
+                        src="/avelora-logo.png"
+                        alt="Avelora Travel"
                         width={130}
                         height={40}
                         className="h-8 w-auto object-contain"
@@ -141,8 +141,8 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 <div className="flex items-center justify-between px-5 h-14">
                     <div className="flex items-center gap-2">
                         <Image
-                            src="/velora_logo.svg"
-                            alt="Velora Journeys"
+                            src="/avelora-logo.png"
+                            alt="Avelora Travel"
                             width={110}
                             height={33}
                             className="h-7 w-auto object-contain"

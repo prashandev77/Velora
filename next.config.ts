@@ -18,6 +18,35 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/journeys/luxury/velora-luxe',
+        destination: '/journeys/luxury/avelora-signature',
+        permanent: true,
+      },
+      {
+        source: '/journeys/wellness/velora-serene',
+        destination: '/journeys/wellness/avelora-wellness',
+        permanent: true,
+      },
+      {
+        source: '/journeys/adventure/velora-wild',
+        destination: '/journeys/adventure/avelora-wild',
+        permanent: true,
+      },
+      {
+        source: '/journeys/honeymoon/velora-honeymoon',
+        destination: '/journeys/honeymoon/avelora-honeymoon',
+        permanent: true,
+      },
+      {
+        source: '/journeys/adventure/serendipity-of-sri-lanka',
+        destination: '/journeys/adventure/avelora-serendipity',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {

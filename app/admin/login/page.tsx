@@ -51,8 +51,8 @@ export default function AdminLoginPage() {
                 {/* Logo Section */}
                 <div className="flex flex-col items-center mb-10">
                     <Image
-                        src="/velora_logo.svg"
-                        alt="Velora Journeys"
+                        src="/avelora-logo.png"
+                        alt="Avelora Travel"
                         width={180}
                         height={55}
                         className="h-10 w-auto object-contain mb-3"
@@ -139,7 +139,7 @@ export default function AdminLoginPage() {
 
                 {/* Footer */}
                 <p className="text-center text-gray-400 font-medium text-xs mt-8">
-                    Velora Journeys Admin &middot; Authorised users only
+                    Avelora Travel Admin &middot; Authorised users only
                 </p>
             </div>
         </div>

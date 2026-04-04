@@ -1,6 +1,6 @@
 import Hero from '@/components/Hero';
 import TravelStyle from '@/components/TravelStyle';
-import WhyVelora from '@/components/WhyVelora';
+import WhyAvelora from '@/components/WhyAvelora';
 import SignatureJourneys from '@/components/SignatureJourneys';
 import Destinations from '@/components/Destinations';
 import StartPlanning from '@/components/StartPlanning';
@@ -16,8 +16,8 @@ export default function Home() {
       <Hero />
       {/* 2. Travel Style */}
       <TravelStyle />
-      {/* 3. Trust – The Velora Difference */}
-      <WhyVelora />
+      {/* 3. Trust – The Avelora Difference */}
+      <WhyAvelora />
       {/* 4. Journeys – Signature Packages */}
       <SignatureJourneys />
       {/* 5. Exploration – Sri Lanka by Province Map */}

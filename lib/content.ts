@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// VELORA JOURNEYS — Centralised Content File
+// AVELORA TRAVEL — Centralised Content File
 // All static text content for the website. Components import from here.
 // Package data (itineraries, included, etc.) lives in data.ts.
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -9,11 +9,12 @@ export const heroContent = {
     slides: [
         {
             id: 1,
-            headline: 'From Sacred Temples to Turquoise Shores',
-            subtext: 'Privately curated journeys across Sri Lanka.',
-            tag: 'DISCOVER SRI LANKA',
+            headline: 'Private Journeys Across Sri Lanka, the Maldives & Beyond',
+            subtext: 'Thoughtfully curated travel with handpicked stays and trusted local expertise — designed around you.',
+            tag: 'DESIGNED AROUND YOU',
             buttons: [
-                { label: 'Plan Your Journey', href: '/plan-your-trip', primary: true },
+                { label: 'Start Planning', href: '/plan-your-trip', primary: true },
+                { label: 'Browse Journeys', href: '/journeys', primary: false },
             ],
             image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
         },
@@ -31,7 +32,7 @@ export const heroContent = {
             id: 3,
             headline: 'Luxury, Thoughtfully Curated',
             subtext: 'Privately designed journeys with handpicked stays and trusted local expertise.',
-            tag: 'THE VELORA PROMISE',
+            tag: 'THE AVELORA PROMISE',
             buttons: [
                 { label: 'Start Planning', href: '/plan-your-trip', primary: true },
             ],
@@ -68,23 +69,23 @@ export const navbarContent = {
         { href: '/journeys', label: 'Journeys' },
         { href: '/destinations', label: 'Destinations' },
         { href: '/about', label: 'About' },
-        { href: '/booking', label: 'Booking' },
+        { href: '/booking', label: 'Plan' },
         { href: '/contact', label: 'Contact' },
     ],
-    ctaLabel: 'Plan Your Journey',
+    ctaLabel: 'Start Planning',
     ctaHref: '/plan-your-trip',
     mobileNavLabel: 'Navigation',
-    mobileCtaLabel: 'Ready to travel?',
+    mobileCtaLabel: 'Start your journey',
     mobileTalkToExpert: 'Talk to an expert',
     lightPages: ['/plan-your-trip', '/contact', '/about', '/journeys', '/destinations', '/booking'],
 };
 
 // ── FOOTER ───────────────────────────────────────────────────────────────────
 export const footerContent = {
-    description: 'Privately curated journeys across Sri Lanka and the Maldives.\nTailor-made travel experiences designed around you.',
+    description: 'Privately curated journeys across Sri Lanka, the Maldives and beyond.\nDesigned Around You.',
     contact: {
         location: 'Sydney, Australia',
-        email: 'hello@velorajourneys.com',
+        email: 'hello@aveloratravel.com',
         phone: '+61 2 1234 5678',
     },
     links: {
@@ -112,40 +113,40 @@ export const footerContent = {
         company: 'Company',
         support: 'Support',
     },
-    copyright: 'Velora Journeys. All rights reserved.',
-    tagline: 'Crafted with passion for extraordinary travel',
+    copyright: 'Avelora Travel. All rights reserved.',
+    tagline: 'Designed Around You',
 };
 
 // ── TRAVEL STYLE SECTION ─────────────────────────────────────────────────────
 export const travelStyleContent = {
-    tag: 'Discover Your Travel Style',
-    heading: 'Four Distinct Ways to Experience Sri Lanka',
-    subtitle: 'Whether you\'re drawn to heritage, wildlife, or coastal serenity, each journey is privately curated around you.',
+    tag: 'Travel by Style',
+    heading: 'Four Distinct Ways to Travel with Avelora',
+    subtitle: 'From Sri Lanka’s cultural heart to Maldives lagoons and multi-country routes, each journey is privately shaped around how you like to travel.',
     tiles: [
         {
             heading: 'Culture & Heritage',
-            description: 'Walk through ancient kingdoms, sacred temples, and colonial towns, guided privately and experienced with depth, not crowds.',
+            description: 'Ancient kingdoms, temples, and colonial towns — explored privately, with depth and space to absorb every moment.',
             button: 'Explore Cultural Journeys',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 _ Classic Discovery.jpeg',
         },
         {
             heading: 'Wildlife & Wilderness',
-            description: 'Track leopards at dawn, witness elephant gatherings, and stay in boutique safari lodges surrounded by untamed beauty.',
+            description: 'Leopards at dawn, elephant gatherings, and boutique safari lodges — immersive nature without the crowds.',
             button: 'Discover Wildlife Experiences',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 _ Wildlife Expedition.jpeg',
         },
         {
             heading: 'Coast & Island Escape',
-            description: 'Boutique beach retreats, private villas, and overwater Maldives indulgence, designed for complete serenity.',
+            description: 'Boutique coastlines in Sri Lanka, overwater calm in the Maldives, and island extensions tailored to your pace.',
             button: 'Explore Beach & Island Escapes',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 _ Coast.jpeg',
         },
         {
             heading: 'Romance & Celebrations',
-            description: 'Private candlelit dinners, scenic train journeys, and unforgettable honeymoon escapes.',
+            description: 'Honeymoons, anniversaries, and milestones — private dining, scenic journeys, and moments designed to remember.',
             button: 'View Romantic Journeys',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 Honeymoon.jpg',
@@ -153,36 +154,39 @@ export const travelStyleContent = {
     ],
 };
 
-// ── WHY VELORA SECTION ───────────────────────────────────────────────────────
-export const whyVeloraContent = {
-    tag: 'The Velora Difference',
-    heading: 'Private Journeys. Thoughtfully Designed. Seamlessly Delivered',
-    description: 'At Velora Journeys, we design private travel experiences across Sri Lanka with thoughtful attention to every detail.\nEach journey is crafted around your pace, interests, and style of travel, supported by trusted local partnerships and carefully selected stays.',
+// ── WHY AVELORA SECTION ───────────────────────────────────────────────────────
+export const whyAveloraContent = {
+    tag: 'The Avelora Difference',
+    heading: 'Private Journeys. Beautifully Delivered.',
+    description: 'Avelora Travel designs private journeys across Sri Lanka, the Maldives and beyond — with calm coordination and stays chosen for character, not volume.\nEach itinerary is built around your dates, pace, and priorities, supported by trusted local partners.',
     values: [
         {
             title: 'Trusted Expertise',
-            description: 'Trusted local partnerships and carefully selected boutique stays ensure authenticity, comfort, and attention to detail.',
+            description: 'Local insight and handpicked boutique stays — authentic, comfortable, and considered down to the details.',
         },
         {
             title: 'Tailored Experiences',
-            description: 'Every journey is customised to your pace, interests, and preferred level of comfort.',
+            description: 'Your pace, your interests, your level of comfort — nothing templated, nothing rushed.',
         },
         {
             title: 'Seamless Coordination',
-            description: 'From private chauffeur journeys to curated experiences, every detail is seamlessly arranged.',
+            description: 'Private transfers, curated experiences, and smooth logistics from first conversation to farewell.',
         },
         {
             title: 'Personalised Support',
-            description: 'Discreet local assistance and 24/7 support throughout your journey.',
+            description: 'Discreet on-ground assistance and responsive support whenever you need it.',
         },
     ],
 };
+
+/** @deprecated Use whyAveloraContent */
+export const whyVeloraContent = whyAveloraContent;
 
 // ── HOW IT WORKS SECTION ─────────────────────────────────────────────────────
 export const howItWorksContent = {
     tag: 'How It Works',
     heading: 'Effortless, From Start to Finish',
-    subtitle: 'Your journey, thoughtfully curated in four simple steps. From the first conversation to your return home, every detail is handled with care and precision.',
+    subtitle: 'From first ideas to your return home, we handle the details so you can stay present for the experience — across Sri Lanka, the Maldives, or a multi-stop route.',
     steps: [
         {
             number: '01',
@@ -193,7 +197,7 @@ export const howItWorksContent = {
         {
             number: '02',
             title: 'Curate & Design',
-            description: 'Your dedicated Velora travel specialist crafts a personalised itinerary, selecting boutique stays, private guides, and meaningful experiences tailored to your style.',
+            description: 'Your dedicated Avelora specialist crafts a personalised itinerary, selecting boutique stays, private guides, and meaningful experiences tailored to your style.',
             image: '/images/how_it_works_2.webp',
         },
         {
@@ -218,10 +222,10 @@ export const faqContent = {
     items: [
         {
             q: 'Do you operate group tours or fixed departure dates?',
-            a: 'No. Velora Journeys specialises exclusively in privately curated travel. We do not operate fixed-date group tours. Every journey is customised around your preferred travel dates, pace, and interests.',
+            a: 'No. Avelora Travel specialises exclusively in privately curated travel. We do not operate fixed-date group tours. Every journey is customised around your preferred travel dates, pace, and interests.',
         },
         {
-            q: 'What is included in a typical Velora journey?',
+            q: 'What is included in a typical Avelora journey?',
             a: 'Each itinerary is personalised, but most journeys include: accommodation in carefully selected 4–5 star hotels, boutique villas, or luxury safari lodges; meals on half-board basis where applicable; private airport transfers; private English-speaking chauffeur-guide; air-conditioned vehicle; entrance fees to included cultural sites; curated experiences such as safaris, heritage visits, or cultural performances; and discreet local support during travel.',
         },
         {
@@ -249,7 +253,7 @@ export const faqContent = {
             a: 'For peak season (December–April), we recommend 4–6 months in advance. For other periods, 2–4 months is generally sufficient.',
         },
         {
-            q: 'What is the typical investment for a Velora journey?',
+            q: 'What is the typical investment for an Avelora journey?',
             a: 'As every journey is privately curated, pricing varies by duration, accommodation level, and experiences. Most private journeys range from mid to high four figures per person and above. We provide transparent proposals tailored to your preferences.',
         },
         {
@@ -266,7 +270,19 @@ export const faqContent = {
         },
         {
             q: 'Do you arrange international flights?',
-            a: 'Yes. While most travellers prefer to book their own flights, Velora Journeys can assist with international airline tickets through our trusted airline and travel partners if required. If you would like us to include flights as part of your journey planning, our team will be happy to provide suitable options based on your travel dates, preferred airlines, and departure city.',
+            a: 'Yes. While most travellers prefer to book their own flights, Avelora Travel can assist with international airline tickets through our trusted airline and travel partners if required. If you would like us to include flights as part of your journey planning, our team will be happy to provide suitable options based on your travel dates, preferred airlines, and departure city.',
+        },
+        {
+            q: 'Can I add a Maldives extension after Sri Lanka?',
+            a: 'Yes. Many guests combine Sri Lanka with a Maldives stay — we coordinate timing, transfers, and island resort selection to match your pace and budget.',
+        },
+        {
+            q: 'Do you plan multi-country itineraries?',
+            a: 'Absolutely. We design seamless multi-stop routes (for example Sri Lanka plus the Maldives or regional hubs), with one coordinated plan and support throughout.',
+        },
+        {
+            q: 'Do you plan honeymoons, anniversaries, and celebrations?',
+            a: 'Yes. Milestones are a speciality — from private dining and spa moments to surprise touches and family-friendly celebration travel, we tailor every detail.',
         },
     ],
 };
@@ -275,14 +291,14 @@ export const faqContent = {
 export const testimonialsContent = {
     tag: 'Traveller Reviews',
     heading: 'Words From Our Travellers',
-    subtitle: 'Real experiences from guests who trusted Velora to craft their most meaningful journeys.',
+    subtitle: 'Real experiences from guests who trusted Avelora to craft their most meaningful journeys.',
     reviews: [
         {
             name: 'Sarah & James Mitchell',
             location: 'Sydney',
             avatar: 'S',
             rating: 5,
-            package: 'Velora Luxe',
+            package: 'Avelora Signature Journey',
             text: 'Absolutely life-changing. The seamless transition from Sri Lanka\'s cultural wonders to the serene southern coast was pure magic. Every need was anticipated before we even thought of it.',
         },
         {
@@ -290,7 +306,7 @@ export const testimonialsContent = {
             location: 'Melbourne',
             avatar: 'A',
             rating: 5,
-            package: 'Velora Serendipity',
+            package: 'Avelora Serendipity',
             text: 'I\'ve traveled extensively, but this journey was on another level. The private sunrise climb of Sigiriya and the train through tea country, every moment felt curated just for me.',
         },
         {
@@ -298,15 +314,15 @@ export const testimonialsContent = {
             location: 'Brisbane',
             avatar: 'E',
             rating: 5,
-            package: 'Velora Honeymoon Journey',
-            text: 'Our honeymoon exceeded every dream. The sunset beach walk and private coastal dining were moments we\'ll treasure forever. Velora made it all effortless.',
+            package: 'Avelora Honeymoon',
+            text: 'Our honeymoon exceeded every dream. The sunset beach walk and private coastal dining were moments we\'ll treasure forever. Avelora made it all effortless.',
         },
         {
             name: 'David Okonkwo',
             location: 'Perth',
             avatar: 'D',
             rating: 5,
-            package: 'Velora Wild',
+            package: 'Avelora Wild',
             text: 'From the elephants at Minneriya to the ancient ruins of Polonnaruwa, each day revealed a new wonder. The local guides were incredibly knowledgeable and passionate.',
         },
         {
@@ -314,7 +330,7 @@ export const testimonialsContent = {
             location: 'Adelaide',
             avatar: 'C',
             rating: 5,
-            package: 'Velora Serene',
+            package: 'Avelora Wellness',
             text: 'Two weeks of pure tranquility. The combination of authentic Ayurvedic experiences and pristine beaches was the perfect balance. We\'re already planning our return trip.',
         },
         {
@@ -322,18 +338,26 @@ export const testimonialsContent = {
             location: 'Gold Coast',
             avatar: 'R',
             rating: 5,
-            package: 'Velora Explorer',
+            package: 'Grand Explorer',
             text: 'The scenic train ride was worth the trip alone. But it was the little touches, the private tea tasting and the jungle safari, that showed true attention to detail.',
+        },
+        {
+            name: 'James & Olivia Chen',
+            location: 'Singapore',
+            avatar: 'J',
+            rating: 5,
+            package: 'Sri Lanka & Maldives',
+            text: 'Avelora stitched together Sri Lanka and the Maldives flawlessly — one timeline, one point of contact, and every transfer felt calm and clear.',
         },
     ],
 };
 
 // ── START PLANNING SECTION ───────────────────────────────────────────────────
 export const startPlanningContent = {
-    tag: 'Your Journey Begins Here',
+    tag: 'Plan with Avelora',
     heading: 'Start Planning Your',
-    headingHighlight: 'Private Journey',
-    subtitle: 'Tell us a little about your travel plans and our Velora specialists will design a personalised Sri Lanka journey just for you.',
+    headingHighlight: 'Journey',
+    subtitle: 'Share your plans and an Avelora specialist will design a personalised journey across Sri Lanka, the Maldives, or a multi-country route.',
     travelStyles: [
         'Luxury Hotels',
         'Wildlife & Safari',
@@ -342,6 +366,9 @@ export const startPlanningContent = {
         'Honeymoon',
         'Wellness & Ayurveda',
         'Adventure & Nature',
+        'Celebration Travel',
+        'Family Travel',
+        'Multi-country Escape',
     ],
     tripLengths: ['5–7 days', '8–10 days', '10–14 days', '15+ days'],
     travellerCounts: ['1', '2', '3', '4', '5+'],
@@ -358,11 +385,18 @@ export const startPlanningContent = {
         emailPlaceholder: 'you@example.com',
         message: 'Message (Optional)',
         messagePlaceholder: 'Tell us anything else...',
+        destinationInterest: 'Destination interest',
+        destinationPlaceholder: 'e.g. Sri Lanka, Maldives, or both',
+        budgetRange: 'Budget range (optional)',
+        budgetPlaceholder: 'Select range',
+        specialOccasion: 'Special occasion (optional)',
+        occasionPlaceholder: 'e.g. honeymoon, anniversary, birthday',
     },
-    submitButton: 'Plan Your Journey',
-    submitFooter: 'No commitment required · Response within 24 hours · 100% bespoke',
+    budgetRanges: ['Under $5k pp', '$5k–$10k pp', '$10k–$20k pp', '$20k+ pp', 'Prefer to discuss'],
+    submitButton: 'Start Planning',
+    submitFooter: 'No obligation · Tailored planning · Response within 24 hours',
     successTitle: 'Thank You!',
-    successMessage: 'Your journey request has been received. A Velora specialist will be in touch within 24 hours.',
+    successMessage: 'Your journey request has been received. An Avelora specialist will be in touch within 24 hours.',
     successLink: 'Browse Journeys While You Wait',
     months: [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -373,22 +407,22 @@ export const startPlanningContent = {
 // ── PRIVATE TRAVEL PROMISE SECTION ───────────────────────────────────────────
 export const privateTravelPromiseContent = {
     tag: 'Our Promise',
-    heading: 'Our Private Travel Promise',
-    subtitle: 'We believe exceptional journeys should never feel rushed or crowded.',
+    heading: 'The Avelora Promise',
+    subtitle: 'Private journeys that feel calm, personal, and unmistakably yours — from Sri Lanka’s hills to Maldives lagoons and beyond.',
     promises: [
-        'Privately curated, never fixed-date group tours',
-        'Fully flexible to your preferred travel dates',
-        'Designed around your pace and comfort',
-        'Supported locally with discreet assistance',
+        'Privately curated — never fixed-date group tours',
+        'Flexible dates and pacing shaped around you',
+        'Handpicked stays and experiences that match your style',
+        'Discreet local support from planning through travel',
     ],
-    tagline: 'Travel as you wish, with confidence and clarity.',
+    tagline: 'Travel as you wish — calm, seamless and deeply personal.',
 };
 
 // ── DESTINATIONS (MAP) SECTION ───────────────────────────────────────────────
 export const destinationsContent = {
     tag: 'Our Destinations',
-    heading: 'Sri Lanka by Province',
-    subtitle: 'Tap a province to explore destinations',
+    heading: 'Explore Sri Lanka, Then Go Beyond',
+    subtitle: 'Start with Sri Lanka by province — then let us layer in the Maldives or multi-country routes.',
     emptyState: {
         title: 'Explore Sri Lanka',
         description: 'Tap any province on the map or a label above to discover its destinations and curated experiences.',
@@ -492,52 +526,52 @@ export const destinationsContent = {
 export const signatureJourneysContent = {
     tag: 'Curated Journeys',
     heading: 'Signature Private Journeys',
-    subtitle: 'Each journey is privately curated and fully customisable to your preferred style of travel.',
+    subtitle: 'Each itinerary is a starting point — privately curated and fully customisable to your dates, style, and destinations.',
     journeys: [
         {
-            title: 'Velora Serendipity',
+            title: 'Avelora Serendipity',
             duration: '8 Days',
             tags: 'Culture • Highlands • Wildlife • Coast',
             description: 'A beautifully balanced introduction to Sri Lanka, blending ancient heritage, misty tea country and the island\'s golden southern coast.',
             route: 'Sigiriya → Kandy → Tea Country → South Coast',
             image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
-            href: '/journeys/adventure/serendipity-of-sri-lanka',
+            href: '/journeys/adventure/avelora-serendipity',
         },
         {
-            title: 'Velora Luxe',
+            title: 'Avelora Signature',
             duration: '11 Days',
             tags: 'Culture • Tea Country • Safari • Coast',
             description: 'Sri Lanka\'s most iconic landscapes are experienced in refined comfort, from cultural landmarks and tea estates to wildlife safaris and coastal retreats.',
             route: 'Sigiriya → Kandy → Tea Country → Yala → South Coast',
             image: '/Photos/Other sections/Velora Luxe Main photo.webp',
-            href: '/journeys/luxury/velora-luxe',
+            href: '/journeys/luxury/avelora-signature',
         },
         {
-            title: 'Velora Luxury Honeymoon',
+            title: 'Avelora Honeymoon',
             duration: '12 Days',
             tags: 'Romance • Tea Country • Safari • Ocean',
             description: 'A romantic journey through Sri Lanka\'s most beautiful settings, combining scenic train rides, wildlife safaris and luxury oceanfront stays.',
             route: 'Negombo → Sigiriya → Hatton → Ella → Yala → Cape Weligama',
             image: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
-            href: '/journeys/honeymoon/velora-honeymoon',
+            href: '/journeys/honeymoon/avelora-honeymoon',
         },
         {
-            title: 'Velora Serene',
+            title: 'Avelora Wellness',
             duration: '14 Days',
             tags: 'Wellness • Ayurveda • Nature • Culture',
             description: 'A restorative journey designed for wellbeing, combining authentic Ayurveda treatments with gentle cultural discovery and peaceful landscapes.',
             route: 'Negombo → Cultural Triangle → Ayurveda Retreat → South Coast',
             image: '/Photos/Other sections/Velora Serene new.avif',
-            href: '/journeys/wellness/velora-serene',
+            href: '/journeys/wellness/avelora-wellness',
         },
         {
-            title: 'Velora Wild',
+            title: 'Avelora Wild',
             duration: '17 Days',
             tags: 'National Parks • Rainforests • Bird Sanctuaries',
             description: 'An immersive wildlife expedition exploring Sri Lanka\'s national parks, wetlands and rainforests in search of extraordinary biodiversity.',
             route: 'Wilpattu → Trincomalee → Kumana → Gal Oya → Sinharaja → Kitulgala',
             image: '/Photos/Other sections/Journey_Velora Wild new.jpg',
-            href: '/journeys/adventure/velora-wild',
+            href: '/journeys/adventure/avelora-wild',
         },
     ],
     cta: 'View All Journeys',
@@ -555,31 +589,31 @@ export const journeysPageContent = {
 
 // ── ABOUT PAGE ───────────────────────────────────────────────────────────────
 export const aboutPageContent = {
-    tag: 'About Velora Journeys',
+    tag: 'About Avelora Travel',
     heading: 'Travel, Thoughtfully Curated',
-    heroDescription: 'Velora Journeys was founded with a simple belief, that truly memorable travel should feel personal, seamless, and deeply meaningful. We specialise in privately curated journeys across Sri Lanka and the Maldives, blending refined comfort with authentic local experiences.',
+    heroDescription: 'Avelora Travel was founded with a simple belief: truly memorable travel should feel personal, seamless, and deeply meaningful. We specialise in privately curated journeys across Sri Lanka, the Maldives and beyond, blending refined comfort with authentic local experiences.',
     heroImage: '/Photos/Other sections/About Page.jpeg',
     introText: 'Every itinerary we design is tailored around you, your pace, your interests, your preferred travel dates. We do not operate fixed group tours. We craft journeys exclusively for individuals, couples, families, and small private groups seeking a more considered way to travel.',
     sections: [
         {
             title: 'Our Story',
-            content: 'Velora was born from a deep connection to Sri Lanka , its landscapes, heritage, wildlife, and warm hospitality, combined with an understanding of what modern travellers expect: clarity, quality, and seamless coordination. We saw the opportunity to create something different from traditional tour operators: not volume-based tourism, not rigid departure schedules, but curated private journeys designed with care and precision. Velora brings together local expertise and international service standards, ensuring every journey feels effortless from arrival to departure.',
+            content: 'Avelora was born from a deep connection to Sri Lanka, its landscapes, heritage, wildlife, and warm hospitality, combined with an understanding of what modern travellers expect: clarity, quality, and seamless coordination. We saw the opportunity to create something different from traditional tour operators: not volume-based tourism, not rigid departure schedules, but curated private journeys designed with care and precision. Avelora brings together local expertise and international service standards, ensuring every journey feels effortless from arrival to departure.',
         },
         {
             title: 'Our Vision',
-            content: 'To redefine how travellers experience Sri Lanka and the Maldives, through thoughtful design, personalised service, and meaningful cultural connection. We believe luxury is not defined by excess. It is defined by seamless coordination, attention to detail, authentic encounters, trusted partnerships, and space to travel at your own pace.',
+            content: 'To redefine how travellers experience Sri Lanka, the Maldives, and the wider region — through thoughtful design, personalised service, and meaningful cultural connection. We believe luxury is not defined by excess. It is defined by seamless coordination, attention to detail, authentic encounters, trusted partnerships, and space to travel at your own pace.',
         },
         {
             title: 'Our Approach',
-            content: 'Every Velora journey begins with listening. We take time to understand your travel style, comfort preferences, and purpose for travel, whether it\'s exploration, relaxation, celebration, or renewal. From there, we curate handpicked stays, private chauffeurs and guides, experiences chosen for depth (not volume), and balanced pacing. Logistics are managed discreetly so you can focus on the experience.',
+            content: 'Every Avelora journey begins with listening. We take time to understand your travel style, comfort preferences, and purpose for travel, whether it\'s exploration, relaxation, celebration, or renewal. From there, we curate handpicked stays, private chauffeurs and guides, experiences chosen for depth (not volume), and balanced pacing. Logistics are managed discreetly so you can focus on the experience.',
         },
         {
-            title: 'Why Velora',
+            title: 'Why Avelora',
             content: 'Because travel should never feel crowded, rushed, or templated. We design journeys on your preferred dates, with private transport throughout, flexibility built into each day, and local support available when needed.',
         },
     ],
-    founderQuote: 'Velora Journeys was created from a deep appreciation for Sri Lanka and a desire to present it in a way that feels refined, seamless, and personal. I recognised a gap between traditional group tourism and the private, well-paced journeys many discerning travellers seek. Velora was founded to bridge that gap, with thoughtful design, trusted local partnerships, and clear communication. Travel should never feel rushed or impersonal. It should feel considered, immersive, and effortless.',
-    founderAttribution: 'Founder, Velora Journeys',
+    founderQuote: 'Avelora Travel was created from a deep appreciation for Sri Lanka and a desire to present it in a way that feels refined, seamless, and personal. I recognised a gap between traditional group tourism and the private, well-paced journeys many discerning travellers seek. Avelora was founded to bridge that gap, with thoughtful design, trusted local partnerships, and clear communication. Travel should never feel rushed or impersonal. It should feel considered, immersive, and effortless.',
+    founderAttribution: 'Founder, Avelora Travel',
     sustainability: {
         heading: 'Sustainability & Responsible Travel',
         body: 'We prioritise boutique and locally owned properties where possible, respectful cultural engagement, wildlife experiences aligned with conservation standards, and supporting local guides and communities. Luxury and responsibility can, and should, coexist.',
@@ -601,8 +635,8 @@ export const contactPageContent = {
     email: {
         title: 'Email Us',
         description: 'Our team typically replies within 24 hours.',
-        address: 'hello@velorajourneys.com',
-        href: 'mailto:hello@velorajourneys.com',
+        address: 'hello@aveloratravel.com',
+        href: 'mailto:hello@aveloratravel.com',
     },
     office: {
         title: 'Office Location',
@@ -624,7 +658,7 @@ export const bookingPageContent = {
     hero: {
         tag: 'Booking & Payment Terms',
         heading: 'Travel With Confidence',
-        subtitle: 'Planning your journey with Velora is simple and transparent. A small deposit secures your itinerary, with the balance payable closer to your travel date.',
+        subtitle: 'Planning your journey with Avelora is simple and transparent. A small deposit secures your itinerary, with the balance payable closer to your travel date.',
         image: '/Photos/Other sections/Payment tab new.webp',
     },
     confidencePoints: [
@@ -666,11 +700,11 @@ export const bookingPageContent = {
         },
         {
             title: 'External Factors',
-            body: 'Velora Journeys shall not be held responsible for changes caused by circumstances beyond our control, including but not limited to weather conditions, airline schedule changes, government regulations, or force majeure events.',
+            body: 'Avelora Travel shall not be held responsible for changes caused by circumstances beyond our control, including but not limited to weather conditions, airline schedule changes, government regulations, or force majeure events.',
         },
         {
             title: 'Local Travel Partners',
-            body: 'Velora Journeys works with licensed local travel providers in Sri Lanka to deliver travel services including accommodation, transport, and guided experiences.',
+            body: 'Avelora Travel works with licensed local travel providers in Sri Lanka to deliver travel services including accommodation, transport, and guided experiences.',
         },
     ],
     paymentMethods: {
@@ -685,7 +719,7 @@ export const bookingPageContent = {
     securePayment: {
         heading: 'Secure Payment Guarantee',
         description: 'All payments are processed securely and confirmations will be issued immediately upon receipt.',
-        note: 'Velora Journeys works with carefully selected boutique hotels and partners across Sri Lanka. Early deposits allow us to secure the best availability for your travel dates.',
+        note: 'Avelora Travel works with carefully selected boutique hotels and partners across Sri Lanka and the Maldives. Early deposits allow us to secure the best availability for your travel dates.',
     },
     cta: {
         heading: 'Ready to Plan Your Journey?',
@@ -697,14 +731,14 @@ export const bookingPageContent = {
 // ── TERMS & CONDITIONS PAGE ──────────────────────────────────────────────────
 export const termsPageContent = {
     hero: {
-        tag: 'Velora Journeys',
+        tag: 'Avelora Travel',
         heading: 'Website Terms & Conditions',
-        subtitle: 'By accessing and using the Velora Journeys website, you agree to the following terms and conditions.',
+        subtitle: 'By accessing and using the Avelora Travel website, you agree to the following terms and conditions.',
     },
     sections: [
         {
             title: 'Website Content',
-            body: 'All content on this website, including text, images, logos, and design elements, is the property of Velora Journeys unless otherwise stated.\n\nContent may not be reproduced, copied, distributed, or used for commercial purposes without prior written permission.',
+            body: 'All content on this website, including text, images, logos, and design elements, is the property of Avelora Travel unless otherwise stated.\n\nContent may not be reproduced, copied, distributed, or used for commercial purposes without prior written permission.',
         },
         {
             title: 'Accuracy of Information',
@@ -712,15 +746,15 @@ export const termsPageContent = {
         },
         {
             title: 'Use of the Website',
-            body: 'The content on this website is provided for general travel inspiration and information. While we take care to ensure accuracy, Velora Journeys cannot guarantee that all information will always be complete or current.',
+            body: 'The content on this website is provided for general travel inspiration and information. While we take care to ensure accuracy, Avelora Travel cannot guarantee that all information will always be complete or current.',
         },
         {
             title: 'External Information',
-            body: 'From time to time, the website may reference travel experiences, destinations, or services provided by third parties. Velora Journeys is not responsible for the policies or practices of those providers.',
+            body: 'From time to time, the website may reference travel experiences, destinations, or services provided by third parties. Avelora Travel is not responsible for the policies or practices of those providers.',
         },
         {
             title: 'Updates to These Terms',
-            body: 'Velora Journeys may update these terms and conditions from time to time. By continuing to use the website, you accept the most recent version.',
+            body: 'Avelora Travel may update these terms and conditions from time to time. By continuing to use the website, you accept the most recent version.',
         },
     ],
     footerNote: 'Have questions about our terms?',
@@ -729,8 +763,8 @@ export const termsPageContent = {
 
 // ── PRIVACY POLICY PAGE ──────────────────────────────────────────────────────
 export const privacyPageContent = {
-    heading: 'Velora Journeys – Privacy Policy',
-    intro: 'Velora Journeys respects your privacy and is committed to protecting the personal information you provide when using our website or contacting us regarding travel services.',
+    heading: 'Avelora Travel – Privacy Policy',
+    intro: 'Avelora Travel respects your privacy and is committed to protecting the personal information you provide when using our website or contacting us regarding travel services.',
     sections: [
         {
             title: 'Information We Collect',
@@ -743,7 +777,7 @@ export const privacyPageContent = {
             items: ['Responding to travel enquiries', 'Preparing customised travel proposals', 'Arranging travel services such as hotels, transport, and experiences', 'Communicating important updates related to your travel plans'],
             additionalParagraphs: [
                 'We may share necessary booking information with trusted travel partners such as hotels, guides, transport providers, or local tour operators in order to deliver your requested travel services.',
-                'Velora Journeys does not sell, rent, or distribute your personal information to third parties for marketing purposes.',
+                'Avelora Travel does not sell, rent, or distribute your personal information to third parties for marketing purposes.',
             ],
         },
         {
@@ -762,8 +796,8 @@ export const privacyPageContent = {
         {
             title: 'Contact',
             body: 'If you have any questions regarding this Privacy Policy, please contact us at:',
-            email: 'info@velorajourneys.com',
-            emailHref: 'mailto:info@velorajourneys.com',
+            email: 'hello@aveloratravel.com',
+            emailHref: 'mailto:hello@aveloratravel.com',
         },
     ],
 };
@@ -778,10 +812,10 @@ export const packageDetailContent = {
         'Itineraries may be adjusted based on weather, local conditions, or guest preferences.',
         'Hotel selections are recommended based on your travel dates and may vary depending on availability.',
         'Entrance fees and experience inclusions are as specified in your personalised itinerary.',
-        'Velora Journeys reserves the right to substitute equivalent or higher-standard alternatives where necessary.',
+        'Avelora Travel reserves the right to substitute equivalent or higher-standard alternatives where necessary.',
         'Travel insurance is strongly recommended for all travellers.',
         'Visa requirements should be confirmed ahead of travel — our team is happy to advise.',
     ],
     relatedJourneysTitle: 'You May Also Love',
-    relatedJourneysSubtitle: 'Explore more of our privately curated journeys across Sri Lanka.',
+    relatedJourneysSubtitle: 'Explore more of our privately curated journeys across Sri Lanka, the Maldives and beyond.',
 };

@@ -19,7 +19,7 @@ const footerLinks = {
         { label: 'FAQ', href: '/#faq' },
     ],
     support: [
-        { label: 'Plan Your Journey', href: '/contact' },
+        { label: 'Start Planning', href: '/plan-your-trip' },
         { label: 'How It Works', href: '/#how-it-works' },
         { label: 'Privacy Policy', href: '/privacy' },
         { label: 'Terms of Service', href: '/terms' },
@@ -123,7 +123,7 @@ export default function Footer() {
                 {/* Bottom Bar */}
                 <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-stone-500">
-                        © {new Date().getFullYear()} Velora Journeys. All rights reserved.
+                        © {new Date().getFullYear()} {footerContent.copyright}
                     </p>
                     <p className="text-xs text-stone-500">
                         {footerContent.tagline}

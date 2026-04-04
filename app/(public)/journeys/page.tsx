@@ -3,7 +3,7 @@ import { getAllPackages } from '@/lib/data';
 import JourneysClient from './JourneysClient';
 
 export const metadata: Metadata = {
-    title: 'Journeys | Velora',
+    title: 'Journeys | Avelora Travel',
     description: 'Explore our curated collection of luxury travel journeys across Sri Lanka and the Maldives.',
 };
 

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'Destinations | Velora Journeys',
+    title: 'Destinations | Avelora Travel',
     description: 'Explore our handpicked destinations, the cultural wonders of Sri Lanka and the pristine paradise of the Maldives.',
 };
 

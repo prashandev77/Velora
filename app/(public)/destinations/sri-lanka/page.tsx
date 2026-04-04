@@ -5,7 +5,7 @@ import { Sun, Thermometer, MapPin, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-    title: 'Sri Lanka | Velora Journeys',
+    title: 'Sri Lanka | Avelora Travel',
     description: 'Discover the Pearl of the Indian Ocean, ancient temples, misty tea plantations, wildlife safaris, and golden beaches. Handcrafted luxury journeys through Sri Lanka.',
 };
 

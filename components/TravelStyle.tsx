@@ -5,36 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { travelStyleContent } from '@/lib/content';
 
-const tiles = [
-    {
-        heading: 'Culture & Heritage',
-        description: 'Walk through ancient kingdoms, sacred temples, and colonial towns, guided privately and experienced with depth, not crowds.',
-        button: 'Explore Cultural Journeys',
-        href: '/journeys',
-        image: '/Photos/Other sections/Section 2 _ Classic Discovery.jpeg',
-    },
-    {
-        heading: 'Wildlife & Wilderness',
-        description: 'Track leopards at dawn, witness elephant gatherings, and stay in boutique safari lodges surrounded by untamed beauty.',
-        button: 'Discover Wildlife Experiences',
-        href: '/journeys',
-        image: '/Photos/Other sections/Section 2 _ Wildlife Expedition.jpeg',
-    },
-    {
-        heading: 'Coast & Island Escape',
-        description: 'Boutique beach retreats, private villas, and overwater Maldives indulgence, designed for complete serenity.',
-        button: 'Explore Beach & Island Escapes',
-        href: '/journeys',
-        image: '/Photos/Other sections/Section 2 _ Coast.jpeg',
-    },
-    {
-        heading: 'Romance & Celebrations',
-        description: 'Private candlelit dinners, scenic train journeys, and unforgettable honeymoon escapes.',
-        button: 'View Romantic Journeys',
-        href: '/journeys',
-        image: '/Photos/Other sections/Section 2 Honeymoon.jpg',
-    },
-];
+const tiles = travelStyleContent.tiles;
 
 export default function TravelStyle() {
     return (
