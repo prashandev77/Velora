@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 import './globals.css';
 import Script from 'next/script';
+import {
+    isMaintenanceBypassPath,
+    isMaintenanceModeServer,
+} from '@/lib/maintenance-server';
 
 export const metadata: Metadata = {
   title: 'Avelora Travel | Private Journeys — Sri Lanka, Maldives & Beyond',
@@ -28,11 +34,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = (await headers()).get('x-pathname') ?? '';
+  // Only redirect when middleware forwarded the path (avoids loops if the header is missing).
+  if (
+    pathname &&
+    isMaintenanceModeServer() &&
+    !isMaintenanceBypassPath(pathname)
+  ) {
+    redirect('/maintenance');
+  }
+
   return (
     <html lang="en">
       <head>
