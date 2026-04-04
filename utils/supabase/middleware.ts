@@ -8,15 +8,6 @@ import {
     setAdminSessionCookies,
 } from '@/utils/supabase/admin-auth';
 
-/** Forwards pathname to Server Components (read via headers() in layout). */
-export function requestWithPathname(request: NextRequest): { headers: Headers } {
-    const headers = new Headers(request.headers);
-    if (!headers.has('x-pathname')) {
-        headers.set('x-pathname', request.nextUrl.pathname);
-    }
-    return { headers };
-}
-
 export async function updateSession(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -26,10 +17,10 @@ export async function updateSession(request: NextRequest) {
         if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
             return NextResponse.redirect(new URL('/admin/login', request.url));
         }
-        return NextResponse.next({ request: requestWithPathname(request) });
+        return NextResponse.next({ request });
     }
 
-    let supabaseResponse = NextResponse.next({ request: requestWithPathname(request) });
+    let supabaseResponse = NextResponse.next({ request });
 
     const supabase = createServerClient(supabaseUrl, supabaseKey, {
         cookies: {
@@ -38,7 +29,7 @@ export async function updateSession(request: NextRequest) {
                 cookiesToSet.forEach(({ name, value }) =>
                     request.cookies.set(name, value)
                 );
-                supabaseResponse = NextResponse.next({ request: requestWithPathname(request) });
+                supabaseResponse = NextResponse.next({ request });
                 cookiesToSet.forEach(({ name, value, options }) =>
                     supabaseResponse.cookies.set(name, value, options)
                 );
