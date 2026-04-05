@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/maintenance',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/journeys/luxury/velora-luxe',
         destination: '/journeys/luxury/avelora-signature',
         permanent: true,
