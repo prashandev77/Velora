@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { AVELORA_LOGO_PATH } from '@/lib/brand';
 
 /** Lazy init — module-level `new Resend()` throws if RESEND_API_KEY is missing, which breaks any importer (e.g. server actions) with 500. */
 let resendClient: Resend | null = null;
@@ -12,6 +13,27 @@ function getResend(): Resend | null {
 
 const BUSINESS_EMAIL = process.env.BUSINESS_NOTIFICATION_EMAIL?.trim() || 'hello@aveloratravel.com';
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL?.trim() || 'Avelora Travel <hello@aveloratravel.com>';
+
+function siteBaseUrl(): string {
+    return (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+}
+
+/** Logo in emails when NEXT_PUBLIC_SITE_URL is set; otherwise text mark. */
+function emailLogoHeaderHtml(): string {
+    const base = siteBaseUrl();
+    if (base) {
+        const src = `${base}${AVELORA_LOGO_PATH}`;
+        return `
+    <div style="text-align:center;margin-bottom:32px;">
+      <img src="${src}" alt="Avelora Travel" width="220" style="max-width:220px;height:auto;display:inline-block;" />
+    </div>`;
+    }
+    return `
+    <div style="text-align:center;margin-bottom:32px;">
+      <h1 style="font-size:24px;color:#1c1917;margin:0;letter-spacing:0.05em;">AVELORA TRAVEL</h1>
+      <div style="width:40px;height:2px;background:#c8a55a;margin:12px auto 0;"></div>
+    </div>`;
+}
 
 // ─── Customer confirmation email ────────────────────────────────────────────
 
@@ -45,11 +67,7 @@ function buildCustomerHtml(data: BookingEmailData): string {
 <body style="margin:0;padding:0;background-color:#faf7f2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <div style="max-width:600px;margin:0 auto;padding:40px 24px;">
     
-    <!-- Logo -->
-    <div style="text-align:center;margin-bottom:32px;">
-      <h1 style="font-size:24px;color:#1c1917;margin:0;letter-spacing:0.05em;">AVELORA TRAVEL</h1>
-      <div style="width:40px;height:2px;background:#c8a55a;margin:12px auto 0;"></div>
-    </div>
+    ${emailLogoHeaderHtml()}
 
     <!-- Main Card -->
     <div style="background:#ffffff;border-radius:16px;padding:40px 32px;border:1px solid #e7e5e4;">
@@ -102,8 +120,11 @@ function buildCustomerHtml(data: BookingEmailData): string {
 // ─── Business owner notification email ──────────────────────────────────────
 
 function buildOwnerHtml(data: BookingEmailData): string {
-    const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
+    const baseUrl = siteBaseUrl();
     const adminBookingsUrl = baseUrl ? `${baseUrl}/admin/bookings` : 'https://example.com/admin/bookings';
+    const ownerLogo = baseUrl
+        ? `<div style="text-align:center;margin-bottom:20px;"><img src="${baseUrl}${AVELORA_LOGO_PATH}" alt="Avelora Travel" width="160" style="max-width:160px;height:auto;" /></div>`
+        : '';
 
     const rows: string[] = [];
     rows.push(`<tr><td style="padding:6px 12px;color:#78716c;font-size:13px;">Name</td><td style="padding:6px 12px;font-size:13px;color:#1c1917;font-weight:600;">${data.customerName ?? '—'}</td></tr>`);
@@ -123,6 +144,7 @@ function buildOwnerHtml(data: BookingEmailData): string {
 <body style="margin:0;padding:0;background-color:#f1f5f9;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
   <div style="max-width:560px;margin:0 auto;padding:32px 20px;">
     <div style="background:#ffffff;border-radius:12px;padding:28px 24px;border:1px solid #e2e8f0;">
+      ${ownerLogo}
       <h2 style="font-size:18px;color:#0f172a;margin:0 0 4px;">🔔 New Booking Enquiry</h2>
       <p style="font-size:13px;color:#64748b;margin:0 0 20px;">A customer has submitted a new enquiry via your website.</p>
       

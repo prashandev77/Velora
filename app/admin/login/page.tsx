@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { AVELORA_LOGO_PATH } from '@/lib/brand';
 
 export default function AdminLoginPage() {
     const router = useRouter();
@@ -51,12 +52,13 @@ export default function AdminLoginPage() {
                 {/* Logo Section */}
                 <div className="flex flex-col items-center mb-10">
                     <Image
-                        src="/avelora-logo.png"
+                        src={AVELORA_LOGO_PATH}
                         alt="Avelora Travel"
-                        width={180}
-                        height={55}
-                        className="h-10 w-auto object-contain mb-3"
+                        width={210}
+                        height={64}
+                        className="h-12 w-auto object-contain mb-3"
                         priority
+                        unoptimized
                     />
                     <span className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] bg-gray-200/50 px-3 py-1 rounded-full border border-gray-200">
                         Admin Portal

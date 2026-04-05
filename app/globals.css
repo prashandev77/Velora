@@ -262,3 +262,24 @@ html {
   from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
 }
+
+/* Avelora navbar logo (inline SVG) — do not affect gradients / icon; only #travel text */
+.avelora-logo-nav > svg {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+}
+
+/*
+ * Only the “Travel” word uses .av-cls-15 inside #travel (see asset).
+ * Default brand colour after scroll / on light pages:
+ */
+.avelora-logo-nav:not(.avelora-logo-nav--hero) #travel :is(path, polygon).av-cls-15 {
+  fill: #57687d !important;
+}
+
+/* White “Travel” only when the bar is transparent over a dark hero (not scrolled) */
+.avelora-logo-nav--hero #travel :is(path, polygon).av-cls-15 {
+  fill: #ffffff !important;
+}

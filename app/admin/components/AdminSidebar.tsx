@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { signOut } from '../actions';
 import ConfirmDialog from './ConfirmDialog';
+import { AVELORA_LOGO_PATH } from '@/lib/brand';
 
 const nav = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
@@ -68,13 +69,14 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 {/* ── Branding ── */}
                 <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-100">
                     <Image
-                        src="/avelora-logo.png"
+                        src={AVELORA_LOGO_PATH}
                         alt="Avelora Travel"
-                        width={130}
-                        height={40}
-                        className="h-8 w-auto object-contain"
+                        width={150}
+                        height={46}
+                        className="h-10 w-auto object-contain"
                         style={{ width: 'auto' }}
                         priority
+                        unoptimized
                     />
                     <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-[0.15em] bg-gray-100 px-2 py-0.5 rounded-md">Admin</span>
                 </div>
@@ -141,12 +143,13 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 <div className="flex items-center justify-between px-5 h-14">
                     <div className="flex items-center gap-2">
                         <Image
-                            src="/avelora-logo.png"
+                            src={AVELORA_LOGO_PATH}
                             alt="Avelora Travel"
-                            width={110}
-                            height={33}
-                            className="h-7 w-auto object-contain"
+                            width={128}
+                            height={38}
+                            className="h-8 w-auto object-contain"
                             style={{ width: 'auto' }}
+                            unoptimized
                         />
                         <span className="text-[9px] text-gray-400 font-semibold uppercase tracking-widest bg-gray-100 px-1.5 py-0.5 rounded">Admin</span>
                     </div>

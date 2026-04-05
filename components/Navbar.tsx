@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Logo from '@/components/Logo';
+import NavbarAveloraLogo from '@/components/NavbarAveloraLogo';
 import { navbarContent } from '@/lib/content';
 
 const navLinks = [
@@ -37,6 +37,9 @@ export default function Navbar() {
     // On a light page, navbar is always in "scrolled" style (dark text)
     const forceDark = isLightPage && !isScrolled;
 
+    // Fixed transparent bar over dark hero: white nav links + white “Travel” in logo
+    const navOverDarkHero = !isScrolled && !forceDark;
+
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -64,8 +67,8 @@ export default function Navbar() {
             >
                 <nav className="flex items-center justify-between px-4 md:px-6 py-3">
                     {/* Logo */}
-                    <Link href="/" onClick={closeMenu} className="flex items-center group">
-                        <Logo isDark={isScrolled || forceDark} />
+                    <Link href="/" onClick={closeMenu} className="flex items-center shrink-0">
+                        <NavbarAveloraLogo whiteTravelText={navOverDarkHero} />
                     </Link>
 
                     {/* Desktop Nav */}

@@ -40,7 +40,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="lg:col-span-2">
                         <Link href="/" className="flex items-center group mb-5">
-                            <Logo isDark={false} className="h-12 w-auto object-contain transition-all duration-300 group-hover:opacity-80" />
+                            <Logo isDark={false} className="h-14 md:h-16 w-auto object-contain transition-all duration-300 group-hover:opacity-80" />
                         </Link>
                         <p className="text-stone-400 text-sm leading-relaxed max-w-sm mb-6">
                             {footerContent.description.split('\n')[0]}

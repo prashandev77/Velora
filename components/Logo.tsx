@@ -1,23 +1,23 @@
 'use client';
 
 import Image from 'next/image';
+import { AVELORA_LOGO_PATH } from '@/lib/brand';
 
 interface LogoProps {
+    /** Kept for API compatibility with Navbar/Footer; logo is shown in full color. */
     isDark?: boolean;
     className?: string;
 }
 
-/**
- * Brand mark — `isDark` = logo for light backgrounds (no filter). When false, nav sits on dark imagery (invert for contrast).
- */
-const Logo = ({ isDark = false, className = '' }: LogoProps) => (
-    <div className={`relative h-10 md:h-12 w-[140px] md:w-[180px] shrink-0 ${className}`}>
+const Logo = ({ className = '' }: LogoProps) => (
+    <div className={`relative h-12 md:h-14 w-[160px] md:w-[205px] shrink-0 ${className}`}>
         <Image
-            src="/avelora-logo.png"
+            src={AVELORA_LOGO_PATH}
             alt="Avelora Travel"
             fill
-            className={`object-contain object-left ${!isDark ? 'brightness-0 invert' : ''}`}
-            sizes="180px"
+            className="object-contain object-left"
+            sizes="205px"
+            unoptimized
         />
     </div>
 );
