@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import './globals.css';
 import Script from 'next/script';
 
@@ -28,20 +29,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = (await headers()).get('x-nonce') ?? '';
+
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics — Replace G-XXXXXXXXXX with your Measurement ID */}
+        {/* Google Analytics — replace G-XXXXXXXXXX with your Measurement ID */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
           strategy="afterInteractive"
+          nonce={nonce}
         />
-        <Script id="ga-init" strategy="afterInteractive">
+        <Script id="ga-init" strategy="afterInteractive" nonce={nonce}>
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

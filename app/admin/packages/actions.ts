@@ -2,6 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { adminAudit } from '@/lib/admin-audit';
 import { journeySchema } from '@/lib/validations/journey-schema';
 import { AdminAuthError, requireAdminAccess } from '@/utils/supabase/admin-auth';
 
@@ -22,7 +23,7 @@ export async function savePackage(_prev: ActionState, formData: FormData): Promi
         }
         throw error;
     }
-    const { supabase } = auth;
+    const { supabase, user } = auth;
 
     // Parse all fields from the raw JSON payload
     let raw: Record<string, unknown>;
@@ -77,6 +78,7 @@ export async function savePackage(_prev: ActionState, formData: FormData): Promi
             console.error('Update error:', error);
             return { errors: { _form: ['Failed to update package. Please try again.'] } };
         }
+        adminAudit('package_update', { packageId: id, slug: payload.slug }, user.email);
     } else {
         const { error } = await supabase.from('packages').insert([payload]);
         if (error) {
@@ -86,6 +88,7 @@ export async function savePackage(_prev: ActionState, formData: FormData): Promi
             }
             return { errors: { _form: ['Failed to create package. Please try again.'] } };
         }
+        adminAudit('package_create', { slug: payload.slug }, user.email);
     }
 
     revalidatePath('/', 'layout');
@@ -101,7 +104,7 @@ export async function deletePackage(formData: FormData) {
         if (error instanceof AdminAuthError) return;
         throw error;
     }
-    const { supabase } = auth;
+    const { supabase, user } = auth;
 
     // Get the package first to find associated images
     const { data: pkg } = await supabase
@@ -114,16 +117,25 @@ export async function deletePackage(formData: FormData) {
     const pathsToDelete: string[] = [];
     if (pkg) {
         const allUrls = [pkg.image_url, ...(pkg.gallery_images || [])];
+        const marker = '/journey-images/';
         for (const url of allUrls) {
-            if (url && url.includes('journey-images')) {
-                const path = url.split('journey-images/')[1];
-                if (path) pathsToDelete.push(path);
+            if (!url || !url.includes('journey-images')) continue;
+            try {
+                const u = new URL(url);
+                const idx = u.pathname.indexOf(marker);
+                if (idx !== -1) {
+                    pathsToDelete.push(u.pathname.slice(idx + marker.length));
+                }
+            } catch {
+                /* invalid URL */
             }
         }
     }
 
     // Delete the package
     await supabase.from('packages').delete().eq('id', id);
+
+    adminAudit('package_delete', { packageId: id }, user.email);
 
     // Clean up storage (fire and forget)
     if (pathsToDelete.length > 0) {

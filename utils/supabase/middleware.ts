@@ -53,7 +53,7 @@ export async function updateSession(request: NextRequest) {
             return NextResponse.redirect(new URL('/admin/login?error=forbidden', request.url));
         }
 
-        const { createdAt, lastActivityAt } = readAdminSessionTimestamps(
+        const { createdAt, lastActivityAt } = await readAdminSessionTimestamps(
             (name) => request.cookies.get(name)?.value
         );
         const timeout = isSessionExpired(createdAt, lastActivityAt, now);
@@ -63,7 +63,7 @@ export async function updateSession(request: NextRequest) {
             return NextResponse.redirect(new URL('/admin/login?error=session_expired', request.url));
         }
 
-        setAdminSessionCookies(
+        await setAdminSessionCookies(
             (name, value, opts) => supabaseResponse.cookies.set(name, value, opts),
             now,
             createdAt

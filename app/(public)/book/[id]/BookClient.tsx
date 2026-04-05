@@ -24,6 +24,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Separator } from '@/components/ui/separator';
 import { createBooking } from '@/app/(public)/actions/booking';
+import TurnstileWidget from '@/components/TurnstileWidget';
 
 import { Package } from '@/lib/types';
 
@@ -77,6 +78,8 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
     const [bookingId, setBookingId] = useState('');
     const [submitError, setSubmitError] = useState('');
     const [fieldErrors, setFieldErrors] = useState<BookingFieldErrors>({});
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+    const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
 
     const [formData, setFormData] = useState({
         travelDate: '',
@@ -216,6 +219,7 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                 guestCount: formData.guestCount,
                 guestNames: formData.guestNames.map((n) => n.trim()),
                 specialRequests: formData.specialRequests.trim(),
+                turnstileToken: turnstileToken ?? undefined,
             });
 
             if (result.success) {
@@ -587,6 +591,11 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                                         </p>
                                     </div>
                                 </div>
+
+                                <TurnstileWidget
+                                    onToken={(t) => setTurnstileToken(t)}
+                                    onExpire={() => setTurnstileToken(null)}
+                                />
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -621,7 +630,9 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                     ) : (
                         <Button
                             onClick={handleSubmit}
-                            disabled={isSubmitting}
+                            disabled={
+                                isSubmitting || (turnstileEnabled && !turnstileToken)
+                            }
                             className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25"
                         >
                             {isSubmitting ? (

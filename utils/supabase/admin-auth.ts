@@ -1,8 +1,9 @@
 import { cookies } from 'next/headers';
+import { parseCookieTimestamp, signCookieTimestamp } from '@/lib/admin-session-crypto';
 import { createClient } from '@/utils/supabase/server';
 
 export const ADMIN_SESSION_CREATED_AT = 'admin_session_created_at';
-export const ADMIN_LAST_ACTIVITY_AT = 'admin_last_activity_at';
+export const ADMIN_SESSION_LAST_ACTIVITY_AT = 'admin_last_activity_at';
 export const ADMIN_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
 export const ADMIN_ABSOLUTE_TIMEOUT_MS = 8 * 60 * 60 * 1000;
 
@@ -23,37 +24,54 @@ export class AdminAuthError extends Error {
     }
 }
 
-export function getUserRole(user: { user_metadata?: Record<string, unknown>; app_metadata?: Record<string, unknown> } | null): string | null {
+/**
+ * Prefer app_metadata.role (server-controlled). user_metadata.role is user-writable.
+ */
+export function getUserRole(user: {
+    user_metadata?: Record<string, unknown>;
+    app_metadata?: Record<string, unknown>;
+} | null): string | null {
     if (!user) return null;
-    const metadataRole = user.user_metadata?.role;
     const appRole = user.app_metadata?.role;
-    const role = typeof metadataRole === 'string' ? metadataRole : typeof appRole === 'string' ? appRole : null;
+    const metadataRole = user.user_metadata?.role;
+    const role =
+        typeof appRole === 'string'
+            ? appRole
+            : typeof metadataRole === 'string'
+                ? metadataRole
+                : null;
     return role ? role.toLowerCase() : null;
 }
 
-export function isAdminUser(user: { user_metadata?: Record<string, unknown>; app_metadata?: Record<string, unknown> } | null): boolean {
+export function isAdminUser(user: {
+    user_metadata?: Record<string, unknown>;
+    app_metadata?: Record<string, unknown>;
+} | null): boolean {
     return getUserRole(user) === 'admin';
 }
 
-function parseCookieTimestamp(value: string | undefined): number | null {
-    if (!value) return null;
-    const parsed = Number(value);
-    if (!Number.isFinite(parsed) || parsed <= 0) return null;
-    return parsed;
+function getSessionSecret(): string | undefined {
+    return process.env.ADMIN_SESSION_SECRET?.trim();
 }
 
-export function readAdminSessionTimestamps(getCookie: (name: string) => string | undefined) {
+export async function readAdminSessionTimestamps(getCookie: (name: string) => string | undefined) {
     return {
-        createdAt: parseCookieTimestamp(getCookie(ADMIN_SESSION_CREATED_AT)),
-        lastActivityAt: parseCookieTimestamp(getCookie(ADMIN_LAST_ACTIVITY_AT)),
+        createdAt: await parseCookieTimestamp(getCookie(ADMIN_SESSION_CREATED_AT)),
+        lastActivityAt: await parseCookieTimestamp(getCookie(ADMIN_SESSION_LAST_ACTIVITY_AT)),
     };
 }
 
 export function isSessionExpired(createdAt: number | null, lastActivityAt: number | null, now = Date.now()) {
+    const secret = getSessionSecret();
+
     if (!createdAt || !lastActivityAt) {
-        // First request after login may not have our timeout markers yet.
-        // Treat as active and let callers initialize fresh timestamps.
-        return { expired: false as const, reason: null };
+        if (!secret) {
+            return { expired: false as const, reason: null };
+        }
+        if (!createdAt && !lastActivityAt) {
+            return { expired: false as const, reason: null };
+        }
+        return { expired: true as const, reason: 'invalid_cookie' as const };
     }
 
     if (now - createdAt > ADMIN_ABSOLUTE_TIMEOUT_MS) {
@@ -67,7 +85,7 @@ export function isSessionExpired(createdAt: number | null, lastActivityAt: numbe
     return { expired: false as const, reason: null };
 }
 
-export function setAdminSessionCookies(
+export async function setAdminSessionCookies(
     setCookie: (name: string, value: string, options: CookieSetOptions) => void,
     now = Date.now(),
     existingCreatedAt?: number | null,
@@ -81,8 +99,11 @@ export function setAdminSessionCookies(
         maxAge: Math.ceil(ADMIN_ABSOLUTE_TIMEOUT_MS / 1000),
     };
 
-    setCookie(ADMIN_SESSION_CREATED_AT, String(createdAt), baseOptions);
-    setCookie(ADMIN_LAST_ACTIVITY_AT, String(now), {
+    const createdSigned = await signCookieTimestamp(createdAt);
+    const activitySigned = await signCookieTimestamp(now);
+
+    setCookie(ADMIN_SESSION_CREATED_AT, createdSigned, baseOptions);
+    setCookie(ADMIN_SESSION_LAST_ACTIVITY_AT, activitySigned, {
         ...baseOptions,
         maxAge: Math.ceil(ADMIN_IDLE_TIMEOUT_MS / 1000),
     });
@@ -98,7 +119,7 @@ export function clearAdminSessionCookies(clearCookie: (name: string, options: Co
     };
 
     clearCookie(ADMIN_SESSION_CREATED_AT, baseOptions);
-    clearCookie(ADMIN_LAST_ACTIVITY_AT, baseOptions);
+    clearCookie(ADMIN_SESSION_LAST_ACTIVITY_AT, baseOptions);
 }
 
 export async function requireAdminAccess(options?: { touchActivity?: boolean }) {
@@ -117,7 +138,7 @@ export async function requireAdminAccess(options?: { touchActivity?: boolean }) 
     }
 
     const cookieStore = await cookies();
-    const { createdAt, lastActivityAt } = readAdminSessionTimestamps((name) => cookieStore.get(name)?.value);
+    const { createdAt, lastActivityAt } = await readAdminSessionTimestamps((name) => cookieStore.get(name)?.value);
     const timeout = isSessionExpired(createdAt, lastActivityAt);
 
     if (timeout.expired) {
@@ -127,7 +148,7 @@ export async function requireAdminAccess(options?: { touchActivity?: boolean }) 
     }
 
     if (touchActivity) {
-        setAdminSessionCookies(
+        await setAdminSessionCookies(
             (name, value, opts) => cookieStore.set(name, value, opts),
             Date.now(),
             createdAt,

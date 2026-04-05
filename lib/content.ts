@@ -10,7 +10,7 @@ export const heroContent = {
         {
             id: 1,
             headline: 'Private Journeys Across Sri Lanka, the Maldives & Beyond',
-            subtext: 'Thoughtfully curated travel with handpicked stays and trusted local expertise — designed around you.',
+            subtext: 'Thoughtfully curated travel with handpicked stays and trusted local expertise, designed around you.',
             tag: 'DESIGNED AROUND YOU',
             buttons: [
                 { label: 'Start Planning', href: '/plan-your-trip', primary: true },
@@ -125,14 +125,14 @@ export const travelStyleContent = {
     tiles: [
         {
             heading: 'Culture & Heritage',
-            description: 'Ancient kingdoms, temples, and colonial towns — explored privately, with depth and space to absorb every moment.',
+            description: 'Ancient kingdoms, temples, and colonial towns , explored privately, with depth and space to absorb every moment.',
             button: 'Explore Cultural Journeys',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 _ Classic Discovery.jpeg',
         },
         {
             heading: 'Wildlife & Wilderness',
-            description: 'Leopards at dawn, elephant gatherings, and boutique safari lodges — immersive nature without the crowds.',
+            description: 'Leopards at dawn, elephant gatherings, and boutique safari lodges, immersive nature without the crowds.',
             button: 'Discover Wildlife Experiences',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 _ Wildlife Expedition.jpeg',
@@ -146,7 +146,7 @@ export const travelStyleContent = {
         },
         {
             heading: 'Romance & Celebrations',
-            description: 'Honeymoons, anniversaries, and milestones — private dining, scenic journeys, and moments designed to remember.',
+            description: 'Honeymoons, anniversaries, and milestones, private dining, scenic journeys, and moments designed to remember.',
             button: 'View Romantic Journeys',
             href: '/journeys',
             image: '/Photos/Other sections/Section 2 Honeymoon.jpg',
@@ -158,15 +158,15 @@ export const travelStyleContent = {
 export const whyAveloraContent = {
     tag: 'The Avelora Difference',
     heading: 'Private Journeys. Beautifully Delivered.',
-    description: 'Avelora Travel designs private journeys across Sri Lanka, the Maldives and beyond — with calm coordination and stays chosen for character, not volume.\nEach itinerary is built around your dates, pace, and priorities, supported by trusted local partners.',
+    description: 'Avelora Travel designs private journeys across Sri Lanka, the Maldives and beyond, with calm coordination and stays chosen for character, not volume.\nEach itinerary is built around your dates, pace, and priorities, supported by trusted local partners.',
     values: [
         {
             title: 'Trusted Expertise',
-            description: 'Local insight and handpicked boutique stays — authentic, comfortable, and considered down to the details.',
+            description: 'Local insight and handpicked boutique stays, authentic, comfortable, and considered down to the details.',
         },
         {
             title: 'Tailored Experiences',
-            description: 'Your pace, your interests, your level of comfort — nothing templated, nothing rushed.',
+            description: 'Your pace, your interests, your level of comfort, nothing templated, nothing rushed.',
         },
         {
             title: 'Seamless Coordination',
@@ -186,7 +186,7 @@ export const whyVeloraContent = whyAveloraContent;
 export const howItWorksContent = {
     tag: 'How It Works',
     heading: 'Effortless, From Start to Finish',
-    subtitle: 'From first ideas to your return home, we handle the details so you can stay present for the experience — across Sri Lanka, the Maldives, or a multi-stop route.',
+    subtitle: 'From first ideas to your return home, we handle the details so you can stay present for the experience, across Sri Lanka, the Maldives, or a multi-stop route.',
     steps: [
         {
             number: '01',
@@ -274,7 +274,7 @@ export const faqContent = {
         },
         {
             q: 'Can I add a Maldives extension after Sri Lanka?',
-            a: 'Yes. Many guests combine Sri Lanka with a Maldives stay — we coordinate timing, transfers, and island resort selection to match your pace and budget.',
+            a: 'Yes. Many guests combine Sri Lanka with a Maldives stay, we coordinate timing, transfers, and island resort selection to match your pace and budget.',
         },
         {
             q: 'Do you plan multi-country itineraries?',
@@ -282,7 +282,7 @@ export const faqContent = {
         },
         {
             q: 'Do you plan honeymoons, anniversaries, and celebrations?',
-            a: 'Yes. Milestones are a speciality — from private dining and spa moments to surprise touches and family-friendly celebration travel, we tailor every detail.',
+            a: 'Yes. Milestones are a speciality, from private dining and spa moments to surprise touches and family-friendly celebration travel, we tailor every detail.',
         },
     ],
 };
@@ -347,7 +347,7 @@ export const testimonialsContent = {
             avatar: 'J',
             rating: 5,
             package: 'Sri Lanka & Maldives',
-            text: 'Avelora stitched together Sri Lanka and the Maldives flawlessly — one timeline, one point of contact, and every transfer felt calm and clear.',
+            text: 'Avelora stitched together Sri Lanka and the Maldives flawlessly, one timeline, one point of contact, and every transfer felt calm and clear.',
         },
     ],
 };
@@ -408,21 +408,21 @@ export const startPlanningContent = {
 export const privateTravelPromiseContent = {
     tag: 'Our Promise',
     heading: 'The Avelora Promise',
-    subtitle: 'Private journeys that feel calm, personal, and unmistakably yours — from Sri Lanka’s hills to Maldives lagoons and beyond.',
+    subtitle: 'Private journeys that feel calm, personal, and unmistakably yours, from Sri Lanka’s hills to Maldives lagoons and beyond.',
     promises: [
-        'Privately curated — never fixed-date group tours',
+        'Privately curated, never fixed-date group tours',
         'Flexible dates and pacing shaped around you',
         'Handpicked stays and experiences that match your style',
         'Discreet local support from planning through travel',
     ],
-    tagline: 'Travel as you wish — calm, seamless and deeply personal.',
+    tagline: 'Travel as you wish, calm, seamless and deeply personal.',
 };
 
 // ── DESTINATIONS (MAP) SECTION ───────────────────────────────────────────────
 export const destinationsContent = {
     tag: 'Our Destinations',
     heading: 'Explore Sri Lanka, Then Go Beyond',
-    subtitle: 'Start with Sri Lanka by province — then let us layer in the Maldives or multi-country routes.',
+    subtitle: 'Start with Sri Lanka by province, then let us layer in the Maldives or multi-country routes.',
     emptyState: {
         title: 'Explore Sri Lanka',
         description: 'Tap any province on the map or a label above to discover its destinations and curated experiences.',
@@ -526,7 +526,7 @@ export const destinationsContent = {
 export const signatureJourneysContent = {
     tag: 'Curated Journeys',
     heading: 'Signature Private Journeys',
-    subtitle: 'Each itinerary is a starting point — privately curated and fully customisable to your dates, style, and destinations.',
+    subtitle: 'Each itinerary is a starting point, privately curated and fully customisable to your dates, style, and destinations.',
     journeys: [
         {
             title: 'Avelora Serendipity',
@@ -601,7 +601,7 @@ export const aboutPageContent = {
         },
         {
             title: 'Our Vision',
-            content: 'To redefine how travellers experience Sri Lanka, the Maldives, and the wider region — through thoughtful design, personalised service, and meaningful cultural connection. We believe luxury is not defined by excess. It is defined by seamless coordination, attention to detail, authentic encounters, trusted partnerships, and space to travel at your own pace.',
+            content: 'To redefine how travellers experience Sri Lanka, the Maldives, and the wider region, through thoughtful design, personalised service, and meaningful cultural connection. We believe luxury is not defined by excess. It is defined by seamless coordination, attention to detail, authentic encounters, trusted partnerships, and space to travel at your own pace.',
         },
         {
             title: 'Our Approach',
@@ -671,7 +671,7 @@ export const bookingPageContent = {
     reserveSection: {
         tag: 'How It Works',
         heading: 'Reserve Your Journey with Confidence',
-        subtitle: 'Book Now, Pay As You Go — our process is built around flexibility and transparency.',
+        subtitle: 'Book Now, Pay As You Go, our process is built around flexibility and transparency.',
     },
     sections: [
         {
@@ -814,7 +814,7 @@ export const packageDetailContent = {
         'Entrance fees and experience inclusions are as specified in your personalised itinerary.',
         'Avelora Travel reserves the right to substitute equivalent or higher-standard alternatives where necessary.',
         'Travel insurance is strongly recommended for all travellers.',
-        'Visa requirements should be confirmed ahead of travel — our team is happy to advise.',
+        'Visa requirements should be confirmed ahead of travel, our team is happy to advise.',
     ],
     relatedJourneysTitle: 'You May Also Love',
     relatedJourneysSubtitle: 'Explore more of our privately curated journeys across Sri Lanka, the Maldives and beyond.',

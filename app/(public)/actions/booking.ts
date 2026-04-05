@@ -3,24 +3,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { getPackageById } from '@/lib/data';
 import { sendBookingEmails } from '@/lib/email';
+import { generateBookingRef } from '@/lib/booking-ref';
+import { createBookingInputSchema } from '@/lib/validations/public-booking';
+import { verifyTurnstileToken } from '@/lib/verify-turnstile';
 
-function generateBookingRef(): string {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let ref = '';
-    for (let i = 0; i < 6; i++) {
-        ref += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return `VJ-${ref}`;
-}
+const GENERIC_ERROR = 'Unable to complete your booking. Please try again or contact us.';
 
 // Use service-role client so public (non-authenticated) visitors can insert bookings.
-// The normal SSR client uses anon key + cookie-based auth, which means public visitors
-// have no auth session — the insert gets silently rejected by competing RLS policies.
 function getAdminClient() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
+    if (!url || !key) return null;
+    return createClient(url, key);
 }
 
 export async function createBooking(formData: {
@@ -29,6 +23,7 @@ export async function createBooking(formData: {
     guestCount: number;
     guestNames: string[];
     specialRequests: string;
+    turnstileToken?: string;
 }) {
     if (!process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()) {
         console.error('createBooking: SUPABASE_SERVICE_ROLE_KEY is not set');
@@ -38,41 +33,54 @@ export async function createBooking(formData: {
         };
     }
 
-    // Look up the package title from dynamic data
-    const pkg = await getPackageById(formData.packageId);
+    const parsed = createBookingInputSchema.safeParse(formData);
+    if (!parsed.success) {
+        console.error('createBooking validation:', parsed.error.flatten());
+        return { success: false, error: GENERIC_ERROR };
+    }
+
+    const { turnstileToken, ...data } = parsed.data;
+    const turnstile = await verifyTurnstileToken(turnstileToken);
+    if (!turnstile.ok) {
+        return { success: false, error: 'Security check failed. Please refresh and try again.' };
+    }
+
+    const pkg = await getPackageById(data.packageId);
     const packageTitle = pkg?.title ?? 'Unknown Package';
 
-    const bookingRef = generateBookingRef();
+    const bookingRef = generateBookingRef('VJ');
 
     const supabase = getAdminClient();
+    if (!supabase) {
+        console.error('createBooking: Supabase admin client unavailable');
+        return { success: false, error: 'Booking service is not configured. Please contact support.' };
+    }
 
     const { error } = await supabase.from('bookings').insert({
         booking_ref: bookingRef,
-        package_id: formData.packageId,
+        package_id: data.packageId,
         package_title: packageTitle,
-        travel_date: formData.travelDate,
-        guest_count: formData.guestCount,
-        guest_names: formData.guestNames.filter((n) => n.trim()),
-        special_requests: formData.specialRequests || null,
+        travel_date: data.travelDate,
+        guest_count: data.guestCount,
+        guest_names: data.guestNames.filter((n) => n.trim()),
+        special_requests: data.specialRequests || null,
         status: 'pending',
     });
 
     if (error) {
         console.error('Booking insert error:', error);
-        return { success: false, error: error.message };
+        return { success: false, error: GENERIC_ERROR };
     }
 
-    // Send emails in the background — do not await. Awaiting Resend can hang or take
-    // a long time and leaves the client stuck on "submitting" with no response.
-    const leadGuestName = formData.guestNames.find((n) => n.trim()) || 'Guest';
+    const leadGuestName = data.guestNames.find((n) => n.trim()) || 'Guest';
     void sendBookingEmails({
         customerEmail: '',
         customerName: leadGuestName,
         bookingRef,
         packageTitle,
-        travelDate: formData.travelDate,
-        guestCount: formData.guestCount,
-        specialRequests: formData.specialRequests || undefined,
+        travelDate: data.travelDate,
+        guestCount: data.guestCount,
+        specialRequests: data.specialRequests || undefined,
     }).catch((err) => console.error('Background booking email error:', err));
 
     return {

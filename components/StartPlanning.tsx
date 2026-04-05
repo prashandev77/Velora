@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, Send, Loader2 } from 'lucide-react';
 import { startPlanningContent } from '@/lib/content';
 import { submitInquiry } from '@/app/(public)/plan-your-trip/actions';
+import TurnstileWidget from '@/components/TurnstileWidget';
 import {
     getEmailErrorMessage,
     getPhoneErrorMessage,
@@ -35,6 +36,9 @@ export default function StartPlanning() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [submitError, setSubmitError] = useState('');
     const [nameError, setNameError] = useState('');
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+    const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+    const honeypotRef = useRef<HTMLInputElement>(null);
 
     const emailError = useMemo(() => getEmailErrorMessage(email), [email]);
     const phoneError = useMemo(() => getPhoneErrorMessage(phone), [phone]);
@@ -63,6 +67,7 @@ export default function StartPlanning() {
             return;
         }
         if (!isFormValid) return;
+        if (turnstileEnabled && !turnstileToken) return;
 
         setIsSubmitting(true);
 
@@ -75,6 +80,8 @@ export default function StartPlanning() {
         fd.set('duration', tripLength);
         fd.set('experiences', selectedStyles.join(', '));
         fd.set('num_travelers', travellers);
+        fd.set('cf-turnstile-response', turnstileToken ?? '');
+        fd.set('website', honeypotRef.current?.value ?? '');
         const extraLines: string[] = [];
         if (destinationInterest.trim()) extraLines.push(`Destination interest: ${destinationInterest.trim()}`);
         if (budgetRange) extraLines.push(`Budget range: ${budgetRange}`);
@@ -156,6 +163,15 @@ export default function StartPlanning() {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="bg-[#F7F5F2] border border-stone-200 rounded-3xl p-8 md:p-10 max-w-4xl mx-auto"
                 >
+                    <input
+                        ref={honeypotRef}
+                        type="text"
+                        name="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden"
+                        aria-hidden="true"
+                    />
                     {submitError && (
                         <div className="mb-6 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
                             {submitError}
@@ -387,11 +403,20 @@ export default function StartPlanning() {
                         </div>
                     </div>
 
+                    <TurnstileWidget
+                        onToken={(t) => setTurnstileToken(t)}
+                        onExpire={() => setTurnstileToken(null)}
+                    />
+
                     {/* Submit */}
                     <div className="text-center">
                         <button
                             type="submit"
-                            disabled={isSubmitting || !isFormValid}
+                            disabled={
+                                isSubmitting ||
+                                !isFormValid ||
+                                (turnstileEnabled && !turnstileToken)
+                            }
                             className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-base px-10 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/25 hover:scale-[1.02] group disabled:opacity-40 disabled:pointer-events-none disabled:hover:scale-100"
                         >
                             {isSubmitting ? (

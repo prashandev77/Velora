@@ -9,12 +9,9 @@ const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   // Disable browser features not needed by this app
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), browsing-topics=()' },
-  // Force HTTPS for 1 year (only active on HTTPS; safe to include for Vercel)
-  { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
-  // Basic XSS protection for older browsers
-  { key: 'X-XSS-Protection', value: '1; mode=block' },
-  // Start with report-only CSP to avoid breaking existing inline patterns.
-  { key: 'Content-Security-Policy-Report-Only', value: "default-src 'self'; base-uri 'self'; frame-ancestors 'self'; object-src 'none'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co; font-src 'self' data: https:;" },
+  // Force HTTPS (add preload after submitting domain to hstspreload.org)
+  { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
+  // Enforced CSP with per-request nonce is set in middleware.ts (no unsafe-eval).
 ];
 
 const nextConfig: NextConfig = {

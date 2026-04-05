@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Send,
@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import Link from 'next/link';
+import TurnstileWidget from '@/components/TurnstileWidget';
 import { submitInquiry } from './actions';
 import {
     getEmailErrorMessage,
@@ -71,6 +72,9 @@ export default function PlanYourTripPage() {
     const [direction, setDirection] = useState(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+    const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+    const honeypotRef = useRef<HTMLInputElement>(null);
 
     const [formData, setFormData] = useState({
         // Step 1
@@ -136,6 +140,9 @@ export default function PlanYourTripPage() {
         ) {
             return;
         }
+        if (turnstileEnabled && !turnstileToken) {
+            return;
+        }
         setIsSubmitting(true);
         const fd = new FormData();
         fd.set('name', formData.fullName);
@@ -147,6 +154,8 @@ export default function PlanYourTripPage() {
         fd.set('experiences', formData.selectedStyles.join(', '));
         fd.set('num_travelers', formData.travellers);
         fd.set('message', formData.message);
+        fd.set('cf-turnstile-response', turnstileToken ?? '');
+        fd.set('website', honeypotRef.current?.value ?? '');
 
         const result = await submitInquiry(fd);
         if (result && typeof result === 'object' && 'success' in result && result.success === false) {
@@ -369,6 +378,16 @@ export default function PlanYourTripPage() {
                                             className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-300 focus:border-gold/60"
                                         />
                                     </div>
+                                    {/* Honeypot — leave empty */}
+                                    <input
+                                        ref={honeypotRef}
+                                        type="text"
+                                        name="website"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        className="absolute opacity-0 pointer-events-none h-0 w-0 overflow-hidden"
+                                        aria-hidden="true"
+                                    />
                                 </div>
                             </motion.div>
                         )}
@@ -511,6 +530,11 @@ export default function PlanYourTripPage() {
                                     className="bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400 focus:border-gold/60 resize-none"
                                 />
 
+                                <TurnstileWidget
+                                    onToken={(t) => setTurnstileToken(t)}
+                                    onExpire={() => setTurnstileToken(null)}
+                                />
+
                                 {/* Summary Preview */}
                                 <div className="mt-6 p-5 rounded-2xl bg-stone-50/80 border border-stone-100">
                                     <h4 className="text-stone-800 font-semibold text-sm mb-3">Journey Summary</h4>
@@ -576,7 +600,11 @@ export default function PlanYourTripPage() {
                             <Button
                                 type="button"
                                 onClick={handleSubmit}
-                                disabled={isSubmitting || !canProceed()}
+                                disabled={
+                                    isSubmitting ||
+                                    !canProceed() ||
+                                    (turnstileEnabled && !turnstileToken)
+                                }
                                 className="bg-stone-900 hover:bg-gold text-white font-semibold px-8 py-6 rounded-xl transition-all hover:shadow-lg disabled:opacity-40"
                             >
                                 {isSubmitting ? (

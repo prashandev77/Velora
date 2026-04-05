@@ -2,15 +2,10 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { sendBookingEmails } from '@/lib/email';
+import { generateBookingRef } from '@/lib/booking-ref';
+import { verifyTurnstileToken } from '@/lib/verify-turnstile';
 
-function generateBookingRef(): string {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let ref = '';
-    for (let i = 0; i < 6; i++) {
-        ref += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return `AT-${ref}`;
-}
+const GENERIC_ERROR = 'Unable to submit your enquiry. Please try again or contact us.';
 
 // Service-role client — bypasses RLS so public visitors can insert
 function getAdminClient() {
@@ -24,6 +19,18 @@ export async function submitInquiry(formData: FormData) {
     if (!process.env.SUPABASE_SERVICE_ROLE_KEY?.trim()) {
         console.error('submitInquiry: SUPABASE_SERVICE_ROLE_KEY is not set');
         return { success: false, error: 'Service not configured.' };
+    }
+
+    const honeypot = (formData.get('website') as string | null) ?? '';
+    if (honeypot.trim() !== '') {
+        console.warn('[security] Honeypot triggered on submitInquiry');
+        return { success: true };
+    }
+
+    const turnstileToken = formData.get('cf-turnstile-response') as string | null;
+    const turnstile = await verifyTurnstileToken(turnstileToken);
+    if (!turnstile.ok) {
+        return { success: false, error: 'Security check failed. Please refresh and try again.' };
     }
 
     const supabase = getAdminClient();
@@ -43,7 +50,7 @@ export async function submitInquiry(formData: FormData) {
     const numTravelers = (formData.get('num_travelers') as string) || null;
     const message = (formData.get('message') as string) || null;
 
-    const bookingRef = generateBookingRef();
+    const bookingRef = generateBookingRef('AT');
 
     const parsedGuests = numTravelers ? parseInt(numTravelers, 10) : NaN;
     const guestCount =
@@ -67,7 +74,7 @@ export async function submitInquiry(formData: FormData) {
 
         if (error) {
             console.error('Booking insert error:', error.message);
-            return { success: false, error: error.message };
+            return { success: false, error: GENERIC_ERROR };
         }
 
         void sendBookingEmails({
@@ -86,7 +93,7 @@ export async function submitInquiry(formData: FormData) {
         console.error('submitInquiry:', err);
         return {
             success: false,
-            error: err instanceof Error ? err.message : 'Something went wrong.',
+            error: GENERIC_ERROR,
         };
     }
 }
