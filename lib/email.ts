@@ -11,8 +11,8 @@ function getResend(): Resend | null {
     return resendClient;
 }
 
-const BUSINESS_EMAIL = process.env.BUSINESS_NOTIFICATION_EMAIL?.trim() || 'hello@aveloratravel.com';
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL?.trim() || 'Avelora Travel <hello@aveloratravel.com>';
+const BUSINESS_EMAIL = process.env.BUSINESS_NOTIFICATION_EMAIL?.trim() || 'travel@aveloratravel.com.au';
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL?.trim() || 'Avelora Travel <travel@aveloratravel.com.au>';
 
 function siteBaseUrl(): string {
     return (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');

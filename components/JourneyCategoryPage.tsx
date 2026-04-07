@@ -170,7 +170,7 @@ export default async function JourneyCategoryPage({
                         design something perfect.
                     </p>
                     <Link href="/plan-your-trip">
-                        <Button className="bg-gold hover:bg-gold-dark text-deep font-semibold px-8 py-6 text-base rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25">
+                        <Button variant="gold" size="lg" className="h-auto min-h-14 px-8 py-6 text-base shadow-lg">
                             Plan Your Journey
                         </Button>
                     </Link>

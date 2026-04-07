@@ -39,7 +39,8 @@ const fadeUp = {
     transition: { duration: 0.6, ease: [0, 0, 0.58, 1] as const },
 };
 
-const pricing: Record<number, string> = {
+/** Fallback when `priceFromAud` is not set in the database (legacy behaviour). */
+const legacyPricingByDays: Record<number, string> = {
     8: '1,950',
     11: '5,450',
     12: '7,450',
@@ -47,6 +48,10 @@ const pricing: Record<number, string> = {
     17: '6,950',
     20: '6,200',
 };
+
+function formatAudFromDollars(amount: number): string {
+    return amount.toLocaleString('en-AU', { maximumFractionDigits: 0 });
+}
 
 export default function PackageDetail({ 
     pkg, 
@@ -76,7 +81,10 @@ export default function PackageDetail({
 
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-    const price = pricing[pkg.days];
+    const price =
+        pkg.priceFromAud != null && pkg.priceFromAud >= 0
+            ? formatAudFromDollars(pkg.priceFromAud)
+            : legacyPricingByDays[pkg.days];
 
     // Auto-slider for the photo gallery
     useEffect(() => {
@@ -608,7 +616,7 @@ export default function PackageDetail({
                                 </div>
                                 <div>
                                     <p className="text-stone-800 text-sm font-medium mb-1">Balance Due</p>
-                                    <p className="text-stone-500 text-xs leading-relaxed">Remaining balance payable 14 days prior to arrival in Sri Lanka.</p>
+                                    <p className="text-stone-500 text-xs leading-relaxed">The remaining balance is payable 14 days prior to departure or as otherwise stated in your booking confirmation.</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-3">

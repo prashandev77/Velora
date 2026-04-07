@@ -44,6 +44,13 @@ export const journeySchema = z.object({
         .int('Must be a whole number')
         .min(1, 'Minimum 1 day')
         .max(60, 'Maximum 60 days'),
+    /** Whole Australian dollars; omit or null to hide unless legacy map matches days */
+    priceFromAud: z
+        .union([
+            z.number().int().min(0, 'Price cannot be negative').max(99_999_999),
+            z.null(),
+        ])
+        .optional(),
     tag: z
         .string()
         .min(2, 'Tag is required')

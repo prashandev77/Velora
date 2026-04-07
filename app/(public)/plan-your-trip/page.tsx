@@ -191,7 +191,7 @@ export default function PlanYourTripPage() {
                         will be in touch within 24 hours to start crafting your perfect journey.
                     </p>
                     <Link href="/">
-                        <Button className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl">
+                        <Button variant="gold" size="lg">
                             Return Home
                         </Button>
                     </Link>
@@ -589,9 +589,10 @@ export default function PlanYourTripPage() {
                         {step < TOTAL_STEPS - 1 ? (
                             <Button
                                 type="button"
+                                variant="gold"
+                                size="lg"
                                 onClick={goNext}
                                 disabled={!canProceed()}
-                                className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 disabled:opacity-40"
                             >
                                 Continue
                                 <ChevronRight className="w-4 h-4 ml-1" />
@@ -599,13 +600,15 @@ export default function PlanYourTripPage() {
                         ) : (
                             <Button
                                 type="button"
+                                variant="onyx"
+                                size="lg"
+                                className="h-auto min-h-14 px-8 py-6"
                                 onClick={handleSubmit}
                                 disabled={
                                     isSubmitting ||
                                     !canProceed() ||
                                     (turnstileEnabled && !turnstileToken)
                                 }
-                                className="bg-stone-900 hover:bg-gold text-white font-semibold px-8 py-6 rounded-xl transition-all hover:shadow-lg disabled:opacity-40"
                             >
                                 {isSubmitting ? (
                                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

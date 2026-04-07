@@ -11,7 +11,7 @@ function getPublicSupabase(): SupabaseClient | null {
     return createClient(url, key);
 }
 
-const PACKAGE_COLUMNS = 'id,slug,category,title,location,days,image_url,tag,subtitle,travel_style,description,accommodation,highlights,why_special,perfect_for,route,route_coords,included,not_included,itinerary,gallery_images,is_active,created_at';
+const PACKAGE_COLUMNS = 'id,slug,category,title,location,days,price_from_aud,image_url,tag,subtitle,travel_style,description,accommodation,highlights,why_special,perfect_for,route,route_coords,included,not_included,itinerary,gallery_images,is_active,created_at';
 const PACKAGE_ROUTE_COLUMNS = 'id,slug,category';
 
 type DbPackage = {
@@ -21,6 +21,7 @@ type DbPackage = {
     title: string;
     location: string;
     days: number;
+    price_from_aud: number | null;
     image_url: string;
     tag: string;
     subtitle: string | null;
@@ -46,6 +47,7 @@ export function mapDbToPackage(dbPkg: DbPackage): Package {
         title: dbPkg.title,
         location: dbPkg.location,
         days: dbPkg.days,
+        priceFromAud: dbPkg.price_from_aud,
         image_url: dbPkg.image_url,
         tag: dbPkg.tag,
         subtitle: dbPkg.subtitle ?? undefined,

@@ -70,6 +70,7 @@ export default function Hero() {
                     </motion.div>
 
                     {/* Deepened gradient for premium feel and text readability */}
+                    <div className="absolute inset-0 bg-black/20" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
                 </motion.div>

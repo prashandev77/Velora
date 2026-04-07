@@ -36,11 +36,10 @@ export default function DestinationsPage() {
                         Where We Travel
                     </span>
                     <h1 className="font-heading text-5xl md:text-7xl font-bold text-stone-900 mt-4 mb-6">
-                        Our <span className="text-gold">Destinations</span>
+                        Discover <span className="text-gold">Our Destinations</span>
                     </h1>
                     <p className="text-stone-500 text-lg max-w-2xl mx-auto">
-                        Two extraordinary destinations, each offering a world of discovery.
-                        Together, they create the ultimate multi-destination journey.
+                        Sri Lanka and the Maldives are at the heart of Avelora Travel, with selected extensions available for travellers seeking a broader Indian Ocean or multi-country journey.
                     </p>
                 </div>
             </section>

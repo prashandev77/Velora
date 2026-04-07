@@ -44,6 +44,7 @@ export default function Footer() {
                         </Link>
                         <p className="text-stone-400 text-sm leading-relaxed max-w-sm mb-6">
                             {footerContent.description.split('\n')[0]}
+                            <br />
                             {footerContent.description.split('\n')[1]}
                         </p>
                         <div className="flex flex-col gap-3 text-sm text-stone-400">

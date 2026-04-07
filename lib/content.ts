@@ -82,11 +82,11 @@ export const navbarContent = {
 
 // ── FOOTER ───────────────────────────────────────────────────────────────────
 export const footerContent = {
-    description: 'Privately curated journeys across Sri Lanka, the Maldives and beyond.\nDesigned Around You.',
+    description: 'Privately curated journeys across Sri Lanka, the Maldives & beyond.\nAustralian-Based Travel Company',
     contact: {
-        location: 'Sydney, Australia',
-        email: 'hello@aveloratravel.com',
-        phone: '+61 2 1234 5678',
+        location: 'Melbourne, Australia',
+        email: 'travel@aveloratravel.com.au',
+        phone: '+61 472 726 456',
     },
     links: {
         journeys: [
@@ -120,8 +120,8 @@ export const footerContent = {
 // ── TRAVEL STYLE SECTION ─────────────────────────────────────────────────────
 export const travelStyleContent = {
     tag: 'Travel by Style',
-    heading: 'Four Distinct Ways to Travel with Avelora',
-    subtitle: 'From Sri Lanka’s cultural heart to Maldives lagoons and multi-country routes, each journey is privately shaped around how you like to travel.',
+    heading: 'How You Can Travel with Avelora',
+    subtitle: 'From Sri Lanka’s cultural heart to Maldives lagoons, each journey is privately designed around your travel style, pace and preferences.',
     tiles: [
         {
             heading: 'Culture & Heritage',
@@ -266,7 +266,7 @@ export const faqContent = {
         },
         {
             q: 'How do payments work?',
-            a: 'A 20% deposit is required to confirm your journey. The remaining balance is payable 14 days prior to arrival in Sri Lanka. Full payment instructions will be provided in your booking confirmation.',
+            a: 'A 20% deposit is required to confirm your journey. The remaining balance is payable 14 days prior to departure or as otherwise stated in your booking confirmation. Full payment instructions will be provided in your booking confirmation.',
         },
         {
             q: 'Do you arrange international flights?',
@@ -306,7 +306,7 @@ export const testimonialsContent = {
             location: 'Melbourne',
             avatar: 'A',
             rating: 5,
-            package: 'Avelora Serendipity',
+            package: 'Avelora Discovery',
             text: 'I\'ve traveled extensively, but this journey was on another level. The private sunrise climb of Sigiriya and the train through tea country, every moment felt curated just for me.',
         },
         {
@@ -314,7 +314,7 @@ export const testimonialsContent = {
             location: 'Brisbane',
             avatar: 'E',
             rating: 5,
-            package: 'Avelora Honeymoon',
+            package: 'Avelora Romance',
             text: 'Our honeymoon exceeded every dream. The sunset beach walk and private coastal dining were moments we\'ll treasure forever. Avelora made it all effortless.',
         },
         {
@@ -421,10 +421,10 @@ export const privateTravelPromiseContent = {
 // ── DESTINATIONS (MAP) SECTION ───────────────────────────────────────────────
 export const destinationsContent = {
     tag: 'Our Destinations',
-    heading: 'Explore Sri Lanka, Then Go Beyond',
-    subtitle: 'Start with Sri Lanka by province, then let us layer in the Maldives or multi-country routes.',
+    heading: 'Explore Sri Lanka, the Maldives & Beyond',
+    subtitle: 'From Sri Lanka’s cultural heart and wildlife landscapes to Maldives island escapes. Avelora designs journeys that can begin with one destination or combine several seamlessly.',
     emptyState: {
-        title: 'Explore Sri Lanka',
+            title: 'Explore Destinations',
         description: 'Tap any province on the map or a label above to discover its destinations and curated experiences.',
     },
     ctaPrimary: 'Plan a Journey Here',
@@ -529,7 +529,7 @@ export const signatureJourneysContent = {
     subtitle: 'Each itinerary is a starting point, privately curated and fully customisable to your dates, style, and destinations.',
     journeys: [
         {
-            title: 'Avelora Serendipity',
+            title: 'Avelora Discovery',
             duration: '8 Days',
             tags: 'Culture • Highlands • Wildlife • Coast',
             description: 'A beautifully balanced introduction to Sri Lanka, blending ancient heritage, misty tea country and the island\'s golden southern coast.',
@@ -547,7 +547,7 @@ export const signatureJourneysContent = {
             href: '/journeys/luxury/avelora-signature',
         },
         {
-            title: 'Avelora Honeymoon',
+            title: 'Avelora Romance',
             duration: '12 Days',
             tags: 'Romance • Tea Country • Safari • Ocean',
             description: 'A romantic journey through Sri Lanka\'s most beautiful settings, combining scenic train rides, wildlife safaris and luxury oceanfront stays.',
@@ -591,7 +591,7 @@ export const journeysPageContent = {
 export const aboutPageContent = {
     tag: 'About Avelora Travel',
     heading: 'Travel, Thoughtfully Curated',
-    heroDescription: 'Avelora Travel was founded with a simple belief: truly memorable travel should feel personal, seamless, and deeply meaningful. We specialise in privately curated journeys across Sri Lanka, the Maldives and beyond, blending refined comfort with authentic local experiences.',
+    heroDescription: 'Avelora Travel, an Australian-based travel company, was founded with a simple belief: truly memorable travel should feel personal, seamless, and deeply meaningful. We specialise in privately curated journeys across Sri Lanka, the Maldives and beyond, blending refined comfort with authentic local experiences.',
     heroImage: '/Photos/Other sections/About Page.jpeg',
     introText: 'Every itinerary we design is tailored around you, your pace, your interests, your preferred travel dates. We do not operate fixed group tours. We craft journeys exclusively for individuals, couples, families, and small private groups seeking a more considered way to travel.',
     sections: [
@@ -629,19 +629,19 @@ export const contactPageContent = {
     phone: {
         title: 'Call or WhatsApp',
         description: 'We are available 24/7 for urgent inquiries.',
-        number: '+61 2 1234 5678',
-        href: 'tel:+61212345678',
+        number: '+61 472 726 456',
+        href: 'tel:+61472726456',
     },
     email: {
         title: 'Email Us',
         description: 'Our team typically replies within 24 hours.',
-        address: 'hello@aveloratravel.com',
-        href: 'mailto:hello@aveloratravel.com',
+        address: 'travel@aveloratravel.com.au',
+        href: 'mailto:travel@aveloratravel.com.au',
     },
     office: {
         title: 'Office Location',
         description: 'Visits by appointment only.',
-        address: ['123 Serenity Drive,', 'Sydney, NSW,', 'Australia'],
+        address: ['Melbourne,', 'Australia'],
     },
     cta: {
         heading: 'Ready to design your journey?',
@@ -680,7 +680,7 @@ export const bookingPageContent = {
         },
         {
             title: 'Final Balance Before Arrival',
-            body: 'The remaining 80% balance is payable 14 days prior to your arrival in Sri Lanka, unless otherwise stated in your booking confirmation.',
+            body: 'The remaining balance is payable 14 days prior to departure or as otherwise stated in your booking confirmation.',
         },
         {
             title: 'Flexible & Personalised Planning',
@@ -704,7 +704,7 @@ export const bookingPageContent = {
         },
         {
             title: 'Local Travel Partners',
-            body: 'Avelora Travel works with licensed local travel providers in Sri Lanka to deliver travel services including accommodation, transport, and guided experiences.',
+            body: 'Avelora Travel works with carefully selected, licensed local partners across our destination network, including Sri Lanka, the Maldives, and other curated extensions.',
         },
     ],
     paymentMethods: {
@@ -723,7 +723,7 @@ export const bookingPageContent = {
     },
     cta: {
         heading: 'Ready to Plan Your Journey?',
-        subtitle: 'Speak with our team and start designing your privately curated Sri Lanka experience today.',
+        subtitle: 'Speak with our team and start designing your privately curated journey today.',
         buttonText: 'Plan Your Journey',
     },
 };
@@ -796,8 +796,8 @@ export const privacyPageContent = {
         {
             title: 'Contact',
             body: 'If you have any questions regarding this Privacy Policy, please contact us at:',
-            email: 'hello@aveloratravel.com',
-            emailHref: 'mailto:hello@aveloratravel.com',
+            email: 'travel@aveloratravel.com.au',
+            emailHref: 'mailto:travel@aveloratravel.com.au',
         },
     ],
 };

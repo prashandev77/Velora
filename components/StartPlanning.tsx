@@ -7,6 +7,7 @@ import { ArrowRight, Check, Send, Loader2 } from 'lucide-react';
 import { startPlanningContent } from '@/lib/content';
 import { submitInquiry } from '@/app/(public)/plan-your-trip/actions';
 import TurnstileWidget from '@/components/TurnstileWidget';
+import { Button } from '@/components/ui/button';
 import {
     getEmailErrorMessage,
     getPhoneErrorMessage,
@@ -410,14 +411,16 @@ export default function StartPlanning() {
 
                     {/* Submit */}
                     <div className="text-center">
-                        <button
+                        <Button
                             type="submit"
+                            variant="gold"
+                            size="lg"
                             disabled={
                                 isSubmitting ||
                                 !isFormValid ||
                                 (turnstileEnabled && !turnstileToken)
                             }
-                            className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-base px-10 py-4 rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/25 hover:scale-[1.02] group disabled:opacity-40 disabled:pointer-events-none disabled:hover:scale-100"
+                            className="h-auto min-h-12 rounded-full px-10 py-4 text-base shadow-xl hover:scale-[1.02] hover:shadow-2xl group disabled:hover:scale-100"
                         >
                             {isSubmitting ? (
                                 <>
@@ -431,7 +434,7 @@ export default function StartPlanning() {
                                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                                 </>
                             )}
-                        </button>
+                        </Button>
                         <p className="text-stone-500 text-xs mt-5 tracking-wide">
                             {startPlanningContent.submitFooter}
                         </p>

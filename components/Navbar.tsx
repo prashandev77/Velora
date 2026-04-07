@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import NavbarAveloraLogo from '@/components/NavbarAveloraLogo';
 import { navbarContent } from '@/lib/content';
 
@@ -39,6 +40,7 @@ export default function Navbar() {
 
     // Fixed transparent bar over dark hero: white nav links + white “Travel” in logo
     const navOverDarkHero = !isScrolled && !forceDark;
+    const isHomeHeroState = pathname === '/' && navOverDarkHero;
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -52,6 +54,7 @@ export default function Navbar() {
     return (
         <>
             <motion.header
+                id="site-navbar"
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -65,10 +68,13 @@ export default function Navbar() {
                         : 'bg-white/10 backdrop-blur-md border-b md:border border-white/15'
                     }`}
             >
-                <nav className="flex items-center justify-between px-4 md:px-6 py-3">
+                <nav className="navbar-site-inner flex items-center justify-between py-3">
                     {/* Logo */}
                     <Link href="/" onClick={closeMenu} className="flex items-center shrink-0">
-                        <NavbarAveloraLogo whiteTravelText={navOverDarkHero} />
+                        <NavbarAveloraLogo
+                            whiteTravelText={navOverDarkHero}
+                            className={isHomeHeroState ? 'h-[52px] md:h-[62px] w-[185px] md:w-[240px]' : undefined}
+                        />
                     </Link>
 
                     {/* Desktop Nav */}
@@ -88,12 +94,27 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* Desktop CTA */}
-                    <div className="hidden md:flex items-center">
-                        <Link href="/plan-your-trip">
-                            <Button className="bg-gold hover:bg-gold-dark text-deep font-semibold text-sm px-5 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-gold/25">
-                                {navbarContent.ctaLabel}
-                                <ChevronRight className="w-4 h-4 ml-1" />
+                    {/* Desktop CTA — modern pill: gradient, depth, chevron nudge */}
+                    <div className="hidden md:flex items-center shrink-0 pl-2 pr-4 md:pr-5">
+                        <Link href="/plan-your-trip" className="group/nav-cta inline-flex">
+                            <Button
+                                variant="gold"
+                                size="sm"
+                                className={cn(
+                                    'relative h-9 min-h-9 overflow-hidden rounded-full border border-white/30',
+                                    'bg-gradient-to-br from-gold-light via-gold to-gold-dark text-deep',
+                                    'pl-[1.125rem] pr-3.5 text-[13px] font-semibold tracking-wide shadow-[0_4px_20px_-2px_rgba(200,155,70,0.45)]',
+                                    'ring-1 ring-inset ring-white/25',
+                                    'transition-all duration-300 ease-out',
+                                    'hover:shadow-[0_8px_28px_-4px_rgba(200,145,60,0.55)] hover:brightness-[1.02]',
+                                    'hover:border-white/40 active:scale-[0.97]',
+                                    '[&_svg]:size-[15px] [&_svg]:opacity-90 [&_svg]:transition-transform [&_svg]:duration-300',
+                                    'group-hover/nav-cta:[&_svg]:translate-x-0.5',
+                                )}
+                            >
+                                <span className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-b from-white/35 via-transparent to-transparent opacity-60" aria-hidden />
+                                <span className="relative">{navbarContent.ctaLabel}</span>
+                                <ChevronRight className="relative ml-0.5" aria-hidden />
                             </Button>
                         </Link>
                     </div>
@@ -177,14 +198,28 @@ export default function Navbar() {
                             className="px-6 pb-10 pt-4 border-t border-stone-100"
                         >
                             <p className="text-stone-400 text-xs tracking-widest uppercase mb-4">{navbarContent.mobileCtaLabel}</p>
-                            <Link href="/plan-your-trip" onClick={closeMenu}>
-                                <Button className="w-full bg-gold hover:bg-gold-dark text-deep font-bold text-base py-6 rounded-2xl hover:shadow-xl hover:shadow-gold/25 active:scale-[0.98] transition-all">
-                                    {navbarContent.ctaLabel}
-                                    <ChevronRight className="w-5 h-5 ml-2" />
+                            <Link href="/plan-your-trip" onClick={closeMenu} className="group/nav-cta-mobile block">
+                                <Button
+                                    variant="gold"
+                                    size="lg"
+                                    className={cn(
+                                        'relative w-full h-auto min-h-14 overflow-hidden py-5 rounded-2xl text-base font-bold',
+                                        'border border-white/25 bg-gradient-to-br from-gold-light via-gold to-gold-dark text-deep',
+                                        'shadow-[0_8px_32px_-6px_rgba(200,150,65,0.45)] ring-1 ring-inset ring-white/20',
+                                        'transition-all duration-300 hover:shadow-[0_12px_40px_-8px_rgba(200,140,55,0.55)] hover:brightness-[1.02] active:scale-[0.99]',
+                                        '[&_svg]:transition-transform [&_svg]:duration-300 group-hover/nav-cta-mobile:[&_svg]:translate-x-1',
+                                    )}
+                                >
+                                    <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-transparent opacity-50" aria-hidden />
+                                    <span className="relative">{navbarContent.ctaLabel}</span>
+                                    <ChevronRight className="relative w-5 h-5 ml-2" aria-hidden />
                                 </Button>
                             </Link>
                             <Link href="/contact" onClick={closeMenu}>
-                                <Button variant="ghost" className="w-full mt-2 text-stone-400 hover:text-stone-700 text-sm py-4 rounded-2xl">
+                                <Button
+                                    variant="ghost"
+                                    className="w-full mt-2 text-stone-500 hover:text-stone-800 hover:bg-stone-100/90 text-sm py-4 rounded-2xl border border-transparent"
+                                >
                                     {navbarContent.mobileTalkToExpert}
                                 </Button>
                             </Link>

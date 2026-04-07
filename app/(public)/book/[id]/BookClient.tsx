@@ -257,10 +257,7 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
                         Our travel designer will contact you within 24 hours to personalize
                         every detail of your {pkg.title} journey.
                     </p>
-                    <Button
-                        onClick={() => router.push('/')}
-                        className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl"
-                    >
+                    <Button variant="gold" size="lg" onClick={() => router.push('/')}>
                         Return Home
                     </Button>
                 </motion.div>
@@ -620,23 +617,26 @@ export default function BookClient({ packId: _packId, pkg }: { packId: string, p
 
                     {currentStep < 4 ? (
                         <Button
+                            variant="gold"
+                            size="lg"
                             onClick={goNext}
                             disabled={!canProceed()}
-                            className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="disabled:opacity-35 disabled:cursor-not-allowed"
                         >
                             Next Step
                             <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
                     ) : (
                         <Button
+                            variant="gold"
+                            size="lg"
                             onClick={handleSubmit}
                             disabled={
                                 isSubmitting || (turnstileEnabled && !turnstileToken)
                             }
-                            className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25"
                         >
                             {isSubmitting ? (
-                                <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                <div className="w-5 h-5 border-2 border-deep/20 border-t-deep rounded-full animate-spin" />
                             ) : (
                                 <>
                                     Confirm Booking

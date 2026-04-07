@@ -6,25 +6,23 @@ import Script from 'next/script';
 export const metadata: Metadata = {
   title: 'Avelora Travel | Private Journeys — Sri Lanka, Maldives & Beyond',
   description:
-    'Avelora Travel designs private journeys across Sri Lanka, the Maldives and beyond. Handcrafted itineraries — honeymoons, wellness, wildlife and celebration travel. Designed Around You.',
+    'Avelora Travel designs privately curated journeys across Sri Lanka, the Maldives and beyond, with handpicked stays, seamless planning and personalised service.',
   icons: {
     icon: '/favicon.svg',
   },
   keywords: [
-    'Avelora Travel',
-    'luxury travel',
-    'Sri Lanka',
-    'Maldives',
-    'multi-country',
-    'honeymoon',
-    'wellness retreat',
-    'private journey',
+    'private Sri Lanka tours',
+    'Maldives luxury travel',
     'bespoke travel',
+    'tailor-made journeys',
+    'honeymoon Sri Lanka Maldives',
+    'wildlife and wellness travel',
+    'Australian travel specialist',
   ],
   openGraph: {
-    title: 'Avelora Travel | Private Journeys',
+    title: 'Avelora Travel | Private Journeys — Sri Lanka, Maldives & Beyond',
     description:
-      'Private journeys across Sri Lanka, the Maldives and beyond. Designed Around You.',
+      'Avelora Travel designs privately curated journeys across Sri Lanka, the Maldives and beyond, with handpicked stays, seamless planning and personalised service.',
     type: 'website',
   },
 };

@@ -263,6 +263,23 @@ html {
   to   { opacity: 1; transform: scale(1); }
 }
 
+/*
+ * Public navbar horizontal inset — scoped CSS so md+ padding is not lost to
+ * Tailwind / layer ordering; tightens logo distance from bar edges on desktop.
+ */
+#site-navbar .navbar-site-inner {
+  box-sizing: border-box;
+  padding-left: max(0.75rem, env(safe-area-inset-left));
+  padding-right: max(0.75rem, env(safe-area-inset-right));
+}
+
+@media (min-width: 768px) {
+  #site-navbar .navbar-site-inner {
+    padding-left: max(0.5rem, env(safe-area-inset-left));
+    padding-right: max(0.5rem, env(safe-area-inset-right));
+  }
+}
+
 /* Avelora navbar logo (inline SVG) — do not affect gradients / icon; only #travel text */
 .avelora-logo-nav > svg {
   display: block;

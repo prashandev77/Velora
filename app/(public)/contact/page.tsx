@@ -35,8 +35,8 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.phone.title}</h3>
                                     <p className="text-stone-500 text-sm mb-2">{contactPageContent.phone.description}</p>
-                                    <a href="tel:+61212345678" className="text-stone-800 font-medium hover:text-gold transition-colors block">
-                                        +61 2 1234 5678
+                                    <a href={contactPageContent.phone.href} className="text-stone-800 font-medium hover:text-gold transition-colors block">
+                                        {contactPageContent.phone.number}
                                     </a>
                                 </div>
                             </div>
@@ -49,8 +49,8 @@ export default function ContactPage() {
                                 <div>
                                     <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.email.title}</h3>
                                     <p className="text-stone-500 text-sm mb-2">{contactPageContent.email.description}</p>
-                                    <a href="mailto:hello@aveloratravel.com" className="text-stone-800 font-medium hover:text-gold transition-colors block">
-                                        hello@aveloratravel.com
+                                    <a href={contactPageContent.email.href} className="text-stone-800 font-medium hover:text-gold transition-colors block">
+                                        {contactPageContent.email.address}
                                     </a>
                                 </div>
                             </div>
@@ -64,9 +64,8 @@ export default function ContactPage() {
                                     <h3 className="text-stone-900 font-semibold mb-1">{contactPageContent.office.title}</h3>
                                     <p className="text-stone-500 text-sm mb-2">{contactPageContent.office.description}</p>
                                     <p className="text-stone-800 font-medium">
-                                        123 Serenity Drive,<br />
-                                        Sydney, NSW,<br />
-                                        Australia
+                                        {contactPageContent.office.address[0]}<br />
+                                        {contactPageContent.office.address[1]}
                                     </p>
                                 </div>
                             </div>
@@ -81,7 +80,11 @@ export default function ContactPage() {
                                 {contactPageContent.cta.description}
                             </p>
                             <Link href="/plan-your-trip">
-                                <Button className="w-full bg-gold hover:bg-gold-dark text-white font-semibold py-6 rounded-xl text-base shadow-sm hover:shadow-md hover:shadow-gold/20 transition-all group">
+                                <Button
+                                    variant="gold"
+                                    size="lg"
+                                    className="w-full h-auto min-h-14 py-6 text-base shadow-lg group"
+                                >
                                     Plan Your Trip
                                     <ChevronRight className="w-5 h-5 ml-1 transition-transform group-hover:translate-x-1" />
                                 </Button>

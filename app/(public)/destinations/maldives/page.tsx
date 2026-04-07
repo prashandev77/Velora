@@ -120,7 +120,7 @@ export default function MaldivesPage() {
                         Tell us your dream and we&apos;ll match you with the perfect island resort.
                     </p>
                     <Link href="/plan-your-trip">
-                        <Button className="bg-gold hover:bg-gold-dark text-white font-semibold px-8 py-6 text-base rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25">
+                        <Button variant="gold" size="lg" className="h-auto min-h-14 px-8 py-6 text-base shadow-lg">
                             Start Planning
                             <ChevronRight className="w-5 h-5 ml-2" />
                         </Button>

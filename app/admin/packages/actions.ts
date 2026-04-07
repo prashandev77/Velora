@@ -54,6 +54,7 @@ export async function savePackage(_prev: ActionState, formData: FormData): Promi
         title: data.title,
         location: data.location,
         days: data.days,
+        price_from_aud: data.priceFromAud ?? null,
         image_url: data.imageUrl,
         tag: data.tag,
         subtitle: data.subtitle || null,

@@ -6,6 +6,7 @@ import { createClient } from '@/utils/supabase/client';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { AVELORA_LOGO_PATH } from '@/lib/brand';
+import { Button } from '@/components/ui/button';
 
 export default function AdminLoginPage() {
     const router = useRouter();
@@ -124,18 +125,19 @@ export default function AdminLoginPage() {
                             </div>
                         )}
 
-                        {/* Submit Button */}
-                        <button
+                        <Button
                             type="submit"
+                            variant="default"
+                            size="lg"
                             disabled={loading}
-                            className="w-full bg-gray-900 hover:bg-black text-white font-semibold text-sm py-4 rounded-xl transition-all shadow-md shadow-gray-900/10 disabled:opacity-70 flex items-center justify-center gap-2 mt-2 active:scale-[0.98]"
+                            className="w-full mt-2 h-12 rounded-xl shadow-lg"
                         >
                             {loading ? (
                                 <><Loader2 className="w-4 h-4 animate-spin" /> Authenticating…</>
                             ) : (
                                 'Sign In Securely'
                             )}
-                        </button>
+                        </Button>
                     </form>
                 </div>
 

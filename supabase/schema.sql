@@ -11,6 +11,7 @@ create table if not exists packages (
     title          text not null,
     location       text not null,
     days           int  not null,
+    price_from_aud integer check (price_from_aud is null or price_from_aud >= 0),
     image_url      text not null,
     tag            text not null,
     subtitle       text,

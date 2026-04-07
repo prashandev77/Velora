@@ -3,6 +3,7 @@
 import { useActionState, useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Loader2, Save, AlertCircle, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import ConfirmDialog from '@/app/admin/components/ConfirmDialog';
 import DynamicList from './DynamicList';
 import ImageUploader from './ImageUploader';
@@ -20,6 +21,8 @@ interface PackageData {
     title?: string;
     location?: string;
     days?: number;
+    /** Whole AUD; optional in DB */
+    price_from_aud?: number | null;
     image_url?: string;
     tag?: string;
     subtitle?: string;
@@ -92,6 +95,9 @@ export default function PackageForm({
     const [category, setCategory] = useState(pkg?.category ?? '');
     const [location, setLocation] = useState(pkg?.location ?? 'Sri Lanka');
     const [days, setDays] = useState(pkg?.days ?? 0);
+    const [priceFromAud, setPriceFromAud] = useState<number | ''>(
+        pkg?.price_from_aud != null && pkg.price_from_aud !== undefined ? pkg.price_from_aud : '',
+    );
     const [tag, setTag] = useState(pkg?.tag ?? '');
     const [subtitle, setSubtitle] = useState(pkg?.subtitle ?? '');
     const [travelStyle, setTravelStyle] = useState(pkg?.travel_style ?? '');
@@ -198,6 +204,7 @@ export default function PackageForm({
             category,
             location,
             days,
+            priceFromAud: priceFromAud === '' ? null : priceFromAud,
             tag,
             subtitle,
             travelStyle,
@@ -364,6 +371,26 @@ export default function PackageForm({
                             className={`${inputCls} ${hasFieldError('days') ? 'border-red-300 ring-2 ring-red-100' : ''}`}
                         />
                         {getError('days') && <p className={errorCls}>{getError('days')}</p>}
+                    </div>
+                    <div>
+                        <label className={labelCls}>From price (AUD)</label>
+                        <input
+                            type="number"
+                            min={0}
+                            step={1}
+                            value={priceFromAud}
+                            onChange={(e) => {
+                                const v = e.target.value;
+                                setPriceFromAud(v === '' ? '' : Math.max(0, parseInt(v, 10) || 0));
+                                clearServerError('priceFromAud');
+                            }}
+                            placeholder="e.g. 5450"
+                            className={`${inputCls} ${hasFieldError('priceFromAud') ? 'border-red-300 ring-2 ring-red-100' : ''}`}
+                        />
+                        <p className="text-gray-400 text-[11px] mt-1.5 leading-relaxed">
+                            Shown on the public journey page as &quot;From AUD …&quot;. Leave empty only if you rely on a legacy default for this trip length (or to hide the line).
+                        </p>
+                        {getError('priceFromAud') && <p className={errorCls}>{getError('priceFromAud')}</p>}
                     </div>
                     <div>
                         <label className={labelCls}>Badge Tag *</label>
@@ -538,24 +565,26 @@ export default function PackageForm({
                         )}
                     </div>
                     <div className="flex items-center gap-3">
-                        <button
+                        <Button
                             type="button"
+                            variant="secondary"
                             onClick={() => setDiscardDialogOpen(true)}
-                            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold text-sm px-6 py-3 rounded-xl transition-all active:scale-95"
+                            className="gap-2 text-gray-600 bg-gray-100 hover:bg-gray-200 border-gray-200/80"
                         >
                             <X className="w-4 h-4" /> Cancel
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             type="submit"
+                            variant="default"
                             disabled={isPending}
-                            className="flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm px-8 py-3 rounded-xl transition-all disabled:opacity-60 active:scale-95"
+                            className="gap-2 bg-gray-900 hover:bg-gray-800 text-white border-gray-800 min-w-[160px] shadow-md"
                         >
                             {isPending ? (
                                 <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</>
                             ) : (
                                 <><Save className="w-4 h-4" /> {pkg?.id ? 'Update Journey' : 'Create Journey'}</>
                             )}
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>

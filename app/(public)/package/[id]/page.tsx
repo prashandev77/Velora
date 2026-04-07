@@ -150,7 +150,7 @@ export default async function PackageDetailPage({
                         <span>All inclusive</span>
                     </div>
                     <BookPackageLink packageId={pkg.id}>
-                        <Button className="bg-gold hover:bg-gold-dark text-white font-semibold px-6 rounded-xl transition-all shadow-sm">
+                        <Button variant="gold" size="sm" className="px-6 shadow-md">
                             <CalendarDays className="w-4 h-4 mr-2" />
                             Book Now
                         </Button>
@@ -393,7 +393,7 @@ export default async function PackageDetailPage({
                             <Button
                                 size="lg"
                                 variant="outline"
-                                className="border-stone-700 bg-transparent text-white hover:bg-stone-800 hover:text-white px-8 rounded-xl"
+                                className="border-2 border-stone-600 bg-stone-950/40 text-white backdrop-blur-sm hover:bg-stone-800 hover:text-white hover:border-stone-500 px-8 shadow-md"
                             >
                                 Explore Others
                             </Button>

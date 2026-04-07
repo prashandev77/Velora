@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Heart, Leaf } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { aboutPageContent } from '@/lib/content';
 
 const sections = aboutPageContent.sections;
@@ -105,12 +106,9 @@ export default function AboutPage() {
                         {aboutPageContent.sustainability.body}
                     </p>
 
-                    <Link
-                        href="/contact"
-                        className="inline-flex items-center gap-2 bg-gold hover:bg-gold-dark text-white font-semibold text-sm px-6 py-3 rounded-full transition-all hover:shadow-lg hover:shadow-gold/20"
-                    >
-                        {aboutPageContent.ctaText}
-                    </Link>
+                    <Button variant="gold" size="sm" asChild className="rounded-full px-6 shadow-lg">
+                        <Link href="/contact">{aboutPageContent.ctaText}</Link>
+                    </Button>
                 </motion.div>
             </div>
         </main>

@@ -19,6 +19,8 @@ export interface Package {
   title: string;
   location: string;
   days: number;
+  /** Whole AUD; shown as “From AUD …” on journey detail. */
+  priceFromAud?: number | null;
   image_url: string;
   itinerary: ItineraryDay[];
   description?: string;
