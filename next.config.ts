@@ -39,12 +39,22 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/journeys/honeymoon/velora-honeymoon',
-        destination: '/journeys/honeymoon/avelora-honeymoon',
+        destination: '/journeys/honeymoon/avelora-romance',
         permanent: true,
       },
       {
         source: '/journeys/adventure/serendipity-of-sri-lanka',
-        destination: '/journeys/adventure/avelora-serendipity',
+        destination: '/journeys/adventure/avelora-discovery',
+        permanent: true,
+      },
+      {
+        source: '/journeys/honeymoon/avelora-honeymoon',
+        destination: '/journeys/honeymoon/avelora-romance',
+        permanent: true,
+      },
+      {
+        source: '/journeys/adventure/avelora-serendipity',
+        destination: '/journeys/adventure/avelora-discovery',
         permanent: true,
       },
     ];

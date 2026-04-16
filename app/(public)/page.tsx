@@ -8,8 +8,11 @@ import HowItWorks from '@/components/HowItWorks';
 import PrivateTravelPromise from '@/components/PrivateTravelPromise';
 import FAQ from '@/components/FAQ';
 import Testimonials from '@/components/Testimonials';
+import { getAllPackages } from '@/lib/data';
 
-export default function Home() {
+export default async function Home() {
+  const packages = await getAllPackages();
+
   return (
     <>
       {/* 1. Inspiration */}
@@ -19,7 +22,7 @@ export default function Home() {
       {/* 3. Trust – The Avelora Difference */}
       <WhyAvelora />
       {/* 4. Journeys – Signature Packages */}
-      <SignatureJourneys />
+      <SignatureJourneys packages={packages} />
       {/* 5. Exploration – Sri Lanka by Province Map */}
       <Destinations />
       {/* 6. Enquiry – Start Planning CTA */}

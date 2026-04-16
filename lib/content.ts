@@ -535,7 +535,7 @@ export const signatureJourneysContent = {
             description: 'A beautifully balanced introduction to Sri Lanka, blending ancient heritage, misty tea country and the island\'s golden southern coast.',
             route: 'Sigiriya → Kandy → Tea Country → South Coast',
             image: '/Photos/Hero Slide Photo 1 Sigiriya bright up.webp',
-            href: '/journeys/adventure/avelora-serendipity',
+            href: '/journeys/adventure/avelora-discovery',
         },
         {
             title: 'Avelora Signature',
@@ -553,7 +553,7 @@ export const signatureJourneysContent = {
             description: 'A romantic journey through Sri Lanka\'s most beautiful settings, combining scenic train rides, wildlife safaris and luxury oceanfront stays.',
             route: 'Negombo → Sigiriya → Hatton → Ella → Yala → Cape Weligama',
             image: '/Photos/Other sections/Velora Luxury Honeymoon new.webp',
-            href: '/journeys/honeymoon/avelora-honeymoon',
+            href: '/journeys/honeymoon/avelora-romance',
         },
         {
             title: 'Avelora Wellness',

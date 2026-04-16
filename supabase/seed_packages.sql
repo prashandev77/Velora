@@ -8,8 +8,10 @@
 -- Idempotent slug migration (safe if slugs already renamed)
 UPDATE public.packages SET slug = 'avelora-signature' WHERE slug = 'velora-luxe';
 UPDATE public.packages SET slug = 'avelora-wellness' WHERE slug = 'velora-serene';
-UPDATE public.packages SET slug = 'avelora-serendipity' WHERE slug = 'serendipity-of-sri-lanka';
-UPDATE public.packages SET slug = 'avelora-honeymoon' WHERE slug = 'velora-honeymoon';
+UPDATE public.packages SET slug = 'avelora-discovery' WHERE slug = 'serendipity-of-sri-lanka';
+UPDATE public.packages SET slug = 'avelora-discovery' WHERE slug = 'avelora-serendipity';
+UPDATE public.packages SET slug = 'avelora-romance' WHERE slug = 'velora-honeymoon';
+UPDATE public.packages SET slug = 'avelora-romance' WHERE slug = 'avelora-honeymoon';
 UPDATE public.packages SET slug = 'avelora-wild' WHERE slug = 'velora-wild';
 
 INSERT INTO public.packages (
@@ -83,7 +85,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000010', 'avelora-serendipity', 'adventure', 'Avelora Discovery', 'Sri Lanka', 8, 
+    '00000000-0000-0000-0000-000000000010', 'avelora-discovery', 'adventure', 'Avelora Discovery', 'Sri Lanka', 8, 
     '/Photos/Other sections/Hill Country.jpg', 'Signature', 'A Perfect Introduction to the Island', 
     'Culture • Nature • Scenic Landscapes', 
     'An unforgettable journey through Sri Lanka''s cultural heartland, misty hill country, and tropical coastline. This carefully curated itinerary blends ancient heritage sites, scenic landscapes, and boutique hotels to create a seamless introduction to the island.', 
@@ -147,7 +149,7 @@ INSERT INTO public.packages (
     itinerary, gallery_images, is_active
 ) VALUES 
 (
-    '00000000-0000-0000-0000-000000000016', 'avelora-honeymoon', 'honeymoon', 'Avelora Romance', 'Sri Lanka', 12, 
+    '00000000-0000-0000-0000-000000000016', 'avelora-romance', 'honeymoon', 'Avelora Romance', 'Sri Lanka', 12, 
     '/Photos/Other sections/Velora Luxury Honeymoon new.webp', 'Romance', 'A Romantic Escape Through Sri Lanka', 
     'Romantic • Scenic • Luxury', 
     'A carefully designed honeymoon experience combining Sri Lanka''s ancient wonders, misty tea estates, scenic mountain landscapes, wildlife safaris, and luxury coastal retreats.', 

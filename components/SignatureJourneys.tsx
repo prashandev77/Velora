@@ -5,20 +5,36 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import { signatureJourneysContent } from '@/lib/content';
+import { Package } from '@/lib/types';
 
-const journeys = signatureJourneysContent.journeys;
+interface Props {
+    packages: Package[];
+}
 
-export default function SignatureJourneys() {
+export default function SignatureJourneys({ packages }: Props) {
+    const { tag, heading } = signatureJourneysContent;
+
+    // Map each DB package to the card shape the grid expects
+    const journeys = packages.map((pkg) => ({
+        title: pkg.title,
+        duration: `${pkg.days} Days`,
+        tags: pkg.travelStyle ?? pkg.tag ?? '',
+        description: pkg.description ?? '',
+        route: (pkg.route ?? []).join(' → '),
+        image: pkg.image_url,
+        href: `/journeys/${pkg.category}/${pkg.slug}`,
+    }));
+
     return (
         <section className="min-h-screen flex items-center py-20 md:py-28 bg-white">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 {/* Header */}
                 <div className="text-center mb-14 md:mb-20">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
-                        {signatureJourneysContent.tag}
+                        {tag}
                     </span>
                     <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                        {signatureJourneysContent.heading}
+                        {heading}
                     </h2>
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-6" />
                     <p className="text-stone-500 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
@@ -27,57 +43,63 @@ export default function SignatureJourneys() {
                 </div>
 
                 {/* Journeys Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-6 lg:gap-8">
-                    {journeys.map((j, i) => (
-                        <motion.div
-                            key={j.title}
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: i * 0.08 }}
-                            className="group relative overflow-hidden rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all duration-500"
-                        >
-                            <Link href={j.href} className="block w-full h-full">
-                                <div className="relative aspect-[4/3]">
-                                    <Image
-                                        src={j.image}
-                                        alt={j.title}
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                    />
-                                    <div className="absolute top-4 left-4">
-                                        <span className="inline-block bg-white/90 backdrop-blur-md text-stone-700 text-[11px] font-medium px-3 py-1.5 rounded-full border border-stone-200">
-                                            {j.duration}
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="bg-white border-t border-stone-100 p-6 flex flex-col justify-between" style={{ minHeight: '220px' }}>
-                                    <div>
-                                        <h3 className="font-heading text-lg md:text-xl font-bold text-stone-900 mb-1.5 group-hover:text-gold transition-colors duration-300">
-                                            {j.title}
-                                        </h3>
-                                        <span className="text-gold/70 text-xs font-medium tracking-wide mb-3 block">
-                                            {j.tags}
-                                        </span>
-                                        <p className="text-stone-500 text-sm leading-relaxed mb-4 line-clamp-3">
-                                            {j.description}
-                                        </p>
-                                        <div className="flex items-start gap-1.5 text-stone-400 text-xs leading-relaxed">
-                                            <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-gold/60" />
-                                            <span>{j.route}</span>
+                {journeys.length === 0 ? (
+                    <p className="text-center text-stone-400 py-16">No journeys available at the moment.</p>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-6 lg:gap-8">
+                        {journeys.map((j, i) => (
+                            <motion.div
+                                key={j.href}
+                                initial={{ opacity: 0, y: 16 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: i * 0.08 }}
+                                className="group relative overflow-hidden rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all duration-500"
+                            >
+                                <Link href={j.href} className="block w-full h-full">
+                                    <div className="relative aspect-[4/3]">
+                                        <Image
+                                            src={j.image}
+                                            alt={j.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                        />
+                                        <div className="absolute top-4 left-4">
+                                            <span className="inline-block bg-white/90 backdrop-blur-md text-stone-700 text-[11px] font-medium px-3 py-1.5 rounded-full border border-stone-200">
+                                                {j.duration}
+                                            </span>
                                         </div>
                                     </div>
-                                    <div className="mt-4 pt-4 border-t border-stone-100">
-                                        <span className="text-gold text-sm font-semibold group-hover:tracking-wider transition-all duration-300">
-                                            View Journey →
-                                        </span>
+                                    <div className="bg-white border-t border-stone-100 p-6 flex flex-col justify-between" style={{ minHeight: '220px' }}>
+                                        <div>
+                                            <h3 className="font-heading text-lg md:text-xl font-bold text-stone-900 mb-1.5 group-hover:text-gold transition-colors duration-300">
+                                                {j.title}
+                                            </h3>
+                                            <span className="text-gold/70 text-xs font-medium tracking-wide mb-3 block">
+                                                {j.tags}
+                                            </span>
+                                            <p className="text-stone-500 text-sm leading-relaxed mb-4 line-clamp-3">
+                                                {j.description}
+                                            </p>
+                                            {j.route && (
+                                                <div className="flex items-start gap-1.5 text-stone-400 text-xs leading-relaxed">
+                                                    <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-gold/60" />
+                                                    <span>{j.route}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="mt-4 pt-4 border-t border-stone-100">
+                                            <span className="text-gold text-sm font-semibold group-hover:tracking-wider transition-all duration-300">
+                                                View Journey →
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        </motion.div>
-                    ))}
-                </div>
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
 
                 {/* View All CTA */}
                 <div className="mt-16 text-center">
