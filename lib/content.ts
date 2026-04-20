@@ -85,7 +85,7 @@ export const footerContent = {
     description: 'Privately curated journeys across Sri Lanka, the Maldives & beyond.\nAustralian-Based Travel Company',
     contact: {
         location: 'Melbourne, Australia',
-        email: 'travel@aveloratravel.com.au',
+        email: 'info@aveloratravel.com.au',
         phone: '+61 472 726 456',
     },
     links: {
@@ -635,8 +635,8 @@ export const contactPageContent = {
     email: {
         title: 'Email Us',
         description: 'Our team typically replies within 24 hours.',
-        address: 'travel@aveloratravel.com.au',
-        href: 'mailto:travel@aveloratravel.com.au',
+        address: 'info@aveloratravel.com.au',
+        href: 'mailto:info@aveloratravel.com.au',
     },
     office: {
         title: 'Office Location',
@@ -796,8 +796,8 @@ export const privacyPageContent = {
         {
             title: 'Contact',
             body: 'If you have any questions regarding this Privacy Policy, please contact us at:',
-            email: 'travel@aveloratravel.com.au',
-            emailHref: 'mailto:travel@aveloratravel.com.au',
+            email: 'info@aveloratravel.com.au',
+            emailHref: 'mailto:info@aveloratravel.com.au',
         },
     ],
 };

@@ -57,7 +57,7 @@ export default function PrivacyPolicyPage() {
                 <h2 className="text-2xl font-bold text-stone-800 mt-12 mb-4 font-heading">Contact</h2>
                 <p className="text-stone-600 mb-8">
                     If you have any questions regarding this Privacy Policy, please contact us at:{' '}
-                    <a href="mailto:travel@aveloratravel.com.au" className="font-medium text-gold">travel@aveloratravel.com.au</a>
+                    <a href="mailto:info@aveloratravel.com.au" className="font-medium text-gold">info@aveloratravel.com.au</a>
                 </p>
             </div>
         </main>
