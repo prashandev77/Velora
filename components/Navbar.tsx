@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard } from 'lucide-react';
+import { Menu, X, ChevronRight, MapPin, Plane, Info, Phone, Home, CreditCard, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import NavbarAveloraLogo from '@/components/NavbarAveloraLogo';
@@ -14,6 +14,7 @@ const navLinks = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/journeys', label: 'Journeys', icon: Plane },
     { href: '/destinations', label: 'Destinations', icon: MapPin },
+    { href: '/guides', label: 'Guide Hub', icon: BookOpen },
     { href: '/about', label: 'About', icon: Info },
     { href: '/booking', label: 'Plan', icon: CreditCard },
     { href: '/contact', label: 'Contact', icon: Phone },
@@ -33,7 +34,8 @@ export default function Navbar() {
         '/journeys',
         '/destinations',
         '/booking',
-    ].some((p) => pathname === p) || pathname.startsWith('/journeys/') || pathname.startsWith('/destinations/');
+        '/guides',
+    ].some((p) => pathname === p) || pathname.startsWith('/journeys/') || pathname.startsWith('/destinations/') || pathname.startsWith('/guides/');
 
     // On a light page, navbar is always in "scrolled" style (dark text)
     const forceDark = isLightPage && !isScrolled;

@@ -263,6 +263,138 @@ html {
   to   { opacity: 1; transform: scale(1); }
 }
 
+/* ─── Guide Content Prose Styles ─── */
+.guide-content {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #44403c;
+}
+
+.guide-content h1,
+.guide-content h2,
+.guide-content h3,
+.guide-content h4 {
+  font-family: 'Playfair Display', serif;
+  color: #1c1917;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+}
+
+.guide-content h1 { font-size: 2rem; }
+.guide-content h2 { font-size: 1.5rem; }
+.guide-content h3 { font-size: 1.25rem; }
+.guide-content h4 { font-size: 1.125rem; }
+
+.guide-content p {
+  margin-bottom: 1.25em;
+}
+
+.guide-content ul,
+.guide-content ol {
+  margin-bottom: 1.25em;
+  padding-left: 1.5em;
+}
+
+.guide-content ul { list-style-type: disc; }
+.guide-content ol { list-style-type: decimal; }
+
+.guide-content li {
+  margin-bottom: 0.5em;
+}
+
+.guide-content a {
+  color: oklch(0.58 0.09 75);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.guide-content a:hover {
+  color: oklch(0.45 0.10 72);
+}
+
+.guide-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 1.5em 0;
+}
+
+.guide-content blockquote {
+  border-left: 3px solid oklch(0.58 0.09 75);
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: #78716c;
+}
+
+.guide-content strong {
+  font-weight: 600;
+  color: #1c1917;
+}
+
+/* ─── TipTap Editor Styles ─── */
+.tiptap-editor .ProseMirror {
+  min-height: 300px;
+  padding: 16px;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: #1c1917;
+}
+
+.tiptap-editor .ProseMirror h1,
+.tiptap-editor .ProseMirror h2,
+.tiptap-editor .ProseMirror h3 {
+  font-family: 'Playfair Display', serif;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.tiptap-editor .ProseMirror h1 { font-size: 1.75rem; }
+.tiptap-editor .ProseMirror h2 { font-size: 1.375rem; }
+.tiptap-editor .ProseMirror h3 { font-size: 1.125rem; }
+
+.tiptap-editor .ProseMirror p {
+  margin-bottom: 1em;
+}
+
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.tiptap-editor .ProseMirror ul { list-style-type: disc; }
+.tiptap-editor .ProseMirror ol { list-style-type: decimal; }
+
+.tiptap-editor .ProseMirror li {
+  margin-bottom: 0.25em;
+}
+
+.tiptap-editor .ProseMirror a {
+  color: oklch(0.58 0.09 75);
+  text-decoration: underline;
+}
+
+.tiptap-editor .ProseMirror img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1em 0;
+}
+
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #a8a29e;
+  pointer-events: none;
+  height: 0;
+}
+
 /*
  * Public navbar horizontal inset — scoped CSS so md+ padding is not lost to
  * Tailwind / layer ordering; tightens logo distance from bar edges on desktop.

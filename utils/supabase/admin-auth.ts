@@ -25,26 +25,19 @@ export class AdminAuthError extends Error {
 }
 
 /**
- * Prefer app_metadata.role (server-controlled). user_metadata.role is user-writable.
+ * SECURITY: Only trust app_metadata.role — it is server-controlled and cannot
+ * be modified by the end user. user_metadata is user-editable and must NEVER
+ * be used in a security/auth context.
  */
 export function getUserRole(user: {
-    user_metadata?: Record<string, unknown>;
     app_metadata?: Record<string, unknown>;
 } | null): string | null {
     if (!user) return null;
     const appRole = user.app_metadata?.role;
-    const metadataRole = user.user_metadata?.role;
-    const role =
-        typeof appRole === 'string'
-            ? appRole
-            : typeof metadataRole === 'string'
-                ? metadataRole
-                : null;
-    return role ? role.toLowerCase() : null;
+    return typeof appRole === 'string' ? appRole.toLowerCase() : null;
 }
 
 export function isAdminUser(user: {
-    user_metadata?: Record<string, unknown>;
     app_metadata?: Record<string, unknown>;
 } | null): boolean {
     return getUserRole(user) === 'admin';

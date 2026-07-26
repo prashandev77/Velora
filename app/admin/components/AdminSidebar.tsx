@@ -12,21 +12,66 @@ import {
     ExternalLink,
     User,
     Loader2,
+    BookOpen,
+    FolderOpen,
+    PlusCircle,
+    Tags,
+    Mail,
+    Users,
+    Megaphone,
+    ChevronDown,
 } from 'lucide-react';
 import { signOut } from '../actions';
 import ConfirmDialog from './ConfirmDialog';
 import { AVELORA_LOGO_PATH } from '@/lib/brand';
 
-const nav = [
+interface NavItem {
+    href: string;
+    label: string;
+    icon: typeof LayoutDashboard;
+}
+
+interface NavGroup {
+    label: string;
+    icon: typeof LayoutDashboard;
+    basePath: string;
+    items: NavItem[];
+}
+
+const mainNav: NavItem[] = [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/bookings', label: 'Bookings', icon: CalendarCheck },
     { href: '/admin/packages', label: 'Packages', icon: Package },
 ];
 
-const tabs = [
+const navGroups: NavGroup[] = [
+    {
+        label: 'Guide Hub',
+        icon: BookOpen,
+        basePath: '/admin/guide-hub',
+        items: [
+            { href: '/admin/guide-hub', label: 'All Guides', icon: FolderOpen },
+            { href: '/admin/guide-hub/new', label: 'Add Guide', icon: PlusCircle },
+            { href: '/admin/guide-hub/categories', label: 'Categories', icon: Tags },
+        ],
+    },
+    {
+        label: 'Email Marketing',
+        icon: Mail,
+        basePath: '/admin/email-marketing',
+        items: [
+            { href: '/admin/email-marketing/subscribers', label: 'Subscribers', icon: Users },
+            { href: '/admin/email-marketing/campaigns', label: 'Campaigns', icon: Megaphone },
+        ],
+    },
+];
+
+const tabs: NavItem[] = [
     { href: '/admin', label: 'Home', icon: LayoutDashboard },
     { href: '/admin/bookings', label: 'Bookings', icon: CalendarCheck },
     { href: '/admin/packages', label: 'Packages', icon: Package },
+    { href: '/admin/guide-hub', label: 'Guides', icon: BookOpen },
+    { href: '/admin/email-marketing/subscribers', label: 'Email', icon: Mail },
     { href: '/admin/profile', label: 'Sign out', icon: User },
 ];
 
@@ -37,6 +82,8 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
 
     const isActive = (href: string) =>
         href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
+
+    const isGroupActive = (basePath: string) => pathname.startsWith(basePath);
 
     const requestSignOut = () => setShowConfirm(true);
     const confirmSignOut = async () => {
@@ -83,7 +130,8 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
 
                 {/* ── Nav ── */}
                 <nav className="flex-1 px-3 py-5 space-y-1 overflow-y-auto">
-                    {nav.map(({ href, label, icon: Icon }) => {
+                    {/* Main nav items */}
+                    {mainNav.map(({ href, label, icon: Icon }) => {
                         const active = isActive(href);
                         return (
                             <Link
@@ -99,6 +147,16 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                             </Link>
                         );
                     })}
+
+                    {/* Nav groups */}
+                    {navGroups.map((group) => (
+                        <SidebarGroup
+                            key={group.basePath}
+                            group={group}
+                            isGroupActive={isGroupActive(group.basePath)}
+                            isItemActive={isActive}
+                        />
+                    ))}
                 </nav>
 
                 {/* ── Footer ── */}
@@ -195,5 +253,58 @@ export default function AdminSidebar({ userEmail }: { userEmail: string }) {
                 </div>
             </nav>
         </>
+    );
+}
+
+/** Collapsible sidebar group */
+function SidebarGroup({
+    group,
+    isGroupActive,
+    isItemActive,
+}: {
+    group: NavGroup;
+    isGroupActive: boolean;
+    isItemActive: (href: string) => boolean;
+}) {
+    const [open, setOpen] = useState(isGroupActive);
+    const GroupIcon = group.icon;
+
+    return (
+        <div className="mt-2">
+            <button
+                onClick={() => setOpen(!open)}
+                className={`w-full group flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 ${
+                    isGroupActive
+                        ? 'text-gray-900'
+                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                }`}
+            >
+                <GroupIcon className={`w-[18px] h-[18px] ${isGroupActive ? 'text-gray-700' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                <span className="text-[13px] font-medium flex-1 text-left">{group.label}</span>
+                <ChevronDown className={`w-4 h-4 text-gray-300 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+            </button>
+
+            {open && (
+                <div className="ml-4 pl-3 border-l border-gray-100 mt-1 space-y-0.5">
+                    {group.items.map(({ href, label, icon: Icon }) => {
+                        const active = isItemActive(href);
+                        return (
+                            <Link
+                                key={href}
+                                href={href}
+                                className={`group flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-150 ${
+                                    active
+                                        ? 'bg-gray-900 text-white shadow-sm'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900'
+                                }`}
+                            >
+                                <Icon className={`w-[16px] h-[16px] ${active ? 'text-white' : 'text-gray-400 group-hover:text-gray-600'}`} />
+                                <span className="text-[12px] font-medium">{label}</span>
+                            </Link>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
     );
 }

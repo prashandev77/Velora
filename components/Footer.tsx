@@ -15,6 +15,7 @@ const footerLinks = {
     company: [
         { label: 'About Us', href: '/about' },
         { label: 'Destinations', href: '/destinations' },
+        { label: 'Guide Hub', href: '/guides' },
         { label: 'Contact', href: '/contact' },
         { label: 'FAQ', href: '/#faq' },
     ],

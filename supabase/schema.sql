@@ -56,19 +56,19 @@ drop policy if exists "Auth insert packages" on packages;
 drop policy if exists "Admin insert packages" on packages;
 create policy "Admin insert packages"
     on packages for insert
-    with check ((auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+    with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 drop policy if exists "Auth update packages" on packages;
 drop policy if exists "Admin update packages" on packages;
 create policy "Admin update packages"
     on packages for update
-    using ((auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 drop policy if exists "Auth delete packages" on packages;
 drop policy if exists "Admin delete packages" on packages;
 create policy "Admin delete packages"
     on packages for delete
-    using ((auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+    using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 
 
@@ -94,19 +94,19 @@ drop policy if exists "Auth upload journey images" on storage.objects;
 drop policy if exists "Admin upload journey images" on storage.objects;
 create policy "Admin upload journey images"
   on storage.objects for insert
-  with check (bucket_id = 'journey-images' and (auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+  with check (bucket_id = 'journey-images' and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 drop policy if exists "Auth update journey images" on storage.objects;
 drop policy if exists "Admin update journey images" on storage.objects;
 create policy "Admin update journey images"
   on storage.objects for update
-  using (bucket_id = 'journey-images' and (auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+  using (bucket_id = 'journey-images' and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 drop policy if exists "Auth delete journey images" on storage.objects;
 drop policy if exists "Admin delete journey images" on storage.objects;
 create policy "Admin delete journey images"
   on storage.objects for delete
-  using (bucket_id = 'journey-images' and (auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+  using (bucket_id = 'journey-images' and (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- ── 5. BOOKINGS ─────────────────────────────────────────────
 create table if not exists bookings (
@@ -138,13 +138,13 @@ create policy "Public insert booking"
 drop policy if exists "Public read own booking" on bookings;
 drop policy if exists "Admin read bookings" on bookings;
 create policy "Admin read bookings"
-    on bookings for select using ((auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+    on bookings for select using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 drop policy if exists "Auth all bookings" on bookings;
 drop policy if exists "Admin mutate bookings" on bookings;
 create policy "Admin mutate bookings"
-    on bookings for update using ((auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+    on bookings for update using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 drop policy if exists "Admin delete bookings" on bookings;
 create policy "Admin delete bookings"
-    on bookings for delete using ((auth.jwt() -> 'user_metadata' ->> 'role') = 'admin');
+    on bookings for delete using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
