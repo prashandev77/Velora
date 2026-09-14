@@ -57,4 +57,12 @@ export interface Journey {
   description: string;
   image: string;
   color: string;
+  travelStyle?: string;
+  priceFromAud?: number;
 }
+
+export type GuideBlock =
+  | { type: 'hero'; image: string; title: string; subtitle?: string; author?: string }
+  | { type: 'rich-text'; html: string }
+  | { type: 'gallery'; layout: '1-up' | '2-up' | '3-up'; images: { url: string; caption?: string }[] }
+  | { type: 'related-links'; links: { title: string; url: string; description?: string }[] };

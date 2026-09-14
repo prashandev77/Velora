@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Palmtree, Mountain, Waves } from 'lucide-react';
 import { journeys } from '@/lib/data';
@@ -19,9 +20,7 @@ export default function JourneysSection() {
         offset: ['start 0.8', 'end start'],
     });
 
-    // Desktop: scroll-driven slide. The total cards width minus one viewport width.
-    // 3 cards × 500px + 2 gaps × 32px = 1564px total. Viewport ~1280px. Need to move ~284px.
-    // Using -28% works well on wide screens.
+    // Desktop: scroll-driven slide using GPU-accelerated translateX
     const x = useTransform(scrollYProgress, [0.2, 0.95], ['0%', '-42%']);
 
     return (
@@ -38,7 +37,7 @@ export default function JourneysSection() {
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, margin: '-50px' }}
                     transition={{ duration: 0.7 }}
                 >
                     <span className="text-gold text-sm font-medium tracking-[0.3em] uppercase">
@@ -68,10 +67,14 @@ export default function JourneysSection() {
                                 href={`/journeys/${journey.id}`}
                                 className="relative flex-shrink-0 w-[85vw] max-w-[340px] h-[460px] rounded-3xl overflow-hidden snap-center block"
                             >
-                                {/* Background Image */}
-                                <div
-                                    className="absolute inset-0 bg-cover bg-center"
-                                    style={{ backgroundImage: `url(${journey.image})` }}
+                                {/* Background Image — use next/image for optimization */}
+                                <Image
+                                    src={journey.image}
+                                    alt={journey.title}
+                                    fill
+                                    className="object-cover"
+                                    sizes="85vw"
+                                    loading="lazy"
                                 />
                                 {/* Gradient Overlay */}
                                 <div className={`absolute inset-0 bg-gradient-to-t ${journey.color} opacity-80`} />
@@ -112,7 +115,7 @@ export default function JourneysSection() {
             <div className="hidden md:block relative min-h-[70vh]">
                 <div className="sticky top-[15vh]">
                     <motion.div
-                        style={{ x }}
+                        style={{ x, willChange: 'transform' }}
                         className="flex gap-8 pl-[max(24px,calc((100vw-1280px)/2+24px))]"
                     >
                         {journeys.map((journey, index) => {
@@ -122,15 +125,20 @@ export default function JourneysSection() {
                                     key={journey.id}
                                     initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    viewport={{ once: true, margin: '-50px' }}
                                     transition={{ duration: 0.6, delay: index * 0.15 }}
                                     className="relative flex-shrink-0 w-[500px] h-[600px] rounded-3xl overflow-hidden group cursor-pointer"
+                                    style={{ willChange: 'transform' }}
                                 >
                                     <Link href={`/journeys/${journey.id}`} className="absolute inset-0">
-                                        {/* Background Image */}
-                                        <div
-                                            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                            style={{ backgroundImage: `url(${journey.image})` }}
+                                        {/* Background Image — use next/image instead of background-image */}
+                                        <Image
+                                            src={journey.image}
+                                            alt={journey.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            sizes="500px"
+                                            loading="lazy"
                                         />
                                         {/* Gradient Overlay */}
                                         <div className={`absolute inset-0 bg-gradient-to-t ${journey.color} opacity-80`} />
@@ -144,8 +152,20 @@ export default function JourneysSection() {
                                                 <h3 className="font-heading text-4xl font-bold text-white mb-1">
                                                     {journey.title}
                                                 </h3>
-                                                <p className="text-gold/80 text-sm font-medium tracking-wide mb-3">
-                                                    {journey.subtitle}
+                                                <p className="text-gold/80 text-sm font-medium tracking-wide mb-3 flex gap-2 items-center">
+                                                    <span>{journey.subtitle}</span>
+                                                    {journey.travelStyle && (
+                                                        <>
+                                                            <span className="text-white/40">•</span>
+                                                            <span>{journey.travelStyle}</span>
+                                                        </>
+                                                    )}
+                                                    {journey.priceFromAud != null && (
+                                                        <>
+                                                            <span className="text-white/40">•</span>
+                                                            <span>Indicative journey from AUD {journey.priceFromAud.toLocaleString()}</span>
+                                                        </>
+                                                    )}
                                                 </p>
                                                 <p className="text-white/60 text-sm leading-relaxed line-clamp-3">
                                                     {journey.description}
@@ -155,7 +175,7 @@ export default function JourneysSection() {
                                                 className="flex items-center gap-2 text-gold text-sm font-medium group/btn"
                                                 whileHover={{ x: 5 }}
                                             >
-                                                <span>Explore</span>
+                                                <span>MAKE THIS JOURNEY YOURS</span>
                                                 <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
                                             </motion.div>
                                         </div>
@@ -173,3 +193,4 @@ export default function JourneysSection() {
         </section>
     );
 }
+

@@ -8,7 +8,8 @@ export const guideSchema = z.object({
         .max(200, 'Slug is too long')
         .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be lowercase letters, numbers, and hyphens'),
     shortDescription: z.string().min(1, 'Short description is required').max(500, 'Short description is too long'),
-    content: z.string().min(1, 'Content is required'),
+    content: z.array(z.any()),
+    tags: z.array(z.string()).optional(),
     featuredImage: z.string().min(1, 'Featured image is required'),
     categoryId: z.string().uuid('Invalid category').nullable(),
     status: z.enum(['draft', 'published']),

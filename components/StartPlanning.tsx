@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check, Send, Loader2 } from 'lucide-react';
@@ -40,6 +40,33 @@ export default function StartPlanning() {
     const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
     const turnstileEnabled = Boolean(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
     const honeypotRef = useRef<HTMLInputElement>(null);
+
+    const [utmData, setUtmData] = useState({
+        source: '',
+        medium: '',
+        campaign: '',
+        content: '',
+        landingPage: '',
+        referringPage: '',
+        journeyName: '',
+        journeyCategory: '',
+    });
+
+    // We use a useEffect without a dependency array for standard mount 
+    // to capture URLSearchParams, avoiding server-side mismatch.
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setUtmData({
+            source: params.get('utm_source') || '',
+            medium: params.get('utm_medium') || '',
+            campaign: params.get('utm_campaign') || '',
+            content: params.get('utm_content') || '',
+            landingPage: window.location.pathname,
+            referringPage: document.referrer || '',
+            journeyName: params.get('journeyName') || '',
+            journeyCategory: params.get('journeyCategory') || '',
+        });
+    }, []);
 
     const emailError = useMemo(() => getEmailErrorMessage(email), [email]);
     const phoneError = useMemo(() => getPhoneErrorMessage(phone), [phone]);
@@ -87,6 +114,17 @@ export default function StartPlanning() {
         if (destinationInterest.trim()) extraLines.push(`Destination interest: ${destinationInterest.trim()}`);
         if (budgetRange) extraLines.push(`Budget range: ${budgetRange}`);
         if (specialOccasion.trim()) extraLines.push(`Special occasion: ${specialOccasion.trim()}`);
+        
+        // Append hidden data
+        if (utmData.journeyName) extraLines.push(`Journey Name: ${utmData.journeyName}`);
+        if (utmData.journeyCategory) extraLines.push(`Journey Category: ${utmData.journeyCategory}`);
+        if (utmData.source) extraLines.push(`UTM Source: ${utmData.source}`);
+        if (utmData.medium) extraLines.push(`UTM Medium: ${utmData.medium}`);
+        if (utmData.campaign) extraLines.push(`UTM Campaign: ${utmData.campaign}`);
+        if (utmData.content) extraLines.push(`UTM Content: ${utmData.content}`);
+        if (utmData.landingPage) extraLines.push(`Landing Page: ${utmData.landingPage}`);
+        if (utmData.referringPage) extraLines.push(`Referring Page: ${utmData.referringPage}`);
+        
         const combinedMessage = [message.trim(), ...extraLines].filter(Boolean).join('\n');
         fd.set('message', combinedMessage);
 
@@ -265,7 +303,7 @@ export default function StartPlanning() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label className="text-stone-700 text-sm font-medium mb-2 block" htmlFor="start-phone">
-                                Phone (Optional)
+                                Phone / WhatsApp (Optional)
                             </label>
                             <input
                                 id="start-phone"

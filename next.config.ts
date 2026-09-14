@@ -57,6 +57,16 @@ const nextConfig: NextConfig = {
         destination: '/journeys/adventure/avelora-discovery',
         permanent: true,
       },
+      {
+        source: '/guides',
+        destination: '/travel-guides',
+        permanent: true,
+      },
+      {
+        source: '/guides/:slug*',
+        destination: '/travel-guides/:slug*',
+        permanent: true,
+      },
     ];
   },
   images: {

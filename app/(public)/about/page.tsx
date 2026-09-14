@@ -6,6 +6,7 @@ import { Heart, Leaf } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { aboutPageContent } from '@/lib/content';
+import FAQ from '@/components/FAQ';
 
 const sections = aboutPageContent.sections;
 
@@ -110,6 +111,11 @@ export default function AboutPage() {
                         <Link href="/contact">{aboutPageContent.ctaText}</Link>
                     </Button>
                 </motion.div>
+                
+                {/* FAQ */}
+                <div className="mt-20 -mx-6 md:-mx-12">
+                    <FAQ />
+                </div>
             </div>
         </main>
     );

@@ -103,7 +103,7 @@ export default async function GuidesAdminPage() {
                                                 <div className="flex items-center justify-end gap-1.5">
                                                     {guide.status === 'published' && (
                                                         <Link
-                                                            href={`/guides/${guide.slug}`}
+                                                            href={`/travel-guides/${guide.slug}`}
                                                             target="_blank"
                                                             className="p-2 rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-400 hover:text-gray-600 transition-all"
                                                             title="View on site"

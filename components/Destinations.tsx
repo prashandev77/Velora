@@ -429,6 +429,7 @@ export default function Destinations() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
+                                    viewport={{ once: true, margin: '-100px' }}
                                     transition={{ duration: 0.25 }}
                                     className="h-full flex flex-col items-center justify-center text-center p-8 overflow-hidden"
                                 >

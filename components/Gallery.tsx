@@ -91,7 +91,7 @@ export default function Gallery() {
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: true, margin: '-100px' }}
                     transition={{ duration: 0.7 }}
                     className="text-center mb-10 md:mb-14"
                 >
@@ -112,7 +112,7 @@ export default function Gallery() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.96 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, margin: '-100px' }}
                         transition={{ duration: 0.6 }}
                         className="relative w-full h-72 rounded-2xl overflow-hidden mb-3 group"
                     >
@@ -136,7 +136,7 @@ export default function Gallery() {
                                 key={img.alt}
                                 initial={{ opacity: 0, scale: 0.94 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, margin: '-100px' }}
                                 transition={{ duration: 0.5, delay: i * 0.07 }}
                                 className="relative rounded-2xl overflow-hidden group"
                                 style={{ aspectRatio: '4/3' }}
@@ -159,7 +159,7 @@ export default function Gallery() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, margin: '-100px' }}
                         transition={{ delay: 0.5 }}
                         className="mt-6 text-center"
                     >
@@ -180,7 +180,7 @@ export default function Gallery() {
                             key={img.alt + index}
                             initial={{ opacity: 0, scale: 0.92 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, margin: '-100px' }}
                             transition={{ duration: 0.55, delay: index * 0.06 }}
                             className={`relative rounded-2xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-md transition-shadow duration-300 ${img.span}`}
                         >

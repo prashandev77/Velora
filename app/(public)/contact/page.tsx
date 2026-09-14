@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin, ChevronRight, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { contactPageContent } from '@/lib/content';
+import FAQ from '@/components/FAQ';
 
 export default function ContactPage() {
     return (
@@ -115,6 +116,11 @@ export default function ContactPage() {
                         </div>
                     </div>
 
+                </div>
+                
+                {/* FAQ */}
+                <div className="mt-20">
+                    <FAQ />
                 </div>
             </div>
         </main>

@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Calendar, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
+import GuideBlocks from '@/components/GuideBlocks';
+import type { GuideBlock } from '@/lib/types';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
@@ -36,10 +38,29 @@ export default async function GuideDetailPage({ params }: { params: Promise<{ sl
     if (!guide) notFound();
 
     const category = guide.guide_categories as unknown as { id: string; name: string; slug: string } | null;
+    const tags = (guide as any).tags as string[] | undefined;
 
-    // Fetch related guides (same category, excluding current)
-    let relatedGuides: typeof guide[] = [];
-    if (category) {
+    // Fetch related guides: first try tags overlap, then fallback to same category
+    let relatedGuides: any[] = [];
+    
+    if (tags && tags.length > 0) {
+        // Find guides that overlap in tags
+        const { data } = await supabase
+            .from('guides')
+            .select('id, title, slug, short_description, featured_image, published_at, guide_categories(name, slug)')
+            .eq('status', 'published')
+            .neq('id', guide.id)
+            .overlaps('tags', tags)
+            .order('published_at', { ascending: false })
+            .limit(3);
+            
+        if (data && data.length > 0) {
+            relatedGuides = data;
+        }
+    }
+    
+    if (relatedGuides.length === 0 && category) {
+        // Fallback to category based
         const { data } = await supabase
             .from('guides')
             .select('id, title, slug, short_description, featured_image, published_at, guide_categories(name, slug)')
@@ -68,7 +89,7 @@ export default async function GuideDetailPage({ params }: { params: Promise<{ sl
             <article className={`max-w-3xl mx-auto px-6 ${guide.featured_image ? '-mt-20 relative z-10' : 'pt-32 md:pt-40'}`}>
                 {/* Back Link */}
                 <Link
-                    href="/guides"
+                    href="/travel-guides"
                     className="inline-flex items-center gap-2 text-stone-500 hover:text-stone-700 text-sm font-medium mb-6 transition-colors"
                 >
                     <ArrowLeft className="w-4 h-4" />
@@ -103,10 +124,9 @@ export default async function GuideDetailPage({ params }: { params: Promise<{ sl
                 </div>
 
                 {/* Guide Content */}
-                <div
-                    className="guide-content mt-10 mb-16"
-                    dangerouslySetInnerHTML={{ __html: guide.content }}
-                />
+                <div className="mt-10 mb-16">
+                    <GuideBlocks blocks={(guide.content as unknown) as GuideBlock[]} />
+                </div>
 
                 {/* Gold Accent Divider */}
                 <div className="flex items-center gap-4 mb-16">
@@ -127,7 +147,7 @@ export default async function GuideDetailPage({ params }: { params: Promise<{ sl
                             return (
                                 <Link
                                     key={related.id}
-                                    href={`/guides/${related.slug}`}
+                                    href={`/travel-guides/${related.slug}`}
                                     className="group bg-white rounded-2xl border border-stone-100 overflow-hidden hover:shadow-xl hover:shadow-stone-200/50 hover:-translate-y-1 transition-all duration-300"
                                 >
                                     <div className="relative h-44 overflow-hidden">

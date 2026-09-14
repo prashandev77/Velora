@@ -87,6 +87,12 @@ export default function JourneysClient({ packages }: { packages: Package[] }) {
                                                 <span>{pkg.travelStyle}</span>
                                             </>
                                         )}
+                                        {pkg.priceFromAud != null && (
+                                            <>
+                                                <span className="text-gold/60">•</span>
+                                                <span>Indicative journey from AUD {pkg.priceFromAud.toLocaleString()}</span>
+                                            </>
+                                        )}
                                     </div>
 
                                     <h2 className="font-heading text-xl md:text-2xl lg:text-[1.65rem] font-medium text-stone-900 mb-3 group-hover:text-gold transition-colors duration-300 tracking-tight">

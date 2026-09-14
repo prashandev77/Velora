@@ -83,7 +83,7 @@ export default async function GuideHubPage({ searchParams }: { searchParams: Pro
                 <section className="px-6 pb-8">
                     <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2">
                         <Link
-                            href="/guides"
+                            href="/travel-guides"
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                                 !params.category
                                     ? 'bg-stone-900 text-white shadow-sm'
@@ -95,7 +95,7 @@ export default async function GuideHubPage({ searchParams }: { searchParams: Pro
                         {categories.map((cat) => (
                             <Link
                                 key={cat.id}
-                                href={`/guides?category=${cat.slug}${params.q ? `&q=${params.q}` : ''}`}
+                                href={`/travel-guides?category=${cat.slug}${params.q ? `&q=${params.q}` : ''}`}
                                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                                     params.category === cat.slug
                                         ? 'bg-stone-900 text-white shadow-sm'
@@ -126,7 +126,7 @@ export default async function GuideHubPage({ searchParams }: { searchParams: Pro
                                 return (
                                     <Link
                                         key={guide.id}
-                                        href={`/guides/${guide.slug}`}
+                                        href={`/travel-guides/${guide.slug}`}
                                         className="group bg-white rounded-2xl border border-stone-100 overflow-hidden hover:shadow-xl hover:shadow-stone-200/50 hover:-translate-y-1 transition-all duration-300"
                                     >
                                         {/* Image */}

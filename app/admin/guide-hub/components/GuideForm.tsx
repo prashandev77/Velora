@@ -2,7 +2,7 @@
 
 import { useActionState, useState, useCallback } from 'react';
 import { saveGuide, type ActionState } from '../actions';
-import RichTextEditor from './RichTextEditor';
+// import RichTextEditor from './RichTextEditor';
 import { Upload, X, Loader2, Image as ImageIcon } from 'lucide-react';
 
 interface GuideCategory {
@@ -16,7 +16,8 @@ interface GuideData {
     title: string;
     slug: string;
     shortDescription: string;
-    content: string;
+    content: any[];
+    tags?: string[];
     featuredImage: string;
     categoryId: string | null;
     status: 'draft' | 'published';
@@ -41,7 +42,12 @@ export default function GuideForm({ initialData, categories }: GuideFormProps) {
     const [slug, setSlug] = useState(initialData?.slug ?? '');
     const [slugManual, setSlugManual] = useState(!!initialData?.slug);
     const [shortDescription, setShortDescription] = useState(initialData?.shortDescription ?? '');
-    const [content, setContent] = useState(initialData?.content ?? '');
+    const [content, setContent] = useState(
+        typeof initialData?.content === 'string'
+            ? initialData.content
+            : JSON.stringify(initialData?.content || [], null, 2)
+    );
+    const [tagsStr, setTagsStr] = useState(initialData?.tags?.join(', ') || '');
     const [featuredImage, setFeaturedImage] = useState(initialData?.featuredImage ?? '');
     const [categoryId, setCategoryId] = useState(initialData?.categoryId ?? '');
     const [status, setStatus] = useState<'draft' | 'published'>(initialData?.status ?? 'draft');
@@ -91,7 +97,8 @@ export default function GuideForm({ initialData, categories }: GuideFormProps) {
             title,
             slug,
             shortDescription,
-            content,
+            content: JSON.parse(content || '[]'),
+            tags: tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [],
             featuredImage,
             categoryId: categoryId || null,
             status,
@@ -159,12 +166,33 @@ export default function GuideForm({ initialData, categories }: GuideFormProps) {
                         )}
                     </div>
 
-                    {/* Content */}
+                    {/* Content (JSON Editor) */}
                     <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Content</label>
-                        <RichTextEditor content={content} onChange={setContent} placeholder="Write your guide content..." />
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Content Blocks (JSON)</label>
+                        <textarea
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            placeholder='[{"type": "rich-text", "html": "<p>Hello</p>"}]'
+                            rows={15}
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm font-mono placeholder:text-gray-400 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-300 transition-all resize-none"
+                        />
                         {state?.errors?.content && (
                             <p className="text-red-500 text-xs mt-1">{state.errors.content[0]}</p>
+                        )}
+                    </div>
+
+                    {/* Tags */}
+                    <div>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">Tags (comma-separated)</label>
+                        <input
+                            type="text"
+                            value={tagsStr}
+                            onChange={(e) => setTagsStr(e.target.value)}
+                            placeholder="wellness, beaches, culture"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm placeholder:text-gray-400 focus:ring-2 focus:ring-gray-900/10 focus:border-gray-300 transition-all"
+                        />
+                        {state?.errors?.tags && (
+                            <p className="text-red-500 text-xs mt-1">{state.errors.tags[0]}</p>
                         )}
                     </div>
                 </div>

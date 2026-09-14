@@ -53,6 +53,7 @@ export async function saveGuide(_prev: ActionState, formData: FormData): Promise
         slug: data.slug,
         short_description: data.shortDescription,
         content: data.content,
+        tags: data.tags || [],
         featured_image: data.featuredImage,
         category_id: data.categoryId || null,
         status: data.status,

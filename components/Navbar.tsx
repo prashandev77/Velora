@@ -14,7 +14,7 @@ const navLinks = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/journeys', label: 'Journeys', icon: Plane },
     { href: '/destinations', label: 'Destinations', icon: MapPin },
-    { href: '/guides', label: 'Guide Hub', icon: BookOpen },
+    { href: '/travel-guides', label: 'Travel Guides', icon: BookOpen },
     { href: '/about', label: 'About', icon: Info },
     { href: '/booking', label: 'Plan', icon: CreditCard },
     { href: '/contact', label: 'Contact', icon: Phone },
@@ -34,8 +34,8 @@ export default function Navbar() {
         '/journeys',
         '/destinations',
         '/booking',
-        '/guides',
-    ].some((p) => pathname === p) || pathname.startsWith('/journeys/') || pathname.startsWith('/destinations/') || pathname.startsWith('/guides/');
+        '/travel-guides',
+    ].some((p) => pathname === p) || pathname.startsWith('/journeys/') || pathname.startsWith('/destinations/') || pathname.startsWith('/travel-guides/');
 
     // On a light page, navbar is always in "scrolled" style (dark text)
     const forceDark = isLightPage && !isScrolled;
@@ -67,7 +67,7 @@ export default function Navbar() {
                     md:top-3 md:left-1/2 md:-translate-x-1/2 md:w-[95%] md:max-w-6xl md:rounded-2xl
                     ${isScrolled || forceDark
                         ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-stone-200/60 border-b md:border border-stone-100'
-                        : 'bg-white/10 backdrop-blur-md border-b md:border border-white/15'
+                        : 'bg-gradient-to-b from-stone-900/80 via-stone-900/40 to-transparent backdrop-blur-md border-b md:border border-white/15'
                     }`}
             >
                 <nav className="navbar-site-inner flex items-center justify-between py-3">

@@ -245,6 +245,30 @@ html {
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
+  /* GPU-promote scroll-driven containers */
+  .gpu-layer {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+}
+
+/* ─── Scroll Performance: skip rendering off-screen sections ─── */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* ─── Reduced Motion: disable animations for accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ─── Admin UI Animations ─── */

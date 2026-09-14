@@ -219,72 +219,95 @@ export const howItWorksContent = {
 export const faqContent = {
     tag: 'FAQ',
     heading: 'Frequently Asked Questions',
-    items: [
+    categories: [
         {
-            q: 'Do you operate group tours or fixed departure dates?',
-            a: 'No. Avelora Travel specialises exclusively in privately curated travel. We do not operate fixed-date group tours. Every journey is customised around your preferred travel dates, pace, and interests.',
+            title: 'Pre-Departure',
+            items: [
+                {
+                    q: 'Are Avelora journeys private or group tours?',
+                    a: 'No. Avelora specialises in private, tailor-made journeys. We do not operate fixed-date group tours. Your dates, pace and interests shape the journey.',
+                },
+                {
+                    q: 'Can I customise a journey or start completely from scratch?',
+                    a: 'Absolutely. You can begin with any Avelora journey and tailor the route, number of nights, accommodation, experiences and pace or start with a blank canvas. Tell us what interests you, how long you’d like to travel and the way you like to experience a destination, and we’ll design the journey around you.',
+                },
+                {
+                    q: 'What is included in an Avelora journey?',
+                    a: 'Inclusions vary by journey and will be clearly detailed in your personalised itinerary and quotation. Depending on your journey, these may include accommodation, daily breakfast, private transport, guides, selected experiences and entrance fees.',
+                },
+                {
+                    q: 'What type of accommodation do you provide?',
+                    a: 'We select accommodation to suit your journey, preferences and budget from characterful boutique hotels and tea-country bungalows to safari lodges, coastal retreats and luxury resorts. Tell us how you like to travel and we’ll recommend stays that fit you.',
+                },
+                {
+                    q: 'Do I need a visa to visit Sri Lanka?',
+                    a: 'Australian passport holders are currently eligible for a free 30-day tourist visa (ETA), along with nationals of a number of other eligible countries. An Electronic Travel Authorization (ETA) is required before arrival. Visa and entry requirements can change, so we recommend checking the latest information with Sri Lanka’s Department of Immigration & Emigration before travel. We’ll also provide relevant pre-departure guidance as part of your Avelora journey.',
+                },
+                {
+                    q: 'What is the best time to visit Sri Lanka?',
+                    a: 'Sri Lanka can be travelled year-round, but the best regions depend on when you visit. The south and west coasts are generally most favourable during the Australian summer months, while the east coast comes into its own at other times of year. We’ll shape your route around the season as well as the experiences you want.',
+                },
+                {
+                    q: 'How far in advance should I start planning?',
+                    a: 'Earlier is helpful for the widest choice of preferred hotels, guides, trains and experiences, especially during popular travel periods. However, we can also assist with shorter-lead enquiries where availability allows.',
+                },
+                {
+                    q: 'Can you accommodate dietary, accessibility or other special requirements?',
+                    a: 'Yes. Tell us about any dietary, mobility, accessibility or other important requirements when you enquire. We’ll consider them when designing your journey and confirm what can be arranged.',
+                },
+                {
+                    q: 'Do you arrange international flights?',
+                    a: 'Our journeys primarily focus on your arrangements from arrival in destination. We can help you consider suitable international flight timing so your itinerary connects smoothly, but international flights are not normally included unless specifically arranged.',
+                },
+                {
+                    q: 'Can I add the Maldives or another destination to my Sri Lanka journey?',
+                    a: 'Yes. Sri Lanka and the Maldives make a natural combination culture, wildlife and landscapes followed by a few days of island relaxation. We can design both parts as one seamless journey, and selected regional extensions may also be possible depending on your plans.',
+                },
+                {
+                    q: 'Do I need travel insurance?',
+                    a: 'We strongly recommend comprehensive travel insurance appropriate for your journey, including cover for medical expenses, cancellation, luggage and the activities you plan to undertake. Your policy should be arranged as soon as practical after confirming your trip.',
+                },
+                {
+                    q: 'Do you plan honeymoons, anniversaries and special celebrations?',
+                    a: 'Yes. We can design honeymoons, anniversaries, birthdays and other meaningful journeys with stays and experiences chosen around the occasion without turning the trip into a generic celebration package.',
+                }
+            ]
         },
         {
-            q: 'What is included in a typical Avelora journey?',
-            a: 'Each itinerary is personalised, but most journeys include: accommodation in carefully selected 4–5 star hotels, boutique villas, or luxury safari lodges; meals on half-board basis where applicable; private airport transfers; private English-speaking chauffeur-guide; air-conditioned vehicle; entrance fees to included cultural sites; curated experiences such as safaris, heritage visits, or cultural performances; and discreet local support during travel.',
+            title: 'On the Ground',
+            items: [
+                {
+                    q: 'Will we have a private driver or guide?',
+                    a: 'Most Avelora Sri Lanka journeys include private transport with an experienced chauffeur-guide or driver, with specialist local guides arranged where appropriate. The exact arrangements will depend on your itinerary and will be clearly outlined in your personalised proposal.',
+                },
+                {
+                    q: 'What support will I have while travelling?',
+                    a: 'Your journey is coordinated with trusted local support in Sri Lanka. You’ll have contact details for assistance while travelling, including urgent on-trip support when required.',
+                },
+                {
+                    q: 'How does Avelora approach responsible travel?',
+                    a: 'We believe exceptional travel should respect the places, wildlife and communities that make each journey possible. Where possible, we favour quality local businesses and genuine experiences, carefully consider the wildlife experiences we recommend, and avoid filling itineraries with unnecessary tourist stops included primarily to generate commissions.',
+                }
+            ]
         },
         {
-            q: 'What type of accommodation do you provide?',
-            a: 'We work with handpicked 4–5 star properties, boutique heritage hotels, tea estate bungalows, luxury safari lodges, and premium Maldives resorts.',
-        },
-        {
-            q: 'Is transport private?',
-            a: 'Yes. All tours and transfers are arranged privately with an experienced English-speaking chauffeur-guide. You will not share transport with other travellers.',
-        },
-        {
-            q: 'Are entrance fees included?',
-            a: 'Where specified in your personalised itinerary, entrance fees are included, Dambulla Cave Temple, Temple of the Sacred Tooth Relic, Kandyan dance performance, Peradeniya Botanical Gardens, elephant safari, and Polonnaruwa Ancient City.',
-        },
-        {
-            q: 'Do I need a visa to visit Sri Lanka?',
-            a: 'Most travellers require an Electronic Travel Authorisation (ETA) prior to arrival in Sri Lanka. We provide guidance once your journey is confirmed.',
-        },
-        {
-            q: 'What is the best time to visit Sri Lanka?',
-            a: 'Sri Lanka is a year-round destination. The west and south coasts are ideal from December to April, while the east coast is best between May and September. We recommend regions based on your travel dates.',
-        },
-        {
-            q: 'How far in advance should I book?',
-            a: 'For peak season (December–April), we recommend 4–6 months in advance. For other periods, 2–4 months is generally sufficient.',
-        },
-        {
-            q: 'What is the typical investment for an Avelora journey?',
-            a: 'As every journey is privately curated, pricing varies by duration, accommodation level, and experiences. Most private journeys range from mid to high four figures per person and above. We provide transparent proposals tailored to your preferences.',
-        },
-        {
-            q: 'Do you offer honeymoon or special occasion planning?',
-            a: 'Yes. We design bespoke honeymoons, anniversaries, and milestone journeys with private dining, curated experiences, and romantic settings.',
-        },
-        {
-            q: 'Can you accommodate dietary or special travel requirements?',
-            a: 'Certainly. We tailor every journey to your preferences including dietary, accessibility, and wellness needs.',
-        },
-        {
-            q: 'How do payments work?',
-            a: 'A 20% deposit is required to confirm your journey. The remaining balance is payable 14 days prior to departure or as otherwise stated in your booking confirmation. Full payment instructions will be provided in your booking confirmation.',
-        },
-        {
-            q: 'Do you arrange international flights?',
-            a: 'Yes. While most travellers prefer to book their own flights, Avelora Travel can assist with international airline tickets through our trusted airline and travel partners if required. If you would like us to include flights as part of your journey planning, our team will be happy to provide suitable options based on your travel dates, preferred airlines, and departure city.',
-        },
-        {
-            q: 'Can I add a Maldives extension after Sri Lanka?',
-            a: 'Yes. Many guests combine Sri Lanka with a Maldives stay, we coordinate timing, transfers, and island resort selection to match your pace and budget.',
-        },
-        {
-            q: 'Do you plan multi-country itineraries?',
-            a: 'Absolutely. We design seamless multi-stop routes (for example Sri Lanka plus the Maldives or regional hubs), with one coordinated plan and support throughout.',
-        },
-        {
-            q: 'Do you plan honeymoons, anniversaries, and celebrations?',
-            a: 'Yes. Milestones are a speciality, from private dining and spa moments to surprise touches and family-friendly celebration travel, we tailor every detail.',
-        },
-    ],
+            title: 'Booking & Payment',
+            items: [
+                {
+                    q: 'Are entrance fees included?',
+                    a: 'Where entrance fees are included, they will be clearly shown in your proposal. We prefer to make inclusions transparent rather than leave you guessing about additional costs.',
+                },
+                {
+                    q: 'What is the typical investment for an Avelora journey?',
+                    a: 'Every journey is individually designed, so pricing varies with travel dates, duration, accommodation, experiences and number of travellers. Our published journeys provide a useful indication of investment, and we’ll prepare a clear personalised quotation before you commit.',
+                },
+                {
+                    q: 'How do payments work?',
+                    a: 'Your quotation and booking confirmation will clearly state the deposit, payment schedule and payment method applicable to your journey. Payment arrangements may vary depending on the services included.',
+                }
+            ]
+        }
+    ]
 };
 
 // ── TESTIMONIALS SECTION ─────────────────────────────────────────────────────
@@ -370,7 +393,7 @@ export const startPlanningContent = {
         'Family Travel',
         'Multi-country Escape',
     ],
-    tripLengths: ['5–7 days', '8–10 days', '10–14 days', '15+ days'],
+    tripLengths: ['5–7 days', '8–10 days', '10–14 days', '15+ days', 'Not sure yet'],
     travellerCounts: ['1', '2', '3', '4', '5+'],
     formLabels: {
         when: 'When are you travelling?',
@@ -392,7 +415,7 @@ export const startPlanningContent = {
         specialOccasion: 'Special occasion (optional)',
         occasionPlaceholder: 'e.g. honeymoon, anniversary, birthday',
     },
-    budgetRanges: ['Under $5k pp', '$5k–$10k pp', '$10k–$20k pp', '$20k+ pp', 'Prefer to discuss'],
+    budgetRanges: ['Under $5k pp', '$5k–$10k pp', '$10k–$20k pp', '$20k+ pp', 'Prefer to discuss', 'Not sure yet'],
     submitButton: 'Start Planning',
     submitFooter: 'No obligation · Tailored planning · Response within 24 hours',
     successTitle: 'Thank You!',
@@ -400,7 +423,7 @@ export const startPlanningContent = {
     successLink: 'Browse Journeys While You Wait',
     months: [
         'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December',
+        'July', 'August', 'September', 'October', 'November', 'December', 'Not sure yet',
     ],
 };
 
@@ -584,7 +607,7 @@ export const journeysPageContent = {
     heading: 'Choose Your Path',
     subtitle: 'Every journey is thoughtfully curated and fully customisable. Choose your ideal itinerary and we\'ll tailor every detail.',
     footerNote: 'All journeys are privately curated and subject to availability at the time of booking.',
-    viewItinerary: 'View Itinerary',
+    viewItinerary: 'MAKE THIS JOURNEY YOURS',
 };
 
 // ── ABOUT PAGE ───────────────────────────────────────────────────────────────
@@ -819,3 +842,84 @@ export const packageDetailContent = {
     relatedJourneysTitle: 'You May Also Love',
     relatedJourneysSubtitle: 'Explore more of our privately curated journeys across Sri Lanka, the Maldives and beyond.',
 };
+
+// ── BOOKING TERMS & CONDITIONS ───────────────────────────────────────────────
+export const bookingTermsContent = {
+    hero: {
+        tag: 'BOOKING TERMS',
+        heading: 'Booking Terms & Conditions',
+        subtitle: 'These Booking Terms & Conditions apply to travel arrangements booked with Avelora Travel. Your personalised quotation and booking confirmation may also contain journey-specific conditions, including supplier payment and cancellation terms.',
+    },
+    sections: [
+        {
+            title: 'Agreement',
+            body: 'By accessing and using the Avelora Travel website, you agree to the following terms and conditions.',
+        },
+        {
+            title: 'Website Content',
+            body: 'Content on this website, including text, logos, images and design elements, is owned by Avelora Travel or used with permission from the relevant owners or suppliers.\n\nContent may not be reproduced, copied, distributed or used for commercial purposes without appropriate permission.',
+        },
+        {
+            title: 'Accuracy of Information',
+            body: 'We aim to keep the information on this website accurate and up to date. However, travel details including itineraries, accommodation, experiences, availability and indicative pricing may change.\n\nYour personalised quotation and booking confirmation will provide the details applicable to your journey.',
+        },
+        {
+            title: 'Use of the Website',
+            body: 'This website is provided for travel inspiration and general information. You may use the website only for lawful purposes and must not use it in a way that could damage, disrupt or interfere with the website or its operation.',
+        },
+        {
+            title: 'Third-Party Content & Links',
+            body: 'Our website may contain information, content or links relating to third-party accommodation providers, attractions and travel services. Third-party websites and content are subject to their own terms, policies and practices.',
+        },
+        {
+            title: 'Travel Bookings',
+            body: 'Information on this website does not by itself constitute a confirmed travel booking.\n\nTravel arrangements booked with Avelora are subject to our Booking Terms & Conditions, together with any journey-specific conditions provided in your quotation or booking confirmation.',
+        },
+        {
+            title: 'Updates to These Terms',
+            body: 'Avelora Travel may update these terms and conditions from time to time. By continuing to use the website, you accept the most recent version.\n\nLast updated: August 2026',
+        }
+    ],
+    footerNote: 'Ready to begin planning?',
+    footerCta: 'Start Your Journey',
+};
+
+// ── COMPLAINTS & FEEDBACK ────────────────────────────────────────────────────
+export const complaintsContent = {
+    hero: {
+        tag: 'SUPPORT',
+        heading: 'Complaints & Feedback',
+        subtitle: 'We want every interaction with Avelora to feel clear, considered and well supported. If something has not met your expectations, please tell us so we can understand what happened and work toward an appropriate resolution.',
+    },
+    sections: [
+        {
+            title: 'How to Contact Us',
+            body: 'Please contact Avelora Travel by email and include "Complaint" in the subject line. You may also contact us by phone if the matter is urgent while you are travelling.',
+        },
+        {
+            title: 'What to Include',
+            body: 'Please provide your name, booking or enquiry reference if applicable, a clear description of the issue, relevant dates, and any supporting information that may help us review the matter.',
+        },
+        {
+            title: 'What Happens Next',
+            body: 'We will acknowledge your complaint as soon as reasonably practical, review the information provided and contact any relevant service providers where required. We will keep you informed if we need further information or if the matter requires additional time to investigate.',
+        },
+        {
+            title: 'Our Response',
+            body: 'We aim to provide a clear response within a reasonable timeframe, taking into account the nature and complexity of the matter.',
+        },
+        {
+            title: 'If You Are Travelling',
+            body: 'If an issue arises during your journey, please contact your Avelora support contact as soon as possible so we have an opportunity to assist while you are travelling.',
+        },
+        {
+            title: 'Further Assistance',
+            body: 'If we are unable to resolve the matter directly, we will explain any further options that may be available to you.',
+        }
+    ],
+    contact: {
+        email: 'info@aveloratravel.com.au',
+        phone: '+61 472 726 456'
+    }
+};
+

@@ -7,23 +7,27 @@ import { footerContent } from '@/lib/content';
 
 const footerLinks = {
     journeys: [
-        { label: 'Our Collection', href: '/journeys' },
-        { label: 'Classic Discovery', href: '/journeys' },
-        { label: 'Wildlife & Nature', href: '/journeys' },
-        { label: 'Romance & Honeymoon', href: '/journeys' },
+        { label: 'Our Journeys', href: '/journeys' },
+        { label: 'Sri Lanka', href: '/destinations/sri-lanka' },
+        { label: 'Maldives', href: '/destinations/maldives' },
     ],
-    company: [
-        { label: 'About Us', href: '/about' },
+    explore: [
         { label: 'Destinations', href: '/destinations' },
-        { label: 'Guide Hub', href: '/guides' },
-        { label: 'Contact', href: '/contact' },
-        { label: 'FAQ', href: '/#faq' },
+        { label: 'Travel Guides', href: '/travel-guides' },
+        { label: 'About Avelora', href: '/about' },
+        { label: 'Responsible Travel', href: '/about#responsible-travel' },
     ],
     support: [
         { label: 'Start Planning', href: '/plan-your-trip' },
-        { label: 'How It Works', href: '/#how-it-works' },
+        { label: 'Contact', href: '/contact' },
+        { label: 'FAQ', href: '/#faq' },
+        { label: 'Booking & Payment', href: '/booking' },
+    ],
+    legal: [
+        { label: 'Booking Terms & Conditions', href: '/booking-terms-and-conditions' },
         { label: 'Privacy Policy', href: '/privacy' },
-        { label: 'Terms of Service', href: '/terms' },
+        { label: 'Website Terms & Conditions', href: '/terms' },
+        { label: 'Complaints & Feedback', href: '/complaints-procedure' },
     ],
 };
 
@@ -37,7 +41,7 @@ export default function Footer() {
             <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gold/5 rounded-full blur-3xl" />
 
             <div className="relative max-w-7xl mx-auto px-6 py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 lg:gap-8">
                     {/* Brand */}
                     <div className="lg:col-span-2">
                         <Link href="/" className="flex items-center group mb-5">
@@ -83,13 +87,13 @@ export default function Footer() {
                         </ul>
                     </div>
 
-                    {/* Company Links */}
+                    {/* Explore Links */}
                     <div>
                         <h4 className="font-heading text-sm font-semibold uppercase tracking-widest text-gold/70 mb-5">
-                            Company
+                            Explore
                         </h4>
                         <ul className="space-y-3">
-                            {footerLinks.company.map((link) => (
+                            {footerLinks.explore.map((link) => (
                                 <li key={link.label}>
                                     <Link
                                         href={link.href}
@@ -109,6 +113,25 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-3">
                             {footerLinks.support.map((link) => (
+                                <li key={link.label}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-sm text-stone-400 hover:text-gold transition-colors duration-300"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Legal Links */}
+                    <div>
+                        <h4 className="font-heading text-sm font-semibold uppercase tracking-widest text-gold/70 mb-5">
+                            Legal
+                        </h4>
+                        <ul className="space-y-3">
+                            {footerLinks.legal.map((link) => (
                                 <li key={link.label}>
                                     <Link
                                         href={link.href}

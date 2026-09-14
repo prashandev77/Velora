@@ -52,7 +52,7 @@ export default function SignatureJourneys({ packages }: Props) {
                                 key={j.href}
                                 initial={{ opacity: 0, y: 16 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: true, margin: '-100px' }}
                                 transition={{ duration: 0.6, delay: i * 0.08 }}
                                 className="group relative overflow-hidden rounded-2xl shadow-sm border border-stone-100 hover:shadow-md transition-all duration-500"
                             >

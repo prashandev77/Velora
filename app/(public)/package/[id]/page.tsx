@@ -149,12 +149,12 @@ export default async function PackageDetailPage({
                         <Separator orientation="vertical" className="h-6 bg-stone-200 hidden sm:block" />
                         <span>All inclusive</span>
                     </div>
-                    <BookPackageLink packageId={pkg.id}>
+                    <Link href={`/plan-your-trip?journeyName=${encodeURIComponent(pkg.title)}&journeyCategory=${encodeURIComponent(pkg.category)}`}>
                         <Button variant="gold" size="sm" className="px-6 shadow-md">
                             <CalendarDays className="w-4 h-4 mr-2" />
-                            Book Now
+                            MAKE THIS JOURNEY YOURS
                         </Button>
-                    </BookPackageLink>
+                    </Link>
                 </div>
             </div>
 
@@ -380,15 +380,15 @@ export default async function PackageDetailPage({
                         will tailor every detail to perfection.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <BookPackageLink packageId={pkg.id}>
+                        <Link href={`/plan-your-trip?journeyName=${encodeURIComponent(pkg.title)}&journeyCategory=${encodeURIComponent(pkg.category)}`}>
                             <Button
                                 size="lg"
                                 className="bg-gold hover:bg-gold-dark text-stone-900 font-semibold px-10 rounded-xl transition-all hover:shadow-lg hover:shadow-gold/25 border-none"
                             >
                                 <CalendarDays className="w-5 h-5 mr-2" />
-                                Book This Journey
+                                MAKE THIS JOURNEY YOURS
                             </Button>
-                        </BookPackageLink>
+                        </Link>
                         <Link href="/journeys">
                             <Button
                                 size="lg"

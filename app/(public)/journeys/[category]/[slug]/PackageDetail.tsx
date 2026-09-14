@@ -178,7 +178,7 @@ export default function PackageDetail({
                         </span>
                         {price && (
                             <span className="flex items-center gap-1.5 px-3 py-1 bg-gold/15 backdrop-blur-md rounded-full border border-gold/30 text-white font-medium whitespace-nowrap">
-                                From AUD {price}
+                                Indicative journey from AUD {price}
                             </span>
                         )}
                     </motion.div>
@@ -189,15 +189,15 @@ export default function PackageDetail({
                         transition={{ delay: 0.85 }}
                         className="mt-8"
                     >
-                        <BookPackageLink
-                            packageId={pkg.id}
+                        <Link
+                            href={`/plan-your-trip?journeyName=${encodeURIComponent(pkg.title)}&journeyCategory=${encodeURIComponent(pkg.category)}`}
                             className="inline-flex rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
                         >
                             <span className="inline-flex items-center gap-2 bg-gold hover:bg-gold/90 text-stone-900 font-semibold px-6 py-3 rounded-full text-sm transition-all shadow-lg shadow-black/20">
-                                Book this journey
+                                MAKE THIS JOURNEY YOURS
                                 <ArrowRight className="w-4 h-4" />
                             </span>
-                        </BookPackageLink>
+                        </Link>
                     </motion.div>
                 </div>
             </section>

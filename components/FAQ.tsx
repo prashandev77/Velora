@@ -4,16 +4,19 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { faqContent } from '@/lib/content';
-
-const faqs = faqContent.items;
+import { cn } from '@/lib/utils';
 
 export default function FAQ() {
-    const [open, setOpen] = useState<number | null>(0);
+    const [activeTab, setActiveTab] = useState(0);
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+    const categories = faqContent.categories;
+    const currentCategory = categories[activeTab];
 
     return (
         <section className="min-h-screen flex items-center py-20 md:py-28 bg-[#F7F5F2]">
             <div className="max-w-4xl mx-auto px-6 md:px-12 w-full">
-                <div className="text-center mb-14 md:mb-20">
+                <div className="text-center mb-10 md:mb-14">
                     <span className="text-gold/90 text-xs md:text-sm font-medium uppercase tracking-[0.25em] mb-3 block">
                         {faqContent.tag}
                     </span>
@@ -23,9 +26,26 @@ export default function FAQ() {
                     <div className="w-14 h-[2px] bg-gold mx-auto mb-8" />
                 </div>
 
+                <div className="flex flex-wrap justify-center gap-2 mb-10">
+                    {categories.map((cat, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => { setActiveTab(idx); setOpenIndex(null); }}
+                            className={cn(
+                                'px-6 py-2 border rounded-full text-sm font-medium transition-colors',
+                                activeTab === idx
+                                    ? 'bg-stone-900 text-white border-stone-900'
+                                    : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-50'
+                            )}
+                        >
+                            {cat.title}
+                        </button>
+                    ))}
+                </div>
+
                 <div className="space-y-3">
-                    {faqs.map((faq, i) => {
-                        const isOpen = open === i;
+                    {currentCategory.items.map((faq, i) => {
+                        const isOpen = openIndex === i;
                         return (
                             <div
                                 key={i}
@@ -33,7 +53,7 @@ export default function FAQ() {
                                     }`}
                             >
                                 <button
-                                    onClick={() => setOpen(isOpen ? null : i)}
+                                    onClick={() => setOpenIndex(isOpen ? null : i)}
                                     className="flex items-center justify-between w-full text-left px-6 py-5 gap-4"
                                 >
                                     <span className={`text-sm md:text-base font-semibold transition-colors ${isOpen ? 'text-stone-900' : 'text-stone-700'}`}>
